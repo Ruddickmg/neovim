@@ -3,6 +3,7 @@ if (catUtils.isNixCats and nixCats('lspDebugMode')) then
   vim.lsp.set_log_level("debug")
 end
 
+print(catUtils.isNixCats)
 -- NOTE: This file uses lzextras.lsp handler https://github.com/BirdeeHub/lzextras?tab=readme-ov-file#lsp-handler
 -- This is a slightly more performant fallback function
 -- for when you don't provide a filetype to trigger on yourself.
@@ -66,6 +67,14 @@ require('lze').load {
     end,
   },
   {
+    "rustaceanvim",
+    enabled = catUtils.isNixCats,
+    ft = "rs",
+    lsp = {
+      filetypes = { 'rs' },
+    },
+  },
+  {
     -- name of the lsp
     "lua_ls",
     enabled = nixCats('lua') or nixCats('neonixdev') or false,
@@ -92,14 +101,6 @@ require('lze').load {
       },
     },
     -- also these are regular specs and you can use before and after and all the other normal fields
-  },
-  {
-    "gopls",
-    for_cat = "go",
-    -- if you don't provide the filetypes it asks lspconfig for them
-    lsp = {
-      filetypes = { "go", "gomod", "gowork", "gotmpl" },
-    },
   },
   {
     "rnix",

@@ -58,7 +58,3 @@ the rest is just example of how to configure nvim making use of various
 features of nixCats and using the plugin lze for lazy loading.
 --]]
 require('myLuaConf')
-
-print("hello from lua live reload!")
-
-vim.cmd("colorscheme background")
