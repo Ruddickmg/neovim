@@ -2,10 +2,6 @@ local colorschemeName = nixCats('colorscheme')
 if not require('nixCatsUtils').isNixCats then
   colorschemeName = 'onedark'
 end
--- Could I lazy load on colorscheme with lze?
--- sure. But I was going to call vim.cmd.colorscheme() during startup anyway
--- this is just an example, feel free to do a better job!
-vim.cmd.colorscheme(colorschemeName)
 
 local ok, notify = pcall(require, "notify")
 if ok then
@@ -167,7 +163,6 @@ require('lze').load {
       require('lualine').setup({
         options = {
           icons_enabled = false,
-          theme = colorschemeName,
           component_separators = '|',
           section_separators = '',
         },

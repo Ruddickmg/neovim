@@ -46,21 +46,6 @@
             nvim-web-devicons
           ];
         };
-        # You can retreive information from the
-        # packageDefinitions of the package this was packaged with.
-        # :help nixCats.flake.outputs.categoryDefinitions.scheme
-        themer = with pkgs.vimPlugins;
-          (builtins.getAttr (categories.colorscheme or "onedark") {
-              # Theme switcher without creating a new category
-              "monokai-pro" = monokai-pro-nvim;
-              "onedark" = onedark-nvim;
-              "catppuccin" = catppuccin-nvim;
-              "catppuccin-mocha" = catppuccin-nvim;
-              "tokyonight" = tokyonight-nvim;
-              "tokyonight-day" = tokyonight-nvim;
-            }
-          );
-          # This is obviously a fairly basic usecase for this, but still nice.
       };
 
       # not loaded automatically at startup.
@@ -127,6 +112,7 @@
             undotree
             indent-blankline-nvim
             vim-startuptime
+            monokai-pro-nvim
             # If it was included in your flake inputs as plugins-hlargs,
             # this would be how to add that plugin in your config.
             # pkgs.neovimPlugins.hlargs
@@ -186,8 +172,10 @@
 
           # explained below in the `regularCats` package's definition
           # OR see :help nixCats.flake.outputs.settings for all of the settings available
-          wrapRc = true;
+          wrapRc = false;
           configDirName = "nixCats-nvim";
+	  unwrappedCfgPath = "/home/moon/.config/nixCats-nvim";
+
         };
         # enable the categories you want from categoryDefinitions
         categories = {
@@ -198,8 +186,7 @@
           neonixdev = true;
 
           lspDebugMode = false;
-          themer = true;
-          colorscheme = "monokai-pro";
+          colorscheme = "monokai";
         };
         extra = {
           # to keep the categories table from being filled with non category things that you want to pass

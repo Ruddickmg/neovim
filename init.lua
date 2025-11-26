@@ -1,3 +1,4 @@
+print("doing lua stuff")
 --[[
 NOTE:
 if you plan to always load your nixCats via nix,
