@@ -42,6 +42,12 @@
       };
 
       startupPlugins = {
+        rust = with pkgs; [
+          clippy
+          vimPlugins.rustaceanvim
+          rust-analyzer
+          cargo
+        ];
         debug = with pkgs.vimPlugins; [
           nvim-nio
         ];
@@ -87,13 +93,7 @@
         ];
         neonixdev = with pkgs.vimPlugins; [
           lazydev-nvim
-        ];
-        rust = with pkgs; [
-          clippy
-          vimPlugins.rustaceanvim
-          rust-analyzer
-          cargo
-        ];
+        ]; 
         general = {
           blink = with pkgs.vimPlugins; [
             luasnip
