@@ -172,10 +172,8 @@
 
           # explained below in the `regularCats` package's definition
           # OR see :help nixCats.flake.outputs.settings for all of the settings available
-          wrapRc = false;
+          wrapRc = true;
           configDirName = "nixCats-nvim";
-	  unwrappedCfgPath = "/home/moon/.config/nixCats-nvim";
-
         };
         # enable the categories you want from categoryDefinitions
         categories = {
