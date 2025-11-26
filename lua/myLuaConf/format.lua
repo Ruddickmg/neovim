@@ -8,7 +8,7 @@ require('lze').load {
     keys = {
       { "<leader>FF", desc = "[F]ormat [F]ile" },
     },
-    colorscheme = "monokai",
+    colorscheme = "monokai-pro",
     after = function (plugin)
       local conform = require("conform")
 
