@@ -184,7 +184,7 @@
           neonixdev = true;
 
           lspDebugMode = false;
-          colorscheme = "monokai";
+          colorscheme = "monokai-pro";
         };
         extra = {
           # to keep the categories table from being filled with non category things that you want to pass

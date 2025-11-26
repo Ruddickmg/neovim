@@ -1,10 +1,12 @@
+colorscheme = nixCats('colorscheme')
+
 print("in colors")
-print(nixCats('colorscheme'))
+print(colorscheme)
 
 require('lze').load {
   {
     "monokai-pro.nvim",
-    colorscheme = "monokai",
+    colorscheme = "monokai-pro",
     after = function(plugin)
       print("setting up monokai-pro")
       require("monokai-pro").setup({  
@@ -29,3 +31,4 @@ require('lze').load {
   }
 }
 
+vim.cmd.colorscheme(colorscheme)
