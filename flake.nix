@@ -186,7 +186,7 @@
           lint = true;
           format = true;
           neonixdev = true;
-          lspDebugMode = false;
+          lspDebugMode = true;
           colorscheme = "monokai-pro";
         };
         extra = {
