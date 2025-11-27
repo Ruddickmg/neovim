@@ -20,7 +20,6 @@
     categoryDefinitions = { pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
       lspsAndRuntimeDeps = {
         rust = with pkgs; [
-          vimPlugins.rustaceanvim
           rust-analyzer
         ];
         general = with pkgs; [
@@ -34,6 +33,9 @@
       };
 
       startupPlugins = {
+        rust = with pkgs.vimPlugins; [
+          rustaceanvim
+        ];
         debug = with pkgs.vimPlugins; [
           nvim-nio
         ];
@@ -91,6 +93,7 @@
                 plugins: with plugins; [
                   nix
                   lua
+                  rust
                 ]
               ))
           ];
@@ -182,6 +185,8 @@
         # enable the categories you want from categoryDefinitions
         categories = {
           markdown = true;
+          rust = true;
+          debug = true;
           general = true;
           lint = true;
           format = true;
