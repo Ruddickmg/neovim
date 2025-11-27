@@ -1,20 +1,15 @@
-colorscheme = nixCats('colorscheme')
-
-print("in colors")
-print(colorscheme)
+local colorscheme = nixCats('colorscheme')
 
 require('lze').load {
   {
     "monokai-pro.nvim",
     colorscheme = "monokai-pro",
-    after = function(plugin)
-      print("setting up monokai-pro")
-      require("monokai-pro").setup({  
+    after = function()
+      require("monokai-pro").setup({
         transparent_background = true,
         terminal_colors = true,
         devicons = true, -- highlight the icons of `nvim-web-devicons`
         filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
-        -- Enable this will disable filter option
         day_night = {
           enable = false, -- turn off by default
           day_filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum

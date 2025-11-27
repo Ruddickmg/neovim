@@ -19,6 +19,10 @@
 
     categoryDefinitions = { pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
       lspsAndRuntimeDeps = {
+        rust = with pkgs; [
+          vimPlugins.rustaceanvim
+          rust-analyzer
+        ];
         general = with pkgs; [
           universal-ctags
           ripgrep
