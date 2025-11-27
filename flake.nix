@@ -174,6 +174,7 @@
           # OR see :help nixCats.flake.outputs.settings for all of the settings available
           wrapRc = true;
           configDirName = "nixCats-nvim";
+          colorscheme = "hello-world-wide";
         };
         # enable the categories you want from categoryDefinitions
         categories = {
@@ -182,9 +183,7 @@
           lint = true;
           format = true;
           neonixdev = true;
-
           lspDebugMode = false;
-          colorscheme = "monokai-pro";
         };
         extra = {
           # to keep the categories table from being filled with non category things that you want to pass
