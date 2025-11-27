@@ -118,6 +118,13 @@ require('lze').load {
     },
   },
   {
+    "rustaceanvim",
+    enabled = catUtils.isNixCats,
+    lsp = {
+      filetypes = { "rs" },
+    },
+  },
+  {
     "nixd",
     enabled = catUtils.isNixCats and (nixCats('nix') or nixCats('neonixdev')) or false,
     lsp = {
