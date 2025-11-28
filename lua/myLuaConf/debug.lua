@@ -1,22 +1,24 @@
+local utils = require('nixCatsUtils')
+local optionalPlugins = require('nixCats').pawsible.allPlugins.opt
+
+print("lazy load debug")
+
 require('lze').load {
   {
     "nvim-dap",
-    -- NOTE: I dont want to figure out mason tools installer for this, so I only enabled debug if nix loaded config
     for_cat = { cat = 'debug', default = false },
-    -- cmd = { "" },
-    -- event = "",
-    -- ft = "",
-    keys = {
-      { "<F5>", desc = "Debug: Start/Continue" },
-      { "<F1>", desc = "Debug: Step Into" },
-      { "<F2>", desc = "Debug: Step Over" },
-      { "<F3>", desc = "Debug: Step Out" },
-      { "<leader>b", desc = "Debug: Toggle Breakpoint" },
-      { "<leader>B", desc = "Debug: Set Breakpoint" },
-      { "<F7>", desc = "Debug: See last session result." },
-    },
+--    enabled = true,
+--    keys = {
+--      { "<F5>", desc = "Debug: Start/Continue" },
+--      { "<F1>", desc = "Debug: Step Into" },
+--      { "<F2>", desc = "Debug: Step Over" },
+--      { "<F3>", desc = "Debug: Step Out" },
+--      { "<leader>b", desc = "Debug: Toggle Breakpoint" },
+--      { "<leader>B", desc = "Debug: Set Breakpoint" },
+--      { "<F7>", desc = "Debug: See last session result." },
+--    },
     -- colorscheme = "",
-    load = (require('nixCatsUtils').isNixCats and function(name)
+    load = (utils.isNixCats and function(name)
       vim.cmd.packadd(name)
       vim.cmd.packadd("nvim-dap-ui")
       vim.cmd.packadd("nvim-dap-virtual-text")
@@ -46,7 +48,6 @@ require('lze').load {
       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
       -- Dap UI setup
       -- For more information, see |:help nvim-dap-ui|
       dapui.setup {
@@ -106,14 +107,6 @@ require('lze').load {
       -- NOTE: Install lang specific config
       -- either in here, or in a separate plugin spec as demonstrated for go below.
 
-    end,
-  },
-  {
-    "nvim-dap-go",
-    for_cat = { cat = 'debug.go', default = false },
-    on_plugin = { "nvim-dap", },
-    after = function(plugin)
-      require("dap-go").setup()
     end,
   },
 }

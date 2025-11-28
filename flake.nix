@@ -60,12 +60,13 @@
       # to get the name packadd expects, use the
       # `:NixCats pawsible` command to see them all
       optionalPlugins = {
-        debug = with pkgs.vimPlugins; {
-          default = [
+        debug = with pkgs; {
+          default = with vimPlugins; [
             nvim-dap
             nvim-dap-ui
             nvim-dap-virtual-text
           ];
+          rust = [ lldb ];
         };
         lint = with pkgs.vimPlugins; [
           nvim-lint
@@ -158,9 +159,6 @@
         ];
         debug = [
           [ "debug" "default" ]
-        ];
-        go = [
-          [ "debug" "go" ] # yes it has to be a list of lists
         ];
       };
     };
