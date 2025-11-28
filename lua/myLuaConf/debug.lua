@@ -1,8 +1,6 @@
 local utils = require('nixCatsUtils')
 local optionalPlugins = require('nixCats').pawsible.allPlugins.opt
 
-print("lazy load debug")
-
 require('lze').load {
   {
     "nvim-dap",

@@ -307,4 +307,5 @@ require('lze').load {
       }
     end,
   },
+  { import = "myLuaConf.plugins.neotest", },
 }

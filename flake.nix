@@ -60,13 +60,19 @@
       # to get the name packadd expects, use the
       # `:NixCats pawsible` command to see them all
       optionalPlugins = {
+        testing = {
+          default = with pkgs.vimPlugins; [
+            neotest
+            FixCursorHold-nvim
+            neotest-plenary
+          ];
+        };
         debug = with pkgs; {
           default = with vimPlugins; [
             nvim-dap
             nvim-dap-ui
             nvim-dap-virtual-text
           ];
-          rust = [ lldb ];
         };
         lint = with pkgs.vimPlugins; [
           nvim-lint
@@ -111,6 +117,7 @@
             vim-fugitive
             vim-rhubarb
             nvim-surround
+            trouble-nvim
           ];
           extra = with pkgs.vimPlugins; [
             fidget-nvim
@@ -184,6 +191,7 @@
         categories = {
           markdown = true;
           rust = true;
+          testing = true;
           debug = true;
           general = true;
           lint = true;
