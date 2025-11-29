@@ -86,6 +86,10 @@
         neonixdev = with pkgs.vimPlugins; [
           lazydev-nvim
         ];
+        styling = with pkgs.vimPlugins; [
+          lualine-nvim
+          monokai-pro-nvim
+        ];
         general = {
           blink = with pkgs.vimPlugins; [
             luasnip
@@ -111,7 +115,6 @@
           ];
           always = with pkgs.vimPlugins; [
             nvim-lspconfig
-            lualine-nvim
             gitsigns-nvim
             vim-sleuth
             vim-fugitive
@@ -121,36 +124,11 @@
           ];
           extra = with pkgs.vimPlugins; [
             fidget-nvim
-            # lualine-lsp-progress
-            which-key-nvim
             comment-nvim
             undotree
             indent-blankline-nvim
             vim-startuptime
-            monokai-pro-nvim
-            # If it was included in your flake inputs as plugins-hlargs,
-            # this would be how to add that plugin in your config.
-            # pkgs.neovimPlugins.hlargs
           ];
-        };
-      };
-
-      # shared libraries to be added to LD_LIBRARY_PATH
-      # variable available to nvim runtime
-      sharedLibraries = {
-        general = with pkgs; [ # <- this would be included if any of the subcategories of general are
-          # libgit2
-        ];
-      };
-
-      # environmentVariables:
-      # this section is for environmentVariables that should be available
-      # at RUN TIME for plugins. Will be available to path within neovim terminal
-      environmentVariables = {
-        test = {
-          default = {
-            CATTESTVARDEFAULT = "It worked!";
-          };
         };
       };
 
@@ -193,6 +171,7 @@
           rust = true;
           testing = true;
           debug = true;
+          styling = true;
           general = true;
           lint = true;
           format = true;

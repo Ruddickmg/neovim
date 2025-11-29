@@ -27,3 +27,6 @@ require('lze').load {
 }
 
 vim.cmd.colorscheme(colorscheme)
+vim.api.nvim_set_hl(0, "TabLine", { bg = "none" })
+vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none" })
+vim.cmd("hi statusline guibg=NONE gui=NONE")

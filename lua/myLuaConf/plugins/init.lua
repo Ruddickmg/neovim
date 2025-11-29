@@ -1,8 +1,3 @@
-local colorschemeName = nixCats('colorscheme')
-if not require('nixCatsUtils').isNixCats then
-  colorschemeName = 'onedark'
-end
-
 local ok, notify = pcall(require, "notify")
 if ok then
   notify.setup({
@@ -151,46 +146,6 @@ require('lze').load {
   --   end,
   -- },
   {
-    "lualine.nvim",
-    for_cat = 'general.always',
-    -- cmd = { "" },
-    event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
-    after = function (plugin)
-
-      require('lualine').setup({
-        options = {
-          icons_enabled = false,
-          component_separators = '|',
-          section_separators = '',
-        },
-        sections = {
-          lualine_c = {
-            {
-              'filename', path = 1, status = true,
-            },
-          },
-        },
-        inactive_sections = {
-          lualine_b = {
-            {
-              'filename', path = 3, status = true,
-            },
-          },
-          lualine_x = {'filetype'},
-        },
-        tabline = {
-          lualine_a = { 'buffers' },
-          -- if you use lualine-lsp-progress, I have mine here instead of fidget
-          -- lualine_b = { 'lsp_progress', },
-          lualine_z = { 'tabs' }
-        },
-      })
-    end,
-  },
-  {
     "gitsigns.nvim",
     for_cat = 'general.always',
     event = "DeferredUIEnter",
@@ -274,39 +229,7 @@ require('lze').load {
       vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
     end,
   },
-  {
-    "which-key.nvim",
-    for_cat = 'general.extra',
-    -- cmd = { "" },
-    event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
-    after = function (plugin)
-      require('which-key').setup({
-      })
-      require('which-key').add {
-        { "<leader><leader>", group = "buffer commands" },
-        { "<leader><leader>_", hidden = true },
-        { "<leader>c", group = "[c]ode" },
-        { "<leader>c_", hidden = true },
-        { "<leader>d", group = "[d]ocument" },
-        { "<leader>d_", hidden = true },
-        { "<leader>g", group = "[g]it" },
-        { "<leader>g_", hidden = true },
-        { "<leader>m", group = "[m]arkdown" },
-        { "<leader>m_", hidden = true },
-        { "<leader>r", group = "[r]ename" },
-        { "<leader>r_", hidden = true },
-        { "<leader>s", group = "[s]earch" },
-        { "<leader>s_", hidden = true },
-        { "<leader>t", group = "[t]oggles" },
-        { "<leader>t_", hidden = true },
-        { "<leader>w", group = "[w]orkspace" },
-        { "<leader>w_", hidden = true },
-      }
-    end,
-  },
   { import = "myLuaConf.plugins.neotest", },
   { import = "myLuaConf.plugins.trouble", },
+  { import = "myLuaConf.plugins.lualine" },
 }
