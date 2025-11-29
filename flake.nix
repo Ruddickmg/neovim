@@ -6,7 +6,7 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: let
+  outputs = { nixpkgs, ... }@inputs: let
     inherit (inputs.nixCats) utils;
     luaPath = ./.;
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
@@ -17,7 +17,7 @@
       (utils.standardPluginOverlay inputs)
     ];
 
-    categoryDefinitions = { pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
+    categoryDefinitions = { pkgs, ... }: {
       lspsAndRuntimeDeps = {
         rust = with pkgs; [
           rust-analyzer
@@ -141,12 +141,6 @@
         };
       };
 
-      # see :help nixCats.flake.outputs.categoryDefinitions.default_values
-      # this will enable test.default and debug.default
-      # if any subcategory of test or debug is enabled
-      # WARNING: use of categories argument in this set will cause infinite recursion
-      # The categories argument of this function is the FINAL value.
-      # You may use it in any of the other sets.
       extraCats = {
         test = [
           [ "test" "default" ]
@@ -158,23 +152,14 @@
     };
 
     packageDefinitions = {
-      nixCats = { pkgs, name, ... }@misc: {
+      nixCats = { pkgs, ... }: {
         settings = {
           suffix-path = true;
           suffix-LD = true;
-          # The name of the package, and the default launch name,
-          # and the name of the .desktop file, is `nixCats`,
-          # or, whatever you named the package definition in the packageDefinitions set.
-          # WARNING: MAKE SURE THESE DONT CONFLICT WITH OTHER INSTALLED PACKAGES ON YOUR PATH
-          # That would result in a failed build, as nixos and home manager modules validate for collisions on your path
           aliases = [ "nvim" "vim" "vi" "vimdiff" "vimcat" ];
-
-          # explained below in the `regularCats` package's definition
-          # OR see :help nixCats.flake.outputs.settings for all of the settings available
           wrapRc = true;
           configDirName = "nixCats-nvim";
         };
-        # enable the categories you want from categoryDefinitions
         categories = {
           database = true;
           markdown = true;
@@ -190,12 +175,8 @@
           colorscheme = "monokai-pro";
         };
         extra = {
-          # to keep the categories table from being filled with non category things that you want to pass
-          # there is also an extra table you can use to pass extra stuff.
-          # but you can pass all the same stuff in any of these sets and access it in lua
           nixdExtras = {
             nixpkgs = ''import ${pkgs.path} {}'';
-            # or inherit nixpkgs;
           };
         };
       };
@@ -203,9 +184,7 @@
 
     defaultPackageName = "nixCats";
   in
-  # you shouldnt need to change much past here, but you can if you wish.
-  # but you should at least eventually try to figure out whats going on here!
-  # see :help nixCats.flake.outputs.exports
+  
   forEachSystem (system: let
     # and this will be our builder! it takes a name from our packageDefinitions as an argument, and builds an nvim.
     nixCatsBuilder = utils.baseBuilder luaPath {
