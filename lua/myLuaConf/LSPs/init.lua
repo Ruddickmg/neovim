@@ -121,7 +121,7 @@ require('lze').load {
     "postgres_lsp",
     for_cat = "database",
     lsp = {
-      filetypes = { "sql" },
+      filetypes = { "sql", "rs" },
       cmd = { "postgres-language-server", "lsp-proxy" },
       root_markers = { "postgres-language-server.jsonc" },
     },

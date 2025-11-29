@@ -73,7 +73,7 @@ require('lze').load {
       {"<leader>ms", "<cmd>MarkdownPreviewStop <CR>", mode = {"n"}, noremap = true, desc = "markdown preview stop"},
       {"<leader>mt", "<cmd>MarkdownPreviewToggle <CR>", mode = {"n"}, noremap = true, desc = "markdown preview toggle"},
     },
-    before = function(plugin)
+    before = function()
       vim.g.mkdp_auto_close = 0
     end,
   },
@@ -91,7 +91,7 @@ require('lze').load {
     "comment.nvim",
     for_cat = 'general.extra',
     event = "DeferredUIEnter",
-    after = function(plugin)
+    after = function()
       require('Comment').setup()
     end,
   },
@@ -99,7 +99,7 @@ require('lze').load {
     "indent-blankline.nvim",
     for_cat = 'general.extra',
     event = "DeferredUIEnter",
-    after = function(plugin)
+    after = function()
       require("ibl").setup()
     end,
   },
@@ -108,7 +108,7 @@ require('lze').load {
     for_cat = 'general.always',
     event = "DeferredUIEnter",
     -- keys = "",
-    after = function(plugin)
+    after = function()
       require('nvim-surround').setup()
     end,
   },
@@ -116,7 +116,7 @@ require('lze').load {
     "vim-startuptime",
     for_cat = 'general.extra',
     cmd = { "StartupTime" },
-    before = function(_)
+    before = function()
       vim.g.startuptime_event_width = 0
       vim.g.startuptime_tries = 10
       vim.g.startuptime_exe_path = nixCats.packageBinPath
@@ -127,7 +127,7 @@ require('lze').load {
     for_cat = 'general.extra',
     event = "DeferredUIEnter",
     -- keys = "",
-    after = function(plugin)
+    after = function()
       require('fidget').setup({})
     end,
   },
@@ -153,7 +153,7 @@ require('lze').load {
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
-    after = function (plugin)
+    after = function ()
       require('gitsigns').setup({
         -- See `:help gitsigns.txt`
         signs = {

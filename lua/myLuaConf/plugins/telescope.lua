@@ -99,7 +99,7 @@ return {
         vim.cmd.packadd("telescope-fzf-native.nvim")
         vim.cmd.packadd("telescope-ui-select.nvim")
     end,
-    after = function (plugin)
+    after = function ()
       local open_with_trouble = require("trouble.sources.telescope").open
 
       require('telescope').setup {

@@ -113,6 +113,7 @@
                   nix
                   lua
                   rust
+                  sql
                 ]
               ))
           ];

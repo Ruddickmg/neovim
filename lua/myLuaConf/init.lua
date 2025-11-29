@@ -16,3 +16,13 @@ if nixCats('format') then
 end
 
 require('myLuaConf.colors')
+
+vim.diagnostic.config({
+  virtual_text = {
+    source = true,
+  },
+  underline = true, -- Underline problematic lines
+  -- You can also configure specific highlight groups for different diagnostic severities
+  -- For example:
+  -- severity_sort = true, -- Sort diagnostics by severity
+})

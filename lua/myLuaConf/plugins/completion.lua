@@ -124,6 +124,13 @@ return {
             snippets = {
               score_offset = 40,
             },
+            buffer = {
+              score_offset = 30,
+            },
+            dadbod = {
+              name = "Dadbod",
+              module = "vim_dadbod_completion.blink",
+            },
             cmp_cmdline = {
               name = 'cmp_cmdline',
               module = 'blink.compat.source',
