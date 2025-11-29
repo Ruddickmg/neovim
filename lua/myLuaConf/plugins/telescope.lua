@@ -22,6 +22,7 @@
 
 -- Telescope live_grep in git root
 -- Function to find the git root directory based on the current buffer's path
+
 local function find_git_root()
   -- Use the current buffer's path as the starting point for the git search
   local current_file = vim.api.nvim_buf_get_name(0)
@@ -99,13 +100,19 @@ return {
         vim.cmd.packadd("telescope-ui-select.nvim")
     end,
     after = function (plugin)
+      local open_with_trouble = require("trouble.sources.telescope").open
+
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         defaults = {
           mappings = {
-            i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+            i = {
+              ['<c-enter>'] = 'to_fuzzy_refine',
+              ["<c-t>"] = open_with_trouble,
+            },
+            n = { ["<c-t>"] = open_with_trouble },
           },
         },
         -- pickers = {}
@@ -124,3 +131,4 @@ return {
     end,
   },
 }
+

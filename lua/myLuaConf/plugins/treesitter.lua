@@ -4,7 +4,7 @@ return {
   {
     "nvim-treesitter",
     for_cat = 'general.treesitter',
-    dep_of = { "neotest" },
+    dep_of = { "neotest", "trouble.nvim" },
     -- cmd = { "" },
     event = "DeferredUIEnter",
     -- ft = "",
