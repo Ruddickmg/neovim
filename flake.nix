@@ -22,6 +22,9 @@
         rust = with pkgs; [
           rust-analyzer
         ];
+        database = with pkgs; [
+          postgres-language-server 
+        ];
         general = with pkgs; [
           universal-ctags
           ripgrep
@@ -60,6 +63,11 @@
       # to get the name packadd expects, use the
       # `:NixCats pawsible` command to see them all
       optionalPlugins = {
+        database = with pkgs.vimPlugins; [
+          vim-dadbod
+          vim-dadbod-ui
+          vim-dadbod-completion
+        ];
         testing = {
           default = with pkgs.vimPlugins; [
             neotest
@@ -167,6 +175,7 @@
         };
         # enable the categories you want from categoryDefinitions
         categories = {
+          database = true;
           markdown = true;
           rust = true;
           testing = true;

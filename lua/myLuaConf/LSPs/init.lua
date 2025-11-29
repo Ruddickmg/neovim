@@ -118,6 +118,18 @@ require('lze').load {
     },
   },
   {
+    "postgres_lsp",
+    for_cat = "database",
+    lsp = {
+      filetypes = { "sql" },
+      cmd = { "postgres-language-server", "lsp-proxy" },
+      root_markers = { "postgres-language-server.jsonc" },
+    },
+    after = function()
+      print("postgres-language-server")
+    end
+  },
+  {
     "nixd",
     enabled = catUtils.isNixCats and (nixCats('nix') or nixCats('neonixdev')) or false,
     lsp = {

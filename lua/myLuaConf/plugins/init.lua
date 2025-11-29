@@ -232,4 +232,5 @@ require('lze').load {
   { import = "myLuaConf.plugins.neotest", },
   { import = "myLuaConf.plugins.trouble", },
   { import = "myLuaConf.plugins.lualine" },
+  { import = "myLuaConf.plugins.dadbod" },
 }
