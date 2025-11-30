@@ -1,15 +1,21 @@
 return {
   {
+    "lualine-lsp-progress",
+    for_cat = "styling",
+    dep_of = { "lualine.nvim" },
+    event = "DeferredUIEnter",
+  },
+  {
     "lualine.nvim",
     for_cat = 'styling',
     event = "DeferredUIEnter",
     after = function ()
       local auto = require('lualine.themes.auto')
-      
+
       auto.normal.c.bg = 'none'
       auto.normal.x.bg = 'none'
-      
-      require('lualine').setup({
+
+      local config = {
         options = {
           component_separators = "",
           icons_enabled = true,
@@ -32,11 +38,7 @@ return {
               separator = { right = "" },
             },
           },
-          lualine_c = {
-            {
-              'filename', path = 1, status = true,
-            },
-          },
+          lualine_c = { 'lsp_progress' },
         },
         inactive_sections = {
           lualine_b = {
@@ -48,10 +50,37 @@ return {
         },
         tabline = {
           lualine_a = { 'buffers' },
-          lualine_b = { 'lsp_progress', },
           lualine_z = { 'tabs' }
         },
+      }
+
+      local base = '#ECBE7B'
+      local main = '#a9a1e1'
+
+      table.insert(config.sections.lualine_c, {
+        "lsp_progress",
+        colors = {
+          percentage = main,
+          title  = base,
+          spinner = base,
+          lsp_client_name = base,
+          use = true,
+        },
+        display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage' } },
+        separators = {
+          component = ' ',
+          progress = ' | ',
+          percentage = { pre = '', post = '%% ' },
+          title = { pre = '', post = ': ' },
+          lsp_client_name = { pre = '[', post = ']' },
+          spinner = { pre = '', post = '' },
+          message = { commenced = 'In Progress', completed = 'Completed' },
+        },
+        timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
+        spinner_symbols = { '🌑 ', '🌒 ', '🌓 ', '🌔 ', '🌕 ', '🌖 ', '🌗 ', '🌘 ' },
       })
+
+      require('lualine').setup(config)
     end,
   }
 }

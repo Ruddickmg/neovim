@@ -122,15 +122,6 @@ require('lze').load {
       vim.g.startuptime_exe_path = nixCats.packageBinPath
     end,
   },
-  {
-    "fidget.nvim",
-    for_cat = 'general.extra',
-    event = "DeferredUIEnter",
-    -- keys = "",
-    after = function()
-      require('fidget').setup({})
-    end,
-  },
   -- {
   --   "hlargs",
   --   for_cat = 'general.extra',

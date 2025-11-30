@@ -42,17 +42,19 @@
         debug = with pkgs.vimPlugins; [
           nvim-nio
         ];
+        styling = with pkgs.vimPlugins; [
+            nvim-web-devicons
+        ];
         general = with pkgs.vimPlugins; {
           always = [
             lze
             lzextras
-            vim-repeat
             plenary-nvim
             (nvim-notify.overrideAttrs { doCheck = false; }) # TODO: remove overrideAttrs after check is fixed
           ];
-          extra = [
+          utility = [
             oil-nvim
-            nvim-web-devicons
+            vim-repeat
           ];
         };
       };
@@ -95,6 +97,7 @@
           lazydev-nvim
         ];
         styling = with pkgs.vimPlugins; [
+          lualine-lsp-progress
           lualine-nvim
           monokai-pro-nvim
         ];
@@ -122,21 +125,23 @@
             telescope-ui-select-nvim
             telescope-nvim
           ];
+          git = with pkgs.vimPlugins; [
+            gitsigns-nvim
+            diffview-nvim
+            neogit
+          ];
           always = with pkgs.vimPlugins; [
             nvim-lspconfig
-            gitsigns-nvim
-            vim-sleuth
-            vim-fugitive
-            vim-rhubarb
             nvim-surround
             trouble-nvim
           ];
-          extra = with pkgs.vimPlugins; [
-            fidget-nvim
+          performance = with pkgs.vimPlugins; [
+            vim-startuptime
+          ];
+          utility = with pkgs.vimPlugins; [
             comment-nvim
             undotree
             indent-blankline-nvim
-            vim-startuptime
           ];
         };
       };
@@ -161,9 +166,12 @@
           configDirName = "nixCats-nvim";
         };
         categories = {
+          performance = false;
+          git = true;
           database = true;
           markdown = true;
           rust = true;
+          utility = true;
           testing = true;
           debug = true;
           styling = true;
@@ -184,7 +192,6 @@
 
     defaultPackageName = "nixCats";
   in
-  
   forEachSystem (system: let
     # and this will be our builder! it takes a name from our packageDefinitions as an argument, and builds an nvim.
     nixCatsBuilder = utils.baseBuilder luaPath {

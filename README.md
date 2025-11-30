@@ -16,12 +16,11 @@ If you are unfamiliar with the above, refer to the [Neovim runtime path document
 
 ## TODO
 
-- use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
 - format virtual text/linting errors
 - add lazy git
-- set up key bindings
-- figure out why the leader key isn't working
-- set up tmux
 - add javascript/typescript lsp, linting, etc
 - add docker lsp, linting, etc
-- set up lualine lsp status plugin
+- figure out why the leader key isn't working
+- set up key bindings
+- set up tmux
+- use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
