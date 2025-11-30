@@ -17,7 +17,6 @@ If you are unfamiliar with the above, refer to the [Neovim runtime path document
 ## TODO
 
 - format virtual text/linting errors
-- add lazy git
 - add javascript/typescript lsp, linting, etc
 - add docker lsp, linting, etc
 - figure out why the leader key isn't working
