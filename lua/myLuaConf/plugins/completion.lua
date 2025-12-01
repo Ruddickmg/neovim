@@ -1,20 +1,4 @@
-local load_w_after = function(name)
-  vim.cmd.packadd(name)
-  vim.cmd.packadd(name .. '/after')
-end
-
 return {
-  {
-    "cmp-cmdline",
-    for_cat = "general.blink",
-    on_plugin = { "blink.cmp" },
-    load = load_w_after,
-  },
-  {
-    "blink.compat",
-    for_cat = "general.blink",
-    dep_of = { "cmp-cmdline" },
-  },
   {
     "luasnip",
     for_cat = "general.blink",
@@ -44,8 +28,6 @@ return {
     event = "DeferredUIEnter",
     after = function (_)
       require("blink.cmp").setup({
-        -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-        -- See :h blink-cmp-config-keymap for configuring keymaps
         keymap =  {
           preset = 'default',
         },
@@ -61,7 +43,7 @@ return {
             -- Search forward and backward
             if type == '/' or type == '?' then return { 'buffer' } end
             -- Commands
-            if type == ':' or type == '@' then return { 'cmdline', 'cmp_cmdline' } end
+            if type == ':' or type == '@' then return { 'cmdline' } end
             return {}
           end,
         },
@@ -83,6 +65,7 @@ return {
           menu = {
             draw = {
               treesitter = { 'lsp' },
+              columns = { { "kind_icon" }, { "label", gap = 1 } },
               components = {
                 label = {
                   text = function(ctx)
@@ -101,7 +84,7 @@ return {
         },
         snippets = {
           preset = 'luasnip',
-          active = function(filter)
+          active = function()
             local snippet = require "luasnip"
             local blink = require "blink.cmp"
             if snippet.in_snippet() and not blink.is_visible() then
@@ -131,13 +114,8 @@ return {
               name = "Dadbod",
               module = "vim_dadbod_completion.blink",
             },
-            cmp_cmdline = {
-              name = 'cmp_cmdline',
-              module = 'blink.compat.source',
-              score_offset = -100,
-              opts = {
-                cmp_name = 'cmdline',
-              },
+            cmdline = {
+              module = 'blink.cmp.sources.cmdline',
             },
           },
         },

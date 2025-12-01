@@ -21,6 +21,8 @@ require('lze').h.lsp.set_ft_fallback(function(name)
   end
 end)
 require('lze').load {
+  { import = "myLuaConf.LSPs.rust-analyzer" },
+  { import = "myLuaConf.LSPs.tombi" },
   {
     "nvim-lspconfig",
     for_cat = "general.always",
@@ -38,7 +40,7 @@ require('lze').load {
       })
     end,
   },
-  {
+ {
     "mason.nvim",
     -- only run it when not on nix
     enabled = not catUtils.isNixCats,

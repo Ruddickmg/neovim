@@ -17,7 +17,6 @@ require('lze').load {
         },
         background_clear = {
           "toggleterm",
-          "telescope",
           "notify",
         },
         inc_search = "background", -- underline | background

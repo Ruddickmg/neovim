@@ -26,6 +26,7 @@
           postgres-language-server 
         ];
         general = with pkgs; [
+          tombi
           universal-ctags
           ripgrep
           fd
@@ -43,7 +44,7 @@
           nvim-nio
         ];
         styling = with pkgs.vimPlugins; [
-            nvim-web-devicons
+          nvim-web-devicons
         ];
         general = with pkgs.vimPlugins; {
           always = [
@@ -53,6 +54,7 @@
             (nvim-notify.overrideAttrs { doCheck = false; }) # TODO: remove overrideAttrs after check is fixed
           ];
           utility = [
+            snacks-nvim
             oil-nvim
             vim-repeat
           ];
@@ -89,6 +91,7 @@
         ];
         format = with pkgs.vimPlugins; [
           conform-nvim
+          pkgs.stylua
         ];
         markdown = with pkgs.vimPlugins; [
           markdown-preview-nvim
@@ -104,7 +107,6 @@
         general = {
           blink = with pkgs.vimPlugins; [
             luasnip
-            cmp-cmdline
             blink-cmp
             blink-compat
             colorful-menu-nvim
@@ -120,11 +122,6 @@
                 ]
               ))
           ];
-          telescope = with pkgs.vimPlugins; [
-            telescope-fzf-native-nvim
-            telescope-ui-select-nvim
-            telescope-nvim
-          ];
           git = with pkgs.vimPlugins; [
             gitsigns-nvim
             diffview-nvim
@@ -135,13 +132,10 @@
             nvim-surround
             trouble-nvim
           ];
-          performance = with pkgs.vimPlugins; [
-            vim-startuptime
-          ];
           utility = with pkgs.vimPlugins; [
             comment-nvim
+            which-key-nvim
             undotree
-            indent-blankline-nvim
           ];
         };
       };
@@ -166,7 +160,7 @@
           configDirName = "nixCats-nvim";
         };
         categories = {
-          performance = false;
+          profiling = false;
           git = true;
           database = true;
           markdown = true;
@@ -179,7 +173,7 @@
           lint = true;
           format = true;
           neonixdev = true;
-          lspDebugMode = true;
+          lspDebugMode = false;
           colorscheme = "monokai-pro";
         };
         extra = {

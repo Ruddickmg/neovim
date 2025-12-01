@@ -33,10 +33,6 @@ require('nixCatsUtils.catPacker').setup({
   { 'nvim-treesitter/nvim-treesitter-textobjects', opt = true, },
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', opt = true, },
 
-  { 'nvim-telescope/telescope-fzf-native.nvim', build = ':!which make && make', opt = true, },
-  { 'nvim-telescope/telescope-ui-select.nvim', opt = true, },
-  {'nvim-telescope/telescope.nvim', opt = true, },
-
   -- lsp
   { 'williamboman/mason.nvim', opt = true, },
   { 'williamboman/mason-lspconfig.nvim', opt = true, },
@@ -72,7 +68,6 @@ require('nixCatsUtils.catPacker').setup({
   { 'tpope/vim-sleuth', opt = true, },
   { 'lewis6991/gitsigns.nvim', opt = true, },
   { 'nvim-lualine/lualine.nvim', opt = true, },
-  { 'lukas-reineke/indent-blankline.nvim', opt = true, },
   { 'numToStr/Comment.nvim', opt = true, as = "comment.nvim", },
   { 'kylechui/nvim-surround', opt = true, },
   {

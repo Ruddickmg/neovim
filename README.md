@@ -16,7 +16,7 @@ If you are unfamiliar with the above, refer to the [Neovim runtime path document
 
 ## TODO
 
-- format virtual text/linting errors
+- add [noice.nvim](https://github.com/folke/noice.nvim)
 - add javascript/typescript lsp, linting, etc
 - add docker lsp, linting, etc
 - figure out why the leader key isn't working

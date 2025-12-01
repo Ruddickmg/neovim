@@ -1,27 +1,24 @@
 require('lze').load {
   {
+    "stylua",
+    for_cat = "format",
+    dep_of = { "conform.nvim" },
+    after = function ()
+        print("doing stylua stuff")
+    end
+  },
+  {
     "conform.nvim",
     for_cat = 'format',
-    -- cmd = { "" },
-    -- event = "",
-    -- ft = "",
     keys = {
       { "<leader>FF", desc = "[F]ormat [F]ile" },
     },
-    -- colorscheme = "",
-    after = function (plugin)
+    after = function ()
       local conform = require("conform")
 
       conform.setup({
         formatters_by_ft = {
-          -- NOTE: download some formatters in lspsAndRuntimeDeps
-          -- and configure them here
-          -- lua = { "stylua" },
-          -- go = { "gofmt", "golint" },
-          -- templ = { "templ" },
-          -- Conform will run multiple formatters sequentially
-          -- python = { "isort", "black" },
-          -- Use a sub-list to run only the first available formatter
+          lua = { "stylua" },
           -- javascript = { { "prettierd", "prettier" } },
         },
       })

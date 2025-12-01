@@ -1,7 +1,7 @@
-
 require('myLuaConf.opts_and_keys')
 require("lze").register_handlers(require('nixCatsUtils.lzUtils').for_cat)
 require('lze').register_handlers(require('lzextras').lsp)
+require("myLuaConf.snacks")
 require("myLuaConf.plugins")
 require("myLuaConf.LSPs")
 
