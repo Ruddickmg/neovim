@@ -26,7 +26,7 @@ require('lze').load {
       vim.cmd.packadd("nvim-dap-virtual-text")
       vim.cmd.packadd("mason-nvim-dap.nvim")
     end,
-    after = function (plugin)
+    after = function ()
       local dap = require 'dap'
       local dapui = require 'dapui'
 

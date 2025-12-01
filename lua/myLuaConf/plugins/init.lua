@@ -95,14 +95,6 @@ require('lze').load {
     end,
   },
   {
-    "indent-blankline.nvim",
-    for_cat = 'general.extra',
-    event = "DeferredUIEnter",
-    after = function()
-      require("ibl").setup()
-    end,
-  },
-  {
     "nvim-surround",
     for_cat = 'general.always',
     event = "DeferredUIEnter",

@@ -55,6 +55,7 @@
           ];
           utility = [
             snacks-nvim
+            noice-nvim
             oil-nvim
             vim-repeat
           ];
@@ -116,7 +117,12 @@
               (nvim-treesitter.withPlugins (
                 plugins: with plugins; [
                   nix
+                  vim
+                  regex
                   lua
+                  bash
+                  markdown 
+                  markdown_inline
                   rust
                   sql
                 ]
