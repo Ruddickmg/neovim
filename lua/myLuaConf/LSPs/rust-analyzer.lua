@@ -1,9 +1,7 @@
 return {
   {
-    "rust-analyzer",
-    ft = { "rs" },
-    lsp = {
-
-    }
-  }
+    "rustaceanvim",
+    lazy = false,
+    after = function() end,
+  },
 }

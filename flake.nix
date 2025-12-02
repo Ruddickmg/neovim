@@ -24,6 +24,7 @@
         {
           lspsAndRuntimeDeps = {
             rust = with pkgs; [
+              vscode-extensions.vadimcn.vscode-lldb.adapter
               rust-analyzer
             ];
             database = with pkgs; [
