@@ -90,10 +90,14 @@
         lint = with pkgs.vimPlugins; [
           nvim-lint
         ];
-        format = with pkgs.vimPlugins; [
-          conform-nvim
-          pkgs.stylua
-        ];
+        format = with pkgs; {
+          always = with vimPlugins; [
+            conform-nvim
+            stylua
+            nixfmt
+          ];
+          rust = [ rustfmt ];
+        };
         markdown = with pkgs.vimPlugins; [
           markdown-preview-nvim
         ];

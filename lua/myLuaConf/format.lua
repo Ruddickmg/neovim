@@ -21,6 +21,11 @@ require('lze').load {
           lua = { "stylua" },
           -- javascript = { { "prettierd", "prettier" } },
         },
+        formatters = {
+          stylua = {
+            args = { "--search-parent-directories", "$FILENAME" },
+          },
+        },
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>FF", function()
