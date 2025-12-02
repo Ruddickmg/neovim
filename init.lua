@@ -1,3 +1,4 @@
+print("doing lua stuff...")
 require('nixCatsUtils').setup {
   non_nix_value = true,
 }

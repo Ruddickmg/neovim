@@ -17,9 +17,6 @@ If you are unfamiliar with the above, refer to the [Neovim runtime path document
 ## TODO
 
 - configure rust lsp to be faster
-- fix nixos formatting
-- fix lua formatting
-- fix toml formatting
 - add javascript/typescript lsp, linting, etc
 - add docker lsp, linting, etc
 - figure out why the leader key isn't working

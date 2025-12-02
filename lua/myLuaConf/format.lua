@@ -1,40 +1,30 @@
-require('lze').load {
-  {
-    "stylua",
-    for_cat = "format",
-    dep_of = { "conform.nvim" },
-    after = function ()
-        print("doing stylua stuff")
-    end
-  },
+require("lze").load({
   {
     "conform.nvim",
-    for_cat = 'format',
+    for_cat = "format",
+    event = "BufWritePre",
     keys = {
       { "<leader>FF", desc = "[F]ormat [F]ile" },
     },
-    after = function ()
+    after = function()
       local conform = require("conform")
+      local formatting_options = {
+        timeout_ms = 1000,
+        lsp_format = false,
+      }
 
       conform.setup({
         formatters_by_ft = {
           lua = { "stylua" },
-          -- javascript = { { "prettierd", "prettier" } },
+          nix = { "nixfmt" },
+          rust = { "rustfmt" },
         },
-        formatters = {
-          stylua = {
-            args = { "--search-parent-directories", "$FILENAME" },
-          },
-        },
+        format_on_save = formatting_options,
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>FF", function()
-        conform.format({
-          lsp_fallback = true,
-          async = false,
-          timeout_ms = 1000,
-        })
+        conform.format(formatting_options)
       end, { desc = "[F]ormat [F]ile" })
     end,
   },
-}
+})
