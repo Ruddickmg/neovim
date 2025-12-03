@@ -1,12 +1,19 @@
 local colorscheme = nixCats("colorscheme")
+local elements = {
+  "statusline",
+  "TabLine",
+  "TabLineFill",
+  "SnacksPicker",
+  "SnacksPickerBorder",
+  "WhichKeyNormal",
+  "Normal",
+  "NormalFloat",
+}
+
 local clear_backgrounds = function()
-  vim.api.nvim_set_hl(0, "TabLine", { bg = "none" })
-  vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none" })
-  vim.api.nvim_set_hl(0, "SnacksPicker", { bg = "none", nocombine = true })
-  vim.api.nvim_set_hl(0, "SnacksPickerBorder", { bg = "none", nocombine = true })
-  vim.api.nvim_set_hl(0, "SnacksPicker", { bg = "none", nocombine = true })
-  vim.api.nvim_set_hl(0, "SnacksPickerBorder", { bg = "none", nocombine = true })
-  vim.cmd("hi statusline guibg=NONE gui=NONE")
+  for _, element in ipairs(elements) do
+    vim.api.nvim_set_hl(0, element, { bg = "none", nocombine = true })
+  end
 end
 
 require("lze").load({
@@ -35,6 +42,5 @@ require("lze").load({
 })
 
 vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = clear_backgrounds })
-vim.cmd.colorscheme(colorscheme)
 
-clear_backgrounds()
+vim.cmd.colorscheme(colorscheme)

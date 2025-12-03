@@ -477,18 +477,6 @@ require("lze").load({
     after = function()
       print("configuring snacks")
       require("snacks").setup({
-        explorer = { enabled = true },
-        image = { enabled = true },
-        indent = { enabled = true },
-        input = { enabled = true },
-        notifier = {
-          enabled = true,
-          timeout = 3000,
-        },
-        keymap = { enabled = true },
-        debug = { enabled = true },
-        gh = { enabled = true },
-        git = { enabled = true },
         picker = {
           sources = {
             gh_issue = {
@@ -501,6 +489,18 @@ require("lze").load({
             },
           },
         },
+        explorer = { enabled = true },
+        image = { enabled = true },
+        indent = { enabled = true },
+        input = { enabled = true },
+        notifier = {
+          enabled = true,
+          timeout = 3000,
+        },
+        keymap = { enabled = true },
+        debug = { enabled = true },
+        gh = { enabled = true },
+        git = { enabled = true },
         terminal = { enabled = true },
         layout = { enabled = true },
         quickfile = { enabled = true },

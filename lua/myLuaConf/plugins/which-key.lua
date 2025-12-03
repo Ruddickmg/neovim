@@ -1,11 +1,11 @@
 return {
   {
     "which-key.nvim",
-    for_cat = 'general.extra',
+    for_cat = "general.extra",
     event = "DeferredUIEnter",
-    after = function ()
-      require('which-key').setup({})
-      require('which-key').add {
+    after = function()
+      require("which-key").setup({})
+      require("which-key").add({
         { "<leader><leader>", group = "buffer commands" },
         { "<leader><leader>_", hidden = true },
         { "<leader>c", group = "[c]ode" },
@@ -24,7 +24,7 @@ return {
         { "<leader>t_", hidden = true },
         { "<leader>w", group = "[w]orkspace" },
         { "<leader>w_", hidden = true },
-      }
+      })
     end,
   },
 }
