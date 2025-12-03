@@ -1,6 +1,15 @@
-local colorscheme = nixCats('colorscheme')
+local colorscheme = nixCats("colorscheme")
+local clear_backgrounds = function()
+  vim.api.nvim_set_hl(0, "TabLine", { bg = "none" })
+  vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none" })
+  vim.api.nvim_set_hl(0, "SnacksPicker", { bg = "none", nocombine = true })
+  vim.api.nvim_set_hl(0, "SnacksPickerBorder", { bg = "none", nocombine = true })
+  vim.api.nvim_set_hl(0, "SnacksPicker", { bg = "none", nocombine = true })
+  vim.api.nvim_set_hl(0, "SnacksPickerBorder", { bg = "none", nocombine = true })
+  vim.cmd("hi statusline guibg=NONE gui=NONE")
+end
 
-require('lze').load {
+require("lze").load({
   {
     "monokai-pro.nvim",
     colorscheme = "monokai-pro",
@@ -21,11 +30,11 @@ require('lze').load {
         },
         inc_search = "background", -- underline | background
       })
-    end
-  }
-}
+    end,
+  },
+})
 
+vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = clear_backgrounds })
 vim.cmd.colorscheme(colorscheme)
-vim.api.nvim_set_hl(0, "TabLine", { bg = "none" })
-vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none" })
-vim.cmd("hi statusline guibg=NONE gui=NONE")
+
+clear_backgrounds()

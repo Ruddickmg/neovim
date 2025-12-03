@@ -16,7 +16,9 @@ If you are unfamiliar with the above, refer to the [Neovim runtime path document
 
 ## TODO
 
-- configure rust lsp to be faster
+- configure snacks
+- configure noice
+- add [lspmux](https://crates.io/crates/lspmux/0.3.0) for rust-analyzer 
 - add javascript/typescript lsp, linting, etc
 - add docker lsp, linting, etc
 - figure out why the leader key isn't working
