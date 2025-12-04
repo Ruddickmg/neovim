@@ -62,11 +62,6 @@
                 plenary-nvim
                 (nvim-notify.overrideAttrs { doCheck = false; }) # TODO: remove overrideAttrs after check is fixed
               ];
-              file-manager = [
-                nvim-lsp-file-operations
-                oil-nvim
-                yazi-nvim
-              ];
               utility = [
                 snacks-nvim
                 noice-nvim
@@ -113,6 +108,11 @@
               lualine-lsp-progress
               lualine-nvim
               monokai-pro-nvim
+            ];
+            file-manager = with pkgs.vimPlugins; [
+              nvim-lsp-file-operations
+              oil-nvim
+              yazi-nvim
             ];
             general = {
               blink = with pkgs.vimPlugins; [
@@ -295,5 +295,4 @@
         inherit (utils) templates;
       }
     );
-
 }
