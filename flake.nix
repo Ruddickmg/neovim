@@ -18,7 +18,6 @@
       dependencyOverlays = [
         (utils.standardPluginOverlay inputs)
       ];
-
       categoryDefinitions =
         { pkgs, ... }:
         {
@@ -63,10 +62,14 @@
                 plenary-nvim
                 (nvim-notify.overrideAttrs { doCheck = false; }) # TODO: remove overrideAttrs after check is fixed
               ];
+              file-manager = [
+                nvim-lsp-file-operations
+                oil-nvim
+                yazi-nvim
+              ];
               utility = [
                 snacks-nvim
                 noice-nvim
-                oil-nvim
                 vim-repeat
               ];
             };
@@ -123,7 +126,14 @@
                 (nvim-treesitter.withPlugins (
                   plugins: with plugins; [
                     nix
+                    liquid
+                    markdown
+                    html
+                    tsx
                     vim
+                    svelte
+                    javascript
+                    typescript
                     regex
                     lua
                     bash
@@ -145,7 +155,11 @@
                 trouble-nvim
               ];
               utility = with pkgs.vimPlugins; [
+                todo-comments-nvim
+                auto-session
                 comment-nvim
+                nvim-ts-autotag
+                nvim-autopairs
                 which-key-nvim
                 undotree
               ];
@@ -187,6 +201,7 @@
             };
             categories = {
               profiling = false;
+              file-manager = true;
               git = true;
               database = true;
               markdown = true;

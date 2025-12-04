@@ -479,17 +479,10 @@ require("lze").load({
       require("snacks").setup({
         picker = {
           sources = {
-            gh_issue = {
-              -- your gh_issue picker configuration comes here
-              -- or leave it empty to use the default settings
-            },
-            gh_pr = {
-              -- your gh_pr picker configuration comes here
-              -- or leave it empty to use the default settings
-            },
+            gh_issue = {},
+            gh_pr = {},
           },
         },
-        explorer = { enabled = true },
         image = { enabled = true },
         indent = { enabled = true },
         input = { enabled = true },

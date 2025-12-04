@@ -7,13 +7,13 @@ return {
   },
   {
     "lualine.nvim",
-    for_cat = 'styling',
+    for_cat = "styling",
     event = "DeferredUIEnter",
-    after = function ()
-      local auto = require('lualine.themes.auto')
+    after = function()
+      local auto = require("lualine.themes.auto")
 
-      auto.normal.c.bg = 'none'
-      auto.normal.x.bg = 'none'
+      auto.normal.c.bg = "none"
+      auto.normal.x.bg = "none"
 
       local config = {
         options = {
@@ -38,49 +38,56 @@ return {
               separator = { right = "" },
             },
           },
-          lualine_c = { 'lsp_progress' },
+          lualine_c = { "lsp_progress" },
         },
         inactive_sections = {
           lualine_b = {
             {
-              'filename', path = 3, status = true,
+              "filename",
+              path = 3,
+              status = true,
             },
           },
-          lualine_x = {'filetype'},
+          lualine_x = { "filetype" },
         },
         tabline = {
-          lualine_a = { 'buffers' },
-          lualine_z = { 'tabs' }
+          lualine_a = { "buffers" },
+          lualine_z = { "tabs" },
+          lualine_x = {
+            function()
+              return require("auto-session.lib").current_session_name(true)
+            end,
+          },
         },
       }
 
-      local base = '#ECBE7B'
-      local main = '#a9a1e1'
+      local base = "#ECBE7B"
+      local main = "#a9a1e1"
 
       table.insert(config.sections.lualine_c, {
         "lsp_progress",
         colors = {
           percentage = main,
-          title  = base,
+          title = base,
           spinner = base,
           lsp_client_name = base,
           use = true,
         },
-        display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage' } },
+        display_components = { "lsp_client_name", "spinner", { "title", "percentage" } },
         separators = {
-          component = ' ',
-          progress = ' | ',
-          percentage = { pre = '', post = '%% ' },
-          title = { pre = '', post = ': ' },
-          lsp_client_name = { pre = '[', post = ']' },
-          spinner = { pre = '', post = '' },
-          message = { commenced = 'In Progress', completed = 'Completed' },
+          component = " ",
+          progress = " | ",
+          percentage = { pre = "", post = "%% " },
+          title = { pre = "", post = ": " },
+          lsp_client_name = { pre = "[", post = "]" },
+          spinner = { pre = "", post = "" },
+          message = { commenced = "In Progress", completed = "Completed" },
         },
         timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-        spinner_symbols = { '🌑 ', '🌒 ', '🌓 ', '🌔 ', '🌕 ', '🌖 ', '🌗 ', '🌘 ' },
+        spinner_symbols = { "🌑 ", "🌒 ", "🌓 ", "🌔 ", "🌕 ", "🌖 ", "🌗 ", "🌘 " },
       })
 
-      require('lualine').setup(config)
+      require("lualine").setup(config)
     end,
-  }
+  },
 }

@@ -16,6 +16,7 @@ If you are unfamiliar with the above, refer to the [Neovim runtime path document
 
 ## TODO
 
+- install yazi nvim
 - configure snacks
 - configure noice
 - add [lspmux](https://crates.io/crates/lspmux/0.3.0) for rust-analyzer 

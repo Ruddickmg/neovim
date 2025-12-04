@@ -7,12 +7,12 @@ if ok then
   })
   vim.notify = notify
   vim.keymap.set("n", "<Esc>", function()
-      notify.dismiss({ silent = true, })
+    notify.dismiss({ silent = true })
   end, { desc = "dismiss notify popup and clear hlsearch" })
 end
 
 -- NOTE: you can check if you included the category with the thing wherever you want.
-if nixCats('general.extra') then
+if nixCats("general.extra") then
   -- I didnt want to bother with lazy loading this.
   -- I could put it in opt and put it in a spec anyway
   -- and then not set any handlers and it would load at startup,
@@ -23,7 +23,7 @@ if nixCats('general.extra') then
   require("oil").setup({
     default_file_explorer = true,
     view_options = {
-      show_hidden = true
+      show_hidden = true,
     },
     columns = {
       "icon",
@@ -50,13 +50,14 @@ if nixCats('general.extra') then
       ["g\\"] = "actions.toggle_trash",
     },
   })
-  vim.keymap.set("n", "-", "<cmd>Oil<CR>", { noremap = true, desc = 'Open Parent Directory' })
-  vim.keymap.set("n", "<leader>-", "<cmd>Oil .<CR>", { noremap = true, desc = 'Open nvim root directory' })
+  vim.keymap.set("n", "-", "<cmd>Oil<CR>", { noremap = true, desc = "Open Parent Directory" })
+  vim.keymap.set("n", "<leader>-", "<cmd>Oil .<CR>", { noremap = true, desc = "Open nvim root directory" })
 end
 
-require('lze').load {
-  { import = "myLuaConf.plugins.treesitter", },
-  { import = "myLuaConf.plugins.completion", },
+require("lze").load({
+  { import = "myLuaConf.plugins.auto-session" },
+  { import = "myLuaConf.plugins.treesitter" },
+  { import = "myLuaConf.plugins.completion" },
   {
     "markdown-preview.nvim",
     -- NOTE: for_cat is a custom handler that just sets enabled value for us,
@@ -64,13 +65,19 @@ require('lze').load {
     -- it is defined in luaUtils template in lua/nixCatsUtils/lzUtils.lua
     -- you could replace this with enabled = nixCats('cat.name') == true
     -- if you didnt care to set a different default for when not using nix than the default you already set
-    for_cat = 'markdown',
-    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle", },
+    for_cat = "markdown",
+    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
     ft = "markdown",
     keys = {
-      {"<leader>mp", "<cmd>MarkdownPreview <CR>", mode = {"n"}, noremap = true, desc = "markdown preview"},
-      {"<leader>ms", "<cmd>MarkdownPreviewStop <CR>", mode = {"n"}, noremap = true, desc = "markdown preview stop"},
-      {"<leader>mt", "<cmd>MarkdownPreviewToggle <CR>", mode = {"n"}, noremap = true, desc = "markdown preview toggle"},
+      { "<leader>mp", "<cmd>MarkdownPreview <CR>", mode = { "n" }, noremap = true, desc = "markdown preview" },
+      { "<leader>ms", "<cmd>MarkdownPreviewStop <CR>", mode = { "n" }, noremap = true, desc = "markdown preview stop" },
+      {
+        "<leader>mt",
+        "<cmd>MarkdownPreviewToggle <CR>",
+        mode = { "n" },
+        noremap = true,
+        desc = "markdown preview toggle",
+      },
     },
     before = function()
       vim.g.mkdp_auto_close = 0
@@ -78,9 +85,9 @@ require('lze').load {
   },
   {
     "undotree",
-    for_cat = 'general.extra',
-    cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo", },
-    keys = { { "<leader>U", "<cmd>UndotreeToggle<CR>", mode = { "n" }, desc = "Undo Tree" }, },
+    for_cat = "general.extra",
+    cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeShow", "UndotreeFocus", "UndotreePersistUndo" },
+    keys = { { "<leader>U", "<cmd>UndotreeToggle<CR>", mode = { "n" }, desc = "Undo Tree" } },
     before = function(_)
       vim.g.undotree_WindowLayout = 1
       vim.g.undotree_SplitWidth = 40
@@ -88,24 +95,24 @@ require('lze').load {
   },
   {
     "comment.nvim",
-    for_cat = 'general.extra',
+    for_cat = "general.extra",
     event = "DeferredUIEnter",
     after = function()
-      require('Comment').setup()
+      require("Comment").setup()
     end,
   },
   {
     "nvim-surround",
-    for_cat = 'general.always',
+    for_cat = "general.always",
     event = "DeferredUIEnter",
     -- keys = "",
     after = function()
-      require('nvim-surround').setup()
+      require("nvim-surround").setup()
     end,
   },
   {
     "vim-startuptime",
-    for_cat = 'general.extra',
+    for_cat = "general.extra",
     cmd = { "StartupTime" },
     before = function()
       vim.g.startuptime_event_width = 0
@@ -113,10 +120,13 @@ require('lze').load {
       vim.g.startuptime_exe_path = nixCats.packageBinPath
     end,
   },
-  { import = "myLuaConf.plugins.neotest", },
-  { import = "myLuaConf.plugins.gitsigns", },
-  { import = "myLuaConf.plugins.trouble", },
+  { import = "myLuaConf.plugins.neotest" },
+  { import = "myLuaConf.plugins.gitsigns" },
+  { import = "myLuaConf.plugins.trouble" },
   { import = "myLuaConf.plugins.lualine" },
   { import = "myLuaConf.plugins.dadbod" },
   { import = "myLuaConf.plugins.which-key" },
-}
+  { import = "myLuaConf.plugins.auto-pairs" },
+  { import = "myLuaConf.plugins.todo-comments" },
+  { import = "myLuaConf.plugins.auto-tag" },
+})
