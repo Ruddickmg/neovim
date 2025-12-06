@@ -8,10 +8,12 @@ return {
           on_attach = function() end,
           default_settings = {
             ["rust-analyzer"] = {
+              installCargo = false,
+              installRustc = false,
               cachePriming = {
                 enable = false,
               },
-              checkOnSave = {
+              check = {
                 command = "clippy", -- use clippy for diagnostics on save
               },
             },

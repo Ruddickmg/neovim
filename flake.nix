@@ -24,6 +24,8 @@
           lspsAndRuntimeDeps = {
             rust = with pkgs; [
               vscode-extensions.vadimcn.vscode-lldb.adapter
+            ];
+            rust-analyzer = with pkgs; [
               rust-analyzer
             ];
             database = with pkgs; [
@@ -64,6 +66,7 @@
               ];
               utility = [
                 snacks-nvim
+                direnv-vim
                 noice-nvim
                 vim-repeat
               ];
@@ -71,6 +74,10 @@
           };
 
           optionalPlugins = {
+            diagnostics = with pkgs.vimPlugins; [
+              actions-preview-nvim
+              tiny-inline-diagnostic-nvim
+            ];
             database = with pkgs.vimPlugins; [
               vim-dadbod
               vim-dadbod-ui
@@ -114,10 +121,12 @@
               oil-nvim
               yazi-nvim
             ];
+            session-manager = with pkgs.vimPlugins; [
+              persistence-nvim
+            ];
             general = {
               blink = with pkgs.vimPlugins; [
                 luasnip
-                friendly-snippets
                 blink-cmp
                 blink-compat
                 colorful-menu-nvim
@@ -156,6 +165,7 @@
                 trouble-nvim
               ];
               utility = with pkgs.vimPlugins; [
+                substitute-nvim
                 todo-comments-nvim
                 auto-session
                 comment-nvim
@@ -202,11 +212,14 @@
             };
             categories = {
               profiling = false;
+              session-manager = true;
+              diagnostics = true;
               file-manager = true;
               git = true;
               database = true;
               markdown = true;
               rust = true;
+              rust-analyzer = false;
               utility = true;
               testing = true;
               debug = true;

@@ -1,4 +1,4 @@
-require("lze").load({
+return {
   {
     "conform.nvim",
     for_cat = "format",
@@ -27,4 +27,4 @@ require("lze").load({
       end, { desc = "[F]ormat [F]ile" })
     end,
   },
-})
+}

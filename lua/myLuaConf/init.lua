@@ -1,25 +1,26 @@
-require('myLuaConf.opts_and_keys')
-require("lze").register_handlers(require('nixCatsUtils.lzUtils').for_cat)
-require('lze').register_handlers(require('lzextras').lsp)
-require("myLuaConf.snacks")
-require("myLuaConf.plugins")
-require("myLuaConf.LSPs")
+local colorscheme = nixCats("colorscheme")
+local lze = require("lze")
+local lazy_packages = {
+  { import = "myLuaConf.snacks" },
+  { import = "myLuaConf.plugins" },
+  { import = "myLuaConf.LSPs" },
+  { import = "myLuaConf.colors" },
+}
 
-if nixCats('debug') then
-  require('myLuaConf.debug')
+require("myLuaConf.opts_and_keys")
+
+if nixCats("debug") then
+  table.insert(lazy_packages, { import = "myLuaConf.debug" })
 end
-if nixCats('lint') then
-  require('myLuaConf.lint')
+if nixCats("lint") then
+  table.insert(lazy_packages, { import = "myLuaConf.lint" })
 end
-if nixCats('format') then
-  require('myLuaConf.format')
+if nixCats("format") then
+  table.insert(lazy_packages, { import = "myLuaConf.format" })
 end
 
-require('myLuaConf.colors')
+lze.register_handlers(require("nixCatsUtils.lzUtils").for_cat)
+lze.register_handlers(require("lzextras").lsp)
+lze.load(lazy_packages)
 
-vim.diagnostic.config({
-  virtual_text = {
-    source = true,
-  },
-  underline = true,
-})
+vim.cmd.colorscheme(colorscheme)

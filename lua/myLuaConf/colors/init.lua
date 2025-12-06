@@ -1,4 +1,3 @@
-local colorscheme = nixCats("colorscheme")
 local elements = {
   "statusline",
   "TabLine",
@@ -16,7 +15,9 @@ local clear_backgrounds = function()
   end
 end
 
-require("lze").load({
+vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = clear_backgrounds })
+
+return {
   {
     "monokai-pro.nvim",
     colorscheme = "monokai-pro",
@@ -39,8 +40,4 @@ require("lze").load({
       })
     end,
   },
-})
-
-vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = clear_backgrounds })
-
-vim.cmd.colorscheme(colorscheme)
+}

@@ -11,8 +11,8 @@ if ok then
   end, { desc = "dismiss notify popup and clear hlsearch" })
 end
 
-require("lze").load({
-  { import = "myLuaConf.plugins.auto-session" },
+return {
+  { import = "myLuaConf.plugins.session-manager" },
   { import = "myLuaConf.plugins.treesitter" },
   { import = "myLuaConf.plugins.completion" },
   {
@@ -88,4 +88,7 @@ require("lze").load({
   { import = "myLuaConf.plugins.auto-tag" },
   { import = "myLuaConf.plugins.yazi" },
   { import = "myLuaConf.plugins.oil" },
-})
+  { import = "myLuaConf.plugins.substitute" },
+  { import = "myLuaConf.plugins.lsp-lines" },
+  { import = "myLuaConf.plugins.code-actions" },
+}
