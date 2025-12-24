@@ -16,12 +16,12 @@ If you are unfamiliar with the above, refer to the [Neovim runtime path document
 
 ## TODO
 
-- configure snacks
-- configure noice
-- add [lspmux](https://crates.io/crates/lspmux/0.3.0) for rust-analyzer 
 - add javascript/typescript lsp, linting, etc
 - add docker lsp, linting, etc
-- figure out why the leader key isn't working
+- add lsp for everything else, justfiles, pulumi, helm, json, etc..
+- configure snacks
+- configure noice
 - set up key bindings
 - set up tmux
 - use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
+- configure sql lsp for autocompletion
