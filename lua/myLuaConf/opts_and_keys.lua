@@ -148,3 +148,4 @@ vim.keymap.set(
   { noremap = true, silent = true, desc = "Paste over selection without erasing unnamed register" }
 )
 -- vim.diagnostic.config({ virtual_text = false, virtual_lines = { current_line = true } })
+vim.lsp.set_log_level(vim.log.levels.DEBUG)
