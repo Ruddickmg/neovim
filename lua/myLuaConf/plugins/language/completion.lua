@@ -30,6 +30,7 @@ return {
   {
     "blink.cmp",
     for_cat = "general.blink",
+    version = '1.*',
     event = "DeferredUIEnter",
     after = function(_)
       require("blink.cmp").setup({

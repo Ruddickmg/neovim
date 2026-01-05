@@ -17,7 +17,9 @@ return {
     after = function()
       -- [[ Configure Treesitter ]]
       -- See `:help nvim-treesitter`
-      require("nvim-treesitter.configs").setup({
+      local treesitter = require("nvim-treesitter")
+
+      treesitter.setup({
         highlight = { enable = true },
         indent = { enable = false },
         autotag = { enable = true },
