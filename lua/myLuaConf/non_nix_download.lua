@@ -48,8 +48,8 @@ require('nixCatsUtils.catPacker').setup({
   { 'arkav/lualine-lsp-progress', opt = true, },
 
   -- language
-  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = "main" },
-  { 'nvim-treesitter/nvim-treesitter', branch = "main", build = ':TSUpdate' },
+  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = "main", opt = true, },
+  { 'nvim-treesitter/nvim-treesitter', branch = "main", build = ':TSUpdate', opt = true, },
 
   -- lsp
   { 'williamboman/mason.nvim', opt = true, },

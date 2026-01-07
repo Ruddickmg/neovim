@@ -6,9 +6,7 @@ function M.setup(v)
   if not vim.g[ [[nixCats-special-rtp-entry-nixCats]] ] then
     local function clone_paq()
       local path = vim.fn.stdpath("data") .. "/site/pack/paqs/start/paq-nvim"
-      print("paq path:", path)
       local is_installed = vim.fn.empty(vim.fn.glob(path)) == 0
-      print("paq installed:", is_installed)
       if not is_installed then
         vim.fn.system { "git", "clone", "--depth=1", "https://github.com/savq/paq-nvim.git", path }
         return true
@@ -16,18 +14,14 @@ function M.setup(v)
     end
     local function bootstrap_paq(packages)
       local first_install = clone_paq()
-      print("first install:", first_install)
       vim.cmd.packadd("paq-nvim")
-      print("requiring paq")
       local paq = require("paq")
-      print("found paq", paq)
       if first_install then
         vim.notify("Installing plugins... If prompted, hit Enter to continue.")
       end
       paq(packages)
       paq.install()
     end
-    print("bootstrapping paq")
     bootstrap_paq(vim.list_extend({"savq/paq-nvim"},v))
   end
 end
