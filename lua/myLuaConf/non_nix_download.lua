@@ -9,7 +9,7 @@ require('nixCatsUtils.catPacker').setup({
   { "BirdeeHub/lzextras", },
 
   -- actions
-  { 'tpope/vim-repeat', opt = true, },
+  { 'tpope/vim-repeat', },
   { 'gbprod/substitute.nvim', opt = true, },
   { 'numToStr/Comment.nvim', opt = true, as = "comment.nvim", },
   { 'antosha417/nvim-lsp-file-operations', opt = true, },
@@ -19,14 +19,13 @@ require('nixCatsUtils.catPacker').setup({
   { 'mikavilpas/yazi.nvim', opt = true, },
 
   -- testing
-  { 'nvim-neotest/nvim-nio', opt = true, },
+  { 'nvim-neotest/nvim-nio', },
   { 'nvim-neotest/neotest', opt = true, },
   { 'nvim-neotest/neotest-plenary', opt = true, },
-  { 'nvim-lua/plenary.nvim', opt = true, },
+  { 'nvim-lua/plenary.nvim', },
   { 'antoinemadec/FixCursorHold.nvim', opt = true, },
 
   -- debugging
-  { 'nvim-neotest/nvim-nio', opt = true, },
   { 'rcarriga/nvim-dap-ui', opt = true, },
   { 'theHamsta/nvim-dap-virtual-text', opt = true, },
   { 'mfussenegger/nvim-dap', opt = true, },
@@ -48,14 +47,14 @@ require('nixCatsUtils.catPacker').setup({
   { 'arkav/lualine-lsp-progress', opt = true, },
 
   -- language
-  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = "main", opt = true, },
+  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = "main", opt = true, as = "treesitter-textobjects" },
   { 'nvim-treesitter/nvim-treesitter', branch = "main", build = ':TSUpdate', opt = true, },
 
   -- lsp
   { 'williamboman/mason.nvim', opt = true, },
   { 'williamboman/mason-lspconfig.nvim', opt = true, },
   { 'neovim/nvim-lspconfig', opt = true, },
-  { 'mrcjkb/rustaceanvim', opt = true, },
+  { 'mrcjkb/rustaceanvim', },
 
   -- database
   { 'tpope/vim-dadbod', opt = true, },
