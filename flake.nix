@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    plugins-treesitter-textobjects = {
+      url = "github:nvim-treesitter/nvim-treesitter-textobjects/main";
+      flake = false;
+    };
   };
 
   outputs =
@@ -40,6 +44,7 @@
               tombi
               universal-ctags
               ripgrep
+              clang
               fd
             ];
             neonixdev = {
@@ -132,7 +137,7 @@
                 colorful-menu-nvim
               ];
               treesitter = with pkgs.vimPlugins; [
-                nvim-treesitter-textobjects
+                pkgs.neovimPlugins.treesitter-textobjects
                 (nvim-treesitter.withPlugins (
                   plugins: with plugins; [
                     nix
