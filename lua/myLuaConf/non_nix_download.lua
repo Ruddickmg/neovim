@@ -54,6 +54,7 @@ require('nixCatsUtils.catPacker').setup({
   { 'williamboman/mason.nvim', opt = true, },
   { 'williamboman/mason-lspconfig.nvim', opt = true, },
   { 'neovim/nvim-lspconfig', opt = true, },
+  { 'pmizio/typescript-tools.nvim', opt = true, },
   { 'mrcjkb/rustaceanvim', },
 
   -- database
@@ -71,6 +72,7 @@ require('nixCatsUtils.catPacker').setup({
   { 'windwp/nvim-ts-autotag', opt = true, },
 
   -- lint and format
+  -- { '', opt = true, },
   { 'mfussenegger/nvim-lint', opt = true, },
   { 'stevearc/conform.nvim', opt = true, },
 

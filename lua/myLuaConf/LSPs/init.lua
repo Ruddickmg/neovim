@@ -24,6 +24,7 @@ end)
 
 return {
   { import = "myLuaConf.LSPs.rust-analyzer" },
+  { import = "myLuaConf.LSPs.typescript" },
   { import = "myLuaConf.LSPs.tombi" },
   {
     "nvim-lspconfig",
@@ -98,14 +99,6 @@ return {
     -- also these are regular specs and you can use before and after and all the other normal fields
   },
   {
-    "gopls",
-    for_cat = "go",
-    -- if you don't provide the filetypes it asks lspconfig for them
-    lsp = {
-      filetypes = { "go", "gomod", "gowork", "gotmpl" },
-    },
-  },
-  {
     "rnix",
     -- mason doesn't have nixd
     enabled = not catUtils.isNixCats,
@@ -122,7 +115,7 @@ return {
     },
   },
   {
-    "postgres_lsp",
+    "postgres_ls",
     for_cat = "database",
     lsp = {
       filetypes = { "sql", "rs" },
