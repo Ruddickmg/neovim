@@ -15,6 +15,7 @@ require("nixCatsUtils.catPacker").setup({
   { "antosha417/nvim-lsp-file-operations", opt = true },
 
   -- file system
+  { "ahmedkhalf/project.nvim" },
   { "stevearc/oil.nvim" },
   { "mikavilpas/yazi.nvim", opt = true },
 
@@ -55,6 +56,7 @@ require("nixCatsUtils.catPacker").setup({
   { "williamboman/mason-lspconfig.nvim", opt = true },
   { "neovim/nvim-lspconfig", opt = true },
   { "pmizio/typescript-tools.nvim", opt = true },
+  { "vuki656/package-info.nvim", opt = true },
   { "b0o/schemastore.nvim" },
   { "mrcjkb/rustaceanvim" },
 

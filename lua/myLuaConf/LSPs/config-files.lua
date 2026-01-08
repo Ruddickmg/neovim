@@ -40,4 +40,17 @@ return {
       },
     },
   },
+  {
+    "package-info.nvim",
+    ft = "json",
+    after = function()
+      require("package-info").setup()
+      vim.keymap.set(
+        { "n" },
+        "<LEADER>td",
+        require("package-info").toggle,
+        { silent = true, noremap = true, desc = "[d]ependencies" }
+      )
+    end,
+  },
 }
