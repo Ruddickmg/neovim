@@ -1,4 +1,6 @@
-# My Portable neovim configuration 
+# Neovim configuration 
+
+My PDE setup for both nixos and non-nix environments
 
 ## Non nix setup
 
@@ -32,7 +34,7 @@ brew install docker-language-server
 
 ## TODO
 
-- add lsp for everything else, justfiles, pulumi, helm, json, etc..
+- add lsp for justfiles, pulumi, helm, etc..
 - configure snacks
 - configure noice
 - set up key bindings
