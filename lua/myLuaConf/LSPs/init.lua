@@ -31,7 +31,7 @@ return {
     -- and it will run for all specs with type(plugin.lsp) == table
     -- when their filetype trigger loads them
     lsp = function(plugin)
-      vim.lsp.config(plugin.name, plugin.lsp or {})
+      vim.lsp.config(plugin.name, (type(plugin.lsp) == "function" and plugin.lsp()) or plugin.lsp or {})
       vim.lsp.enable(plugin.name)
     end,
     before = function(_)
@@ -71,8 +71,7 @@ return {
   { import = "myLuaConf.LSPs.typescript" },
   { import = "myLuaConf.LSPs.tombi" },
   { import = "myLuaConf.LSPs.docker" },
-  { import = "myLuaConf.LSPs.json" },
-  { import = "myLuaConf.LSPs.yaml" },
+  { import = "myLuaConf.LSPs.config-files" },
   { import = "myLuaConf.LSPs.nix" },
   { import = "myLuaConf.LSPs.lua_ls" },
   { import = "myLuaConf.LSPs.postgres" },

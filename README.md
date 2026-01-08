@@ -14,6 +14,36 @@ While this structure works well, you are encouraged to further modularize your s
 
 If you are unfamiliar with the above, refer to the [Neovim runtime path documentation](https://neovim.io/doc/user/options.html#'rtp').
 
+## Non nix
+
+### LSP setup
+
+typescript
+```bash
+npm install -g typescript-language-server typescript
+```
+
+json
+```bash
+npm i -g vscode-langservers-extracted
+```
+
+yaml
+```
+brew install yaml-language-server
+```
+
+lua
+```bash
+brew install lua-language-server in
+```
+
+docker
+```bash
+brew install docker-language-server
+```
+
+
 ## TODO
 
 - add javascript/typescript lsp, linting, etc
