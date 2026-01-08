@@ -1,22 +1,8 @@
-## Directory Structure
- 
-This configuration primarily uses the following directory structure:
+# My Portable neovim configuration 
 
-- The `lua/` directory for core configurations.
-- The `after/plugin/` directory to demonstrate compatibility.
+## Non nix setup
 
-While this structure works well, you are encouraged to further modularize your setup by utilizing any of the runtime directories checked by Neovim:
-
-- `ftplugin/` for file-type-specific configurations.
-- `plugin/` for global plugin configurations.
-- Even `pack/*/{start,opt}/` work if you want to make a plugin inside your configuration.
-- And so on...
-
-If you are unfamiliar with the above, refer to the [Neovim runtime path documentation](https://neovim.io/doc/user/options.html#'rtp').
-
-## Non nix
-
-### LSP setup
+### LSP
 
 typescript
 ```bash
@@ -46,8 +32,6 @@ brew install docker-language-server
 
 ## TODO
 
-- add javascript/typescript lsp, linting, etc
-- add docker lsp, linting, etc
 - add lsp for everything else, justfiles, pulumi, helm, json, etc..
 - configure snacks
 - configure noice
