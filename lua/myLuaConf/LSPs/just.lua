@@ -1,6 +1,6 @@
 return {
   {
-    "json-language-server",
+    "just-lsp",
     lsp = {},
   },
 }

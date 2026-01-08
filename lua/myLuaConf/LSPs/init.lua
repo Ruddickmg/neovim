@@ -1,4 +1,6 @@
 local catUtils = require("nixCatsUtils")
+local on_attach = require("myLuaConf.LSPs.on_attach")
+
 if catUtils.isNixCats and nixCats("lspDebugMode") then
   vim.lsp.set_log_level("debug")
 end
@@ -36,7 +38,7 @@ return {
     end,
     before = function(_)
       vim.lsp.config("*", {
-        on_attach = require("myLuaConf.LSPs.on_attach"),
+        on_attach = on_attach,
       })
     end,
   },
@@ -75,4 +77,5 @@ return {
   { import = "myLuaConf.LSPs.nix" },
   { import = "myLuaConf.LSPs.lua_ls" },
   { import = "myLuaConf.LSPs.postgres" },
+  { import = "myLuaConf.LSPs.just" },
 }

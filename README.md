@@ -31,13 +31,19 @@ docker
 brew install docker-language-server
 ```
 
+### Code Snippet Runner
+
+typescript
+```bash
+npm install -g ts-node typescript
+```
 
 ## TODO
 
-- add lsp for justfiles, pulumi, helm, etc..
+- add lsp for pulumi, helm, etc..
 - configure snacks
 - configure noice
 - set up key bindings
-- set up tmux
 - use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
 - configure sql lsp for autocompletion
+- set up tmux

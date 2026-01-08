@@ -13,6 +13,7 @@ require("nixCatsUtils.catPacker").setup({
   { "gbprod/substitute.nvim", opt = true },
   { "numToStr/Comment.nvim", opt = true, as = "comment.nvim" },
   { "antosha417/nvim-lsp-file-operations", opt = true },
+  { "michaelb/sniprun", build = "bash ./install.sh 1", opt = true },
 
   -- file system
   { "ahmedkhalf/project.nvim" },

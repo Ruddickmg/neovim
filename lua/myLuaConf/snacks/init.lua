@@ -32,6 +32,10 @@ return {
       require("snacks").setup({
         dashboard = dashboard,
         picker = {
+          files = {
+            hidden = true,
+            ignored = true,
+          },
           sources = {
             gh_issue = {},
             gh_pr = {},
