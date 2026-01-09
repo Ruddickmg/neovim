@@ -78,4 +78,5 @@ return {
   { import = "myLuaConf.LSPs.lua_ls" },
   { import = "myLuaConf.LSPs.postgres" },
   { import = "myLuaConf.LSPs.just" },
+  { import = "myLuaConf.LSPs.terraform" },
 }

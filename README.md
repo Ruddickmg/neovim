@@ -40,10 +40,8 @@ npm install -g ts-node typescript
 
 ## TODO
 
-- add lsp for pulumi, helm, etc..
 - configure snacks
 - configure noice
 - set up key bindings
 - use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
 - configure sql lsp for autocompletion
-- set up tmux
