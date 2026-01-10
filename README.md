@@ -40,8 +40,13 @@ npm install -g ts-node typescript
 
 ## TODO
 
-- configure snacks
-- configure noice
-- set up key bindings
+- fix docker lsp
+- set up package.json script runner
+- set up lsp key bindings
+- fix treesitter errors
+- set up testing keybindings
 - use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
 - configure sql lsp for autocompletion
+- fix rust lsp
+- configure snacks
+- configure noice

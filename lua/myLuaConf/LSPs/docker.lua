@@ -1,6 +1,6 @@
 return {
   {
-    "docker-language-server",
+    "dockerls",
     lsp = {},
   },
 }

@@ -20,6 +20,8 @@ if nixCats("format") then
   table.insert(lazy_packages, { import = "myLuaConf.format" })
 end
 
+vim.notify = require("notify")
+
 lze.register_handlers(require("nixCatsUtils.lzUtils").for_cat)
 lze.register_handlers(require("lzextras").lsp)
 

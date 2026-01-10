@@ -42,14 +42,16 @@ return {
   },
   {
     "package-info.nvim",
-    ft = "json",
+    enabled = string.find(vim.api.nvim_buf_get_name(0), "package.json"),
     after = function()
-      require("package-info").setup()
+      local info = require("package-info")
+      info.setup()
+      vim.keymap.set({ "n" }, "<LEADER>td", info.toggle, { silent = true, noremap = true, desc = "[d]ependencies" })
       vim.keymap.set(
         { "n" },
-        "<LEADER>td",
-        require("package-info").toggle,
-        { silent = true, noremap = true, desc = "[d]ependencies" }
+        "<leader>js",
+        require("myLuaConf.utilities.js-scripts").scripts,
+        { silent = true, desc = "[j]avascript[s]cripts" }
       )
     end,
   },
