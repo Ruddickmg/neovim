@@ -1,8 +1,15 @@
 # Neovim configuration 
 
-My PDE setup for both nixos and non-nix environments
+PDE setup for nixos and non-nix environments
 
 ## Non nix setup
+
+### Node
+
+provider
+```bash
+npm install -g neovim
+```
 
 ### LSP
 
@@ -41,7 +48,6 @@ npm install -g ts-node typescript
 ## TODO
 
 - fix docker lsp
-- set up package.json script runner
 - set up lsp key bindings
 - fix treesitter errors
 - set up testing keybindings

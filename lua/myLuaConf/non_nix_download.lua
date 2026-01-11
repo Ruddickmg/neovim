@@ -33,6 +33,7 @@ require("nixCatsUtils.catPacker").setup({
   { "mfussenegger/nvim-dap", opt = true },
 
   -- ui
+  { "MunifTanjim/nui.nvim", opt = true },
   { "nvim-tree/nvim-web-devicons" },
   { "loctvl842/monokai-pro.nvim" },
   { "rcarriga/nvim-notify" },
@@ -74,6 +75,7 @@ require("nixCatsUtils.catPacker").setup({
   { "kylechui/nvim-surround", opt = true },
   { "windwp/nvim-autopairs", opt = true },
   { "windwp/nvim-ts-autotag", opt = true },
+  { "alexandre-abrioux/blink-cmp-npm.nvim", opt = true },
 
   -- lint and format
   -- { '', opt = true, },

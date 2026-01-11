@@ -1,3 +1,5 @@
+local in_package_json = string.find(vim.api.nvim_buf_get_name(0), "package.json")
+
 return {
   {
     "yamlls",
@@ -42,17 +44,23 @@ return {
   },
   {
     "package-info.nvim",
-    enabled = string.find(vim.api.nvim_buf_get_name(0), "package.json"),
+    enabled = in_package_json,
     after = function()
       local info = require("package-info")
       info.setup()
       vim.keymap.set({ "n" }, "<LEADER>td", info.toggle, { silent = true, noremap = true, desc = "[d]ependencies" })
-      vim.keymap.set(
+      Snacks.keymap.set("n", "<leader>cv", info.change_version, { silent = true, noremap = true, desc = "[v]ersion" })
+      Snacks.keymap.set(
         { "n" },
         "<leader>js",
-        require("myLuaConf.utilities.js-scripts").scripts,
-        { silent = true, desc = "[j]avascript[s]cripts" }
+        require("myLuaConf.utilities.javascript").scripts,
+        { silent = true, desc = "[s]cripts" }
       )
     end,
+  },
+  {
+    "nui.nvim",
+    enabled = in_package_json,
+    dep_of = { "package-info.nvim" },
   },
 }

@@ -26,13 +26,37 @@ return {
     "colorful-menu.nvim",
     for_cat = "general.blink",
     on_plugin = { "blink.cmp" },
+    after = function()
+      require("colorful-menu").setup({
+        ls = {
+          lua_ls = {
+            arguments_hl = "@comment",
+          },
+          ts_ls = {
+            extra_info_hl = "@comment",
+          },
+          vtsls = {
+            extra_info_hl = "@comment",
+          },
+          ["rust-analyzer"] = {
+            extra_info_hl = "@comment",
+            align_type_to_right = true,
+            preserve_type_when_truncate = true,
+          },
+          fallback = true,
+          fallback_extra_info_hl = "@comment",
+        },
+        fallback_highlight = "@variable",
+        max_width = 60,
+      })
+    end,
   },
   {
     "blink.cmp",
     for_cat = "general.blink",
-    version = '1.*',
+    version = "1.*",
     event = "DeferredUIEnter",
-    after = function(_)
+    after = function()
       require("blink.cmp").setup({
         keymap = {
           preset = "default",
@@ -46,11 +70,9 @@ return {
           },
           sources = function()
             local type = vim.fn.getcmdtype()
-            -- Search forward and backward
             if type == "/" or type == "?" then
               return { "buffer" }
             end
-            -- Commands
             if type == ":" or type == "@" then
               return { "cmdline" }
             end
@@ -75,7 +97,7 @@ return {
           menu = {
             draw = {
               treesitter = { "lsp" },
-              columns = { { "kind_icon" }, { "label", gap = 1 } },
+              columns = { { "kind_icon" }, { "label", gap = 1 }, { "source_name", gap = 1 } },
               components = {
                 label = {
                   text = function(ctx)
@@ -83,6 +105,22 @@ return {
                   end,
                   highlight = function(ctx)
                     return require("colorful-menu").blink_components_highlight(ctx)
+                  end,
+                },
+                source_name = {
+                  text = function(ctx)
+                    if ctx.source_name == "LSP" then
+                      local client_name = nil
+                      pcall(function()
+                        client_name = ctx.item.source.source.client.name
+                      end)
+
+                      if client_name then
+                        return "[" .. client_name .. "]"
+                      end
+                    end
+
+                    return "[" .. ctx.source_name .. "]"
                   end,
                 },
               },
@@ -107,14 +145,28 @@ return {
             end
           end,
         },
+        opts_extend = { "sources.default" },
         sources = {
-          default = { "lsp", "path", "snippets", "buffer", "omni" },
+          default = { "lsp", "npm", "path", "snippets", "buffer", "omni" },
           providers = {
             path = {
-              score_offset = 50,
+              score_offset = 60,
             },
             lsp = {
-              score_offset = 40,
+              score_offset = 50,
+            },
+            npm = {
+              name = "npm",
+              module = "blink-cmp-npm",
+              async = true,
+              score_offset = 100,
+              ---@module "blink-cmp-npm"
+              ---@type blink-cmp-npm.Options
+              opts = {
+                ignore = {},
+                only_semantic_versions = false,
+                only_latest_version = false,
+              },
             },
             snippets = {
               score_offset = 40,
@@ -133,5 +185,17 @@ return {
         },
       })
     end,
+  },
+  {
+    "blink.compat",
+    version = "1.*",
+    event = "DeferredUIEnter",
+    dep_of = { "blink.cmp" },
+  },
+  {
+    "blink-cmp-npm.nvim",
+    ft = { "json" },
+    event = "DeferredUIEnter",
+    dep_of = { "blink.cmp" },
   },
 }
