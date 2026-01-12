@@ -145,7 +145,6 @@ return {
             end
           end,
         },
-        opts_extend = { "sources.default" },
         sources = {
           default = { "lsp", "npm", "path", "snippets", "buffer", "omni" },
           providers = {

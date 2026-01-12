@@ -13,7 +13,7 @@ require("nixCatsUtils.catPacker").setup({
   { "gbprod/substitute.nvim", opt = true },
   { "numToStr/Comment.nvim", opt = true, as = "comment.nvim" },
   { "antosha417/nvim-lsp-file-operations", opt = true },
-  { "michaelb/sniprun", build = "bash ./install.sh 1", opt = true },
+  { "michaelb/sniprun", build = "sh ./install.sh 1", opt = true },
 
   -- file system
   { "ahmedkhalf/project.nvim" },
@@ -33,7 +33,9 @@ require("nixCatsUtils.catPacker").setup({
   { "mfussenegger/nvim-dap", opt = true },
 
   -- ui
+  { "xiyaowong/transparent.nvim" },
   { "MunifTanjim/nui.nvim", opt = true },
+  { "MeanderingProgrammer/render-markdown.nvim", opt = true },
   { "nvim-tree/nvim-web-devicons" },
   { "loctvl842/monokai-pro.nvim" },
   { "rcarriga/nvim-notify" },

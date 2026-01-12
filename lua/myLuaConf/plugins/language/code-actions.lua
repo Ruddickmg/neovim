@@ -10,7 +10,7 @@ return {
           layout = { preset = "default" },
         },
       })
-      vim.keymap.set({ "v", "n" }, "gf", actions_preview.code_actions)
+      Snacks.keymap.set({ "v", "n" }, "ca", actions_preview.code_actions)
     end,
   },
 }

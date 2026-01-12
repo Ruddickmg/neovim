@@ -16,6 +16,8 @@ return {
         { "<leader>g_", hidden = true },
         { "<leader>m", group = "[m]arkdown" },
         { "<leader>m_", hidden = true },
+        { "<leader>r", group = "[R]un" },
+        { "<leader>r_", hidden = true },
         { "<leader>s", group = "[s]earch" },
         { "<leader>s_", hidden = true },
         { "<leader>t", group = "[t]oggles" },

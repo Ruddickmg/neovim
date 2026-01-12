@@ -69,6 +69,13 @@ return {
     dep_of = { "treesitter-textobjects" },
     after = function()
       local treesitter = require("nvim-treesitter")
+      treesitter.setup({
+        ensure_installed = {
+          "typescript",
+          "latex",
+          "bash",
+        },
+      })
 
       ---@param buf integer
       ---@param language string

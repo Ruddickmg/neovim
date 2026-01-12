@@ -7,6 +7,15 @@ local elements = {
   "WhichKeyNormal",
   "Normal",
   "NormalFloat",
+  "RenderMarkdownCode",
+  "RenderMarkdownH1Bg",
+  "RenderMarkdownH2Bg",
+  "RenderMarkdownH3Bg",
+  "RenderMarkdownH4Bg",
+  "RenderMarkdownH5Bg",
+  "RenderMarkdownH6Bg",
+  "SnacksDashboardDir",
+  "@markup.raw.block.markdown",
 }
 
 local clear_backgrounds = function()

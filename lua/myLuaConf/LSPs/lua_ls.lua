@@ -1,14 +1,7 @@
 return {
   {
-    -- name of the lsp
     "lua_ls",
-    enabled = nixCats("lua") or nixCats("neonixdev") or false,
-    -- provide a table containing filetypes,
-    -- and then whatever your functions defined in the function type specs expect.
-    -- in our case, it just expects the normal lspconfig setup options,
-    -- but with a default on_attach and capabilities
     lsp = {
-      -- if you provide the filetypes it doesn't ask lspconfig for the filetypes
       filetypes = { "lua" },
       settings = {
         Lua = {
@@ -25,6 +18,5 @@ return {
         },
       },
     },
-    -- also these are regular specs and you can use before and after and all the other normal fields
   },
 }

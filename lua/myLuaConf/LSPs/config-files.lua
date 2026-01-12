@@ -1,4 +1,4 @@
-local in_package_json = string.find(vim.api.nvim_buf_get_name(0), "package.json")
+local in_package_json = string.find(vim.api.nvim_buf_get_name(0), "package.json") or false
 
 return {
   {
@@ -44,18 +44,18 @@ return {
   },
   {
     "package-info.nvim",
-    enabled = in_package_json,
+    enable = in_package_json,
     after = function()
-      local info = require("package-info")
-      info.setup()
-      vim.keymap.set({ "n" }, "<LEADER>td", info.toggle, { silent = true, noremap = true, desc = "[d]ependencies" })
-      Snacks.keymap.set("n", "<leader>cv", info.change_version, { silent = true, noremap = true, desc = "[v]ersion" })
-      Snacks.keymap.set(
-        { "n" },
-        "<leader>js",
-        require("myLuaConf.utilities.javascript").scripts,
-        { silent = true, desc = "[s]cripts" }
-      )
+      if in_package_json then
+        local info = require("package-info")
+        info.setup({
+          autostart = false,
+          hide_up_to_date = true,
+        })
+        Snacks.keymap.set("n", "<LEADER>td", info.toggle, { noremap = true, desc = "[d]ependencies" })
+        Snacks.keymap.set("n", "<leader>cv", info.change_version, { noremap = true, desc = "[v]ersion" })
+        Snacks.keymap.set("n", "<leader>js", require("myLuaConf.utilities.javascript").scripts, { desc = "[s]cripts" })
+      end
     end,
   },
   {

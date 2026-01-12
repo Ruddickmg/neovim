@@ -15,7 +15,7 @@ npm install -g neovim
 
 typescript
 ```bash
-npm install -g typescript-language-server typescript
+npm i -g typescript-language-server typescript
 ```
 
 json
@@ -24,8 +24,8 @@ npm i -g vscode-langservers-extracted
 ```
 
 yaml
-```
-brew install yaml-language-server
+```bash
+npm i -g yaml-language-server
 ```
 
 lua
@@ -47,12 +47,10 @@ npm install -g ts-node typescript
 
 ## TODO
 
-- fix docker lsp
-- set up lsp key bindings
-- fix treesitter errors
 - set up testing keybindings
-- use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
+- add treesitter-text-subjects
 - configure sql lsp for autocompletion
+- use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
 - fix rust lsp
 - configure snacks
 - configure noice

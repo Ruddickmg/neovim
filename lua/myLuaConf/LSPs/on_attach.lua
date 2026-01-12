@@ -1,26 +1,23 @@
 return function(_, bufnr)
-  -- we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
-
   local nmap = function(keys, func, desc)
     if desc then
       desc = "LSP: " .. desc
     end
-
-    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+    Snacks.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap("<leader>cn", vim.lsp.buf.rename, "[C]hange [N]ame")
-  nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-  nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+  -- vim.lsp.buf.completion(): Trigger code completion.
+  -- nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-  -- See `:help K` for why this keymap
-  nmap("K", vim.lsp.buf.hover, "Hover Documentation")
   nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
-
-  -- Lesser used LSP functionality
+  nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+  nmap("cn", vim.lsp.buf.rename, "[C]hange [N]ame")
   nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+  nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+  nmap("gr", vim.lsp.buf.references, "[G]oto [R]eferences")
+  nmap("gt", vim.lsp.buf.type_definition, "[G]oto [T]ype Definition")
+
   nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
   nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
   nmap("<leader>wl", function()

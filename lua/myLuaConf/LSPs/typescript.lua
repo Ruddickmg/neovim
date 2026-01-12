@@ -15,7 +15,7 @@ return {
   },
   {
     "ts_ls",
-    dep_of = { "pmizio/typescript-tools.nvim" },
+    dep_of = { "typescript-tools.nvim" },
     lsp = {},
   },
 }
