@@ -47,7 +47,6 @@ npm install -g ts-node typescript
 
 ## TODO
 
-- set up testing keybindings
 - add treesitter-text-subjects
 - configure sql lsp for autocompletion
 - use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
