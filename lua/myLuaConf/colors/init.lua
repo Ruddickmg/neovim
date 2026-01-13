@@ -1,3 +1,22 @@
+local toHex = function(num)
+  return num ~= nil and string.format("#%06x", num) or "none"
+end
+
+local function get_hl_colors(group_name)
+  local ok, hl = pcall(vim.api.nvim_get_hl_by_name, group_name, true)
+  if not ok or not hl then
+    vim.notify("Couldn't find highlight colors for highlight group " .. group_name)
+    return {
+      background = "none",
+      foreground = "none",
+    }
+  end
+  return {
+    background = toHex(hl.background),
+    foreground = toHex(hl.foreground),
+  }
+end
+
 local elements = {
   "statusline",
   "TabLine",
@@ -7,6 +26,7 @@ local elements = {
   "WhichKeyNormal",
   "Normal",
   "NormalFloat",
+  "@markup.raw.block.markdown",
   "RenderMarkdownCode",
   "RenderMarkdownH1Bg",
   "RenderMarkdownH2Bg",
@@ -15,7 +35,8 @@ local elements = {
   "RenderMarkdownH5Bg",
   "RenderMarkdownH6Bg",
   "SnacksDashboardDir",
-  "@markup.raw.block.markdown",
+  "BlinkCmpMenu",
+  "Pmenu",
 }
 
 local clear_backgrounds = function()
@@ -24,7 +45,19 @@ local clear_backgrounds = function()
   end
 end
 
-vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = clear_backgrounds })
+local update_colors = function()
+  clear_backgrounds()
+
+  -- completion source color
+  vim.api.nvim_set_hl(0, "BlinkCmpSource", { link = "Boolean" })
+
+  -- completion scroll thumb color
+  vim.api.nvim_set_hl(0, "BlinkCmpScrollBarThumb", { bg = get_hl_colors("String").foreground, nocombine = true })
+
+  -- completion highlight coloring
+  vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { link = "Function" })
+end
+vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = update_colors })
 
 return {
   {

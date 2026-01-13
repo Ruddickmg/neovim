@@ -1,6 +1,8 @@
+local javascript = require("myLuaConf.plugins.test.javascript")
 local rust_enabled = nixCats("rust") or false
 
 return {
+  javascript.dependencies,
   {
     "neotest-plenary",
     for_cat = "testing",
@@ -18,9 +20,18 @@ return {
       local includedAdapters = {
         require("neotest-plenary"),
       }
+      local addAdapter = function(adapter)
+        table.insert(includedAdapters, adapter)
+      end
 
       if rust_enabled then
-        table.insert(includedAdapters, require("rustaceanvim.neotest"))
+        addAdapter(require("rustaceanvim.neotest"))
+      end
+
+      if javascript.enabled then
+        for _, adapter in ipairs(javascript.adapters()) do
+          addAdapter(adapter)
+        end
       end
 
       local neotest = require("neotest")

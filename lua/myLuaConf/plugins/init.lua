@@ -2,6 +2,7 @@ local ok, notify = pcall(require, "notify")
 
 if ok then
   notify.setup({
+    background_colour = "#00000000",
     on_open = function(win)
       vim.api.nvim_win_set_config(win, { focusable = false })
     end,

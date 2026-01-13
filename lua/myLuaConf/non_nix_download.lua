@@ -21,11 +21,14 @@ require("nixCatsUtils.catPacker").setup({
   { "mikavilpas/yazi.nvim", opt = true },
 
   -- testing
+  { "nvim-lua/plenary.nvim" },
+  { "antoinemadec/FixCursorHold.nvim", opt = true },
   { "nvim-neotest/nvim-nio" },
   { "nvim-neotest/neotest", opt = true },
   { "nvim-neotest/neotest-plenary", opt = true },
-  { "nvim-lua/plenary.nvim" },
-  { "antoinemadec/FixCursorHold.nvim", opt = true },
+  { "nvim-neotest/neotest-jest", opt = true },
+  { "thenbe/neotest-playwright", opt = true },
+  { "marilari88/neotest-vitest", opt = true },
 
   -- debugging
   { "rcarriga/nvim-dap-ui", opt = true },

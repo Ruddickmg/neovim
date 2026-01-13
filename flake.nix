@@ -223,6 +223,7 @@
               git = true;
               database = true;
               markdown = true;
+              javascript = true;
               rust = true;
               rust-analyzer = false;
               utility = true;

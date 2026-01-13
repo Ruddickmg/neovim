@@ -1,3 +1,9 @@
+local keymap = {
+  preset = "super-tab",
+  ["<CR>"] = { "accept", "fallback" },
+  ["<C-y>"] = { "accept", "fallback" },
+}
+
 return {
   {
     "friendly-snippets",
@@ -58,10 +64,12 @@ return {
     event = "DeferredUIEnter",
     after = function()
       require("blink.cmp").setup({
-        keymap = {
-          preset = "default",
-        },
+        keymap = keymap,
         cmdline = {
+          keymap = {
+            preset = "super-tab",
+            ["<C-y>"] = { "accept", "fallback" },
+          },
           enabled = true,
           completion = {
             menu = {
@@ -95,6 +103,7 @@ return {
         },
         completion = {
           menu = {
+            border = "rounded",
             draw = {
               treesitter = { "lsp" },
               columns = { { "kind_icon" }, { "label", gap = 1 }, { "source_name", gap = 1 } },
@@ -146,7 +155,7 @@ return {
           end,
         },
         sources = {
-          default = { "lsp", "npm", "path", "snippets", "buffer", "omni" },
+          default = { "lsp", "omni", "npm", "path", "snippets", "buffer" },
           providers = {
             path = {
               score_offset = 60,
