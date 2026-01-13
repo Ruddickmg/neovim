@@ -47,11 +47,12 @@ npm install -g ts-node typescript
 
 ## TODO
 
-- configure sql lsp for autocompletion
-- use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
 - add flash.neovim
 - add treesitter-text-subjects
 - add cursor movement styling
+- style doc popup to have a border
+- configure sql lsp for autocompletion
+- use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
 - fix rust lsp
 - configure snacks
 - configure noice
