@@ -1,3 +1,4 @@
+vim.notify = require("notify")
 local nixColorScheme = nixCats("colorscheme")
 local colorscheme = type(nixColorScheme) == "string" and nixColorScheme or "monokai-pro"
 local lze = require("lze")
@@ -19,8 +20,6 @@ end
 if nixCats("format") then
   table.insert(lazy_packages, { import = "myLuaConf.format" })
 end
-
-vim.notify = require("notify")
 
 lze.register_handlers(require("nixCatsUtils.lzUtils").for_cat)
 lze.register_handlers(require("lzextras").lsp)

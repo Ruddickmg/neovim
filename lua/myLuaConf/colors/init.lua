@@ -56,6 +56,9 @@ local update_colors = function()
 
   -- completion highlight coloring
   vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { link = "Function" })
+
+  -- lazygit border color
+  vim.api.nvim_set_hl(0, "FloatBorder", { link = "Identifier" })
 end
 vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = update_colors })
 

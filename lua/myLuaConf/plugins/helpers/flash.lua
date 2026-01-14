@@ -29,7 +29,6 @@ return {
       },
     },
     after = function()
-      vim.notify("setting up flash")
       require("flash").setup({
         modes = {
           search = {
