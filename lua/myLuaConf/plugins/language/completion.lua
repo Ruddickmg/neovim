@@ -1,6 +1,6 @@
 local keymap = {
   preset = "super-tab",
-  ["<CR>"] = { "accept", "fallback" },
+  -- ["<CR>"] = { "accept", "fallback" },
   ["<C-y>"] = { "accept", "fallback" },
 }
 
@@ -66,10 +66,7 @@ return {
       require("blink.cmp").setup({
         keymap = keymap,
         cmdline = {
-          keymap = {
-            preset = "super-tab",
-            ["<C-y>"] = { "accept", "fallback" },
-          },
+          keymap = keymap,
           enabled = true,
           completion = {
             menu = {

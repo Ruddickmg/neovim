@@ -53,6 +53,7 @@ return {
         debug = { enabled = true },
         gh = { enabled = true },
         git = { enabled = true },
+        lazygit = { enabled = true },
         terminal = { enabled = true },
         layout = { enabled = true },
         quickfile = { enabled = true },

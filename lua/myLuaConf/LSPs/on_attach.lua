@@ -11,7 +11,7 @@ return function(_, bufnr)
 
   nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
   nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-  nmap("cn", vim.lsp.buf.rename, "[C]hange [N]ame")
+  -- nmap("cn", vim.lsp.buf.rename, "[C]hange [N]ame")
   nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
   nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
   nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")

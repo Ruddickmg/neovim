@@ -1,4 +1,5 @@
 return {
+  { import = "myLuaConf.plugins.helpers.rename" },
   { import = "myLuaConf.plugins.helpers.auto-pairs" },
   { import = "myLuaConf.plugins.helpers.sniprun" },
   { import = "myLuaConf.plugins.helpers.auto-tag" },

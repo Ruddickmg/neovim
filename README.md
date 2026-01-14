@@ -4,6 +4,13 @@ PDE setup for nixos and non-nix environments
 
 ## Non nix setup
 
+### vcs
+
+lazygit
+```bash
+brew install lazygit
+```
+
 ### Node
 
 provider
@@ -47,6 +54,10 @@ npm install -g ts-node typescript
 
 ## TODO
 
+- vcs
+  - neogit
+  - lazygit
+  - diffview
 - plugins
   - add flash.neovim
   - add treesitter-text-subjects

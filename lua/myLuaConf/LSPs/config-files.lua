@@ -58,9 +58,4 @@ return {
       end
     end,
   },
-  {
-    "nui.nvim",
-    enabled = in_package_json,
-    dep_of = { "package-info.nvim" },
-  },
 }

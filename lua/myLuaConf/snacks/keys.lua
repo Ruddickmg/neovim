@@ -166,6 +166,13 @@ return {
     end,
     desc = "GitHub Pull Requests (all)",
   },
+  {
+    "<leader>gU",
+    function()
+      Snacks.lazygit.open()
+    end,
+    desc = "Lazy Git UI",
+  },
   -- Grep
   {
     "<leader>sb",
