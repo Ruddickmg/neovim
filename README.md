@@ -55,8 +55,6 @@ npm install -g ts-node typescript
 ## TODO
 
 - plugins
-  - add flash.neovim
-  - add treesitter-text-subjects
   - add nvim-ufo
 - configuration
   - style doc popup to have a border
@@ -70,3 +68,4 @@ npm install -g ts-node typescript
   - augment.nvim
   - opencode.nvim
   - mcphub.nvim
+- make which-key key bindings pretty

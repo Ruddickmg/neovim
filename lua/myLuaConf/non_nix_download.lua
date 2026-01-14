@@ -11,6 +11,7 @@ require("nixCatsUtils.catPacker").setup({
   -- actions
   { "tpope/vim-repeat" },
   { "gbprod/substitute.nvim", opt = true },
+  { "folke/flash.nvim", opt = true },
   { "numToStr/Comment.nvim", opt = true, as = "comment.nvim" },
   { "antosha417/nvim-lsp-file-operations", opt = true },
   { "michaelb/sniprun", build = "sh ./install.sh 1", opt = true },
