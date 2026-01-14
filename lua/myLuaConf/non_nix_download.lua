@@ -37,6 +37,7 @@ require("nixCatsUtils.catPacker").setup({
 
   -- ui
   { "xiyaowong/transparent.nvim" },
+  { "sphamba/smear-cursor.nvim", opt = true },
   { "MunifTanjim/nui.nvim", opt = true },
   { "MeanderingProgrammer/render-markdown.nvim", opt = true },
   { "nvim-tree/nvim-web-devicons" },
