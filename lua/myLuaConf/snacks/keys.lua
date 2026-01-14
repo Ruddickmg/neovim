@@ -167,11 +167,25 @@ return {
     desc = "GitHub Pull Requests (all)",
   },
   {
-    "<leader>gU",
+    "<leader>gG",
     function()
       Snacks.lazygit.open()
     end,
-    desc = "Lazy Git UI",
+    desc = "Show Lazy Git UI",
+  },
+  {
+    "<leader>gh",
+    function()
+      Snacks.lazygit.log()
+    end,
+    desc = "Lazy Git History",
+  },
+  {
+    "<leader>gH",
+    function()
+      Snacks.lazygit.log_file()
+    end,
+    desc = "Lazy Git File History",
   },
   -- Grep
   {

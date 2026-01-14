@@ -93,4 +93,6 @@ require("nixCatsUtils.catPacker").setup({
   { "mbbill/undotree", opt = true },
   { "sindrets/diffview.nvim", opt = true },
   { "lewis6991/gitsigns.nvim", opt = true },
+  { "NeogitOrg/neogit", opt = true },
+  { "sindrets/diffview.nvim", opt = true },
 })

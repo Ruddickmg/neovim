@@ -54,14 +54,10 @@ npm install -g ts-node typescript
 
 ## TODO
 
-- vcs
-  - neogit
-  - lazygit
-  - diffview
 - plugins
   - add flash.neovim
   - add treesitter-text-subjects
-  - add cursor movement styling
+  - add nvim-ufo
 - configuration
   - style doc popup to have a border
   - configure sql lsp for autocompletion
