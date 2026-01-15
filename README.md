@@ -60,9 +60,12 @@ npm install -g ts-node typescript
   - style doc popup to have a border
   - configure sql lsp for autocompletion
   - use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
-  - fix rust lsp
   - configure snacks
   - configure noice
+  - fixes
+    - fix flash selection color issues
+    - fix snacks scrolling weirdness (maybe replace with neoscroll)
+    - fix rust lsp
 - ai
   - look into avante.nvim
   - augment.nvim

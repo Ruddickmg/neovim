@@ -37,7 +37,6 @@ require("nixCatsUtils.catPacker").setup({
   { "mfussenegger/nvim-dap", opt = true },
 
   -- ui
-  { "xiyaowong/transparent.nvim" },
   { "sphamba/smear-cursor.nvim", opt = true },
   { "smjonas/inc-rename.nvim", opt = true },
   { "MunifTanjim/nui.nvim", opt = true },
@@ -86,7 +85,6 @@ require("nixCatsUtils.catPacker").setup({
   { "alexandre-abrioux/blink-cmp-npm.nvim", opt = true },
 
   -- lint and format
-  -- { '', opt = true, },
   { "mfussenegger/nvim-lint", opt = true },
   { "stevearc/conform.nvim", opt = true },
 

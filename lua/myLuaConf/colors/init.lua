@@ -59,6 +59,18 @@ local update_colors = function()
 
   -- lazygit border color
   vim.api.nvim_set_hl(0, "FloatBorder", { link = "Identifier" })
+
+  -- flash label
+  vim.api.nvim_set_hl(0, "FlashLabel", {
+    fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
+    bg = get_hl_colors("Boolean").foreground,
+  })
+
+  -- flash selected
+  vim.api.nvim_set_hl(0, "FlashMatch", {
+    fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
+    bg = get_hl_colors("@variable.parameter").foreground,
+  })
 end
 vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = update_colors })
 
