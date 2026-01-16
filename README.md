@@ -65,7 +65,6 @@ cargo install evcxr_repl
     - fix snacks scrolling weirdness (maybe replace with neoscroll)
     - fix luasnip, snippets not showing up in autocompletion
     - fix rust lsp
-  - figure out how to substitute from system clipboard
 - plugins
   - create plugin for sql (connect to postgresql lsp)
     - configure sql lsp for autocompletion

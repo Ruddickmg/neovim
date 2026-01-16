@@ -117,13 +117,10 @@ vim.keymap.set("n", "]d", vim.diagnostic.get_next, { desc = "Go to next diagnost
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
--- kickstart.nvim starts you with this.
--- But it constantly clobbers your system clipboard whenever you delete anything.
-
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
--- vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard = "unnamedplus"
 
 -- You should instead use these keybindings so that they are still easy to use, but dont conflict
 vim.keymap.set({ "v", "x", "n" }, "<leader>y", '"+y', { noremap = true, silent = true, desc = "Yank to clipboard" })
