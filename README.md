@@ -52,15 +52,21 @@ typescript
 npm install -g ts-node typescript
 ```
 
+rust
+```bash
+cargo install evcxr_repl
+```
+
+
 ## TODO
 
 - configuration
-  - figure out how to substitute from system clipboard
   - fixes
-    - fix runsnip code snippet runner
     - fix flash selection color issues
     - fix snacks scrolling weirdness (maybe replace with neoscroll)
+    - fix luasnip, snippets not showing up in autocompletion
     - fix rust lsp
+  - figure out how to substitute from system clipboard
 - plugins
   - create plugin for sql (connect to postgresql lsp)
     - configure sql lsp for autocompletion

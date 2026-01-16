@@ -28,7 +28,18 @@ return {
       },
     },
     after = function()
-      require("sniprun").setup()
+      require("sniprun").setup({
+        display = { "NvimNotify" },
+        repl_enable = { "Rust_original" },
+        interpreter_options = {
+          Rust_original = {
+            compiler = "rustc",
+          },
+          TypeScript_original = {
+            interpreter = "node",
+          },
+        },
+      })
     end,
   },
 }
