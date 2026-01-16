@@ -29,6 +29,7 @@ return {
       },
     },
     after = function()
+      local color = require("myLuaConf.utilities.color")
       require("flash").setup({
         search = {
           exclude = {
@@ -54,6 +55,18 @@ return {
             incremental = true,
           },
         },
+      })
+
+      -- flash label
+      vim.api.nvim_set_hl(0, "FlashLabel", {
+        fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
+        bg = color.get_hl_colors("Boolean").foreground,
+      })
+
+      -- flash selected
+      vim.api.nvim_set_hl(0, "FlashMatch", {
+        fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
+        bg = color.get_hl_colors("@variable.parameter").foreground,
       })
     end,
   },

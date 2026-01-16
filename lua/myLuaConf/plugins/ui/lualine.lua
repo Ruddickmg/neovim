@@ -38,7 +38,17 @@ return {
               separator = { right = "" },
             },
           },
-          lualine_c = { "lsp_progress" },
+          lualine_c = {
+            {
+              "aerial",
+              sep = " ) ",
+              depth = nil,
+              dense = false,
+              dense_sep = ".",
+              colored = true,
+            },
+            "lsp_progress",
+          },
         },
         inactive_sections = {
           lualine_b = {

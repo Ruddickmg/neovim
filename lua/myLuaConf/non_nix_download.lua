@@ -35,6 +35,7 @@ require("nixCatsUtils.catPacker").setup({
   { "rcarriga/nvim-dap-ui", opt = true },
   { "theHamsta/nvim-dap-virtual-text", opt = true },
   { "mfussenegger/nvim-dap", opt = true },
+  { "folke/trouble.nvim", opt = true },
 
   -- ui
   { "sphamba/smear-cursor.nvim", opt = true },
@@ -46,7 +47,6 @@ require("nixCatsUtils.catPacker").setup({
   { "rcarriga/nvim-notify" },
   { "folke/snacks.nvim" },
   { "folke/noice.nvim", opt = true },
-  { "folke/trouble.nvim", opt = true },
   { "folke/which-key.nvim", opt = true },
   { "folke/persistence.nvim", opt = true },
   { "folke/todo-comments.nvim", opt = true },
@@ -55,6 +55,7 @@ require("nixCatsUtils.catPacker").setup({
   { "rachartier/tiny-inline-diagnostic.nvim", opt = true },
   { "aznhe21/actions-preview.nvim", opt = true },
   { "arkav/lualine-lsp-progress", opt = true },
+  { "stevearc/aerial.nvim", opt = true },
 
   -- language
   { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", opt = true, as = "treesitter-textobjects" },

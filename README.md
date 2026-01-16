@@ -4,7 +4,7 @@ PDE setup for nixos and non-nix environments
 
 ## Non nix setup
 
-### vcs
+### VCS
 
 lazygit
 ```bash
@@ -55,14 +55,16 @@ npm install -g ts-node typescript
 ## TODO
 
 - plugins
-  - add nvim-ufo
+  - add nvim-ufo (maybe?)
 - configuration
+  - figure out how to substitute from system clipboard
   - style doc popup to have a border
   - configure sql lsp for autocompletion
   - use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
   - configure snacks
   - configure noice
   - fixes
+    - fix runsnip code snippet runner
     - fix flash selection color issues
     - fix snacks scrolling weirdness (maybe replace with neoscroll)
     - fix rust lsp

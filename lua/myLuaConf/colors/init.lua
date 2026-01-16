@@ -1,22 +1,4 @@
-local toHex = function(num)
-  return num ~= nil and string.format("#%06x", num) or "none"
-end
-
-local function get_hl_colors(group_name)
-  local ok, hl = pcall(vim.api.nvim_get_hl_by_name, group_name, true)
-  if not ok or not hl then
-    vim.notify("Couldn't find highlight colors for highlight group " .. group_name)
-    return {
-      background = "none",
-      foreground = "none",
-    }
-  end
-  return {
-    background = toHex(hl.background),
-    foreground = toHex(hl.foreground),
-  }
-end
-
+local color = require("myLuaConf.utilities.color")
 local elements = {
   "statusline",
   "TabLine",
@@ -52,25 +34,13 @@ local update_colors = function()
   vim.api.nvim_set_hl(0, "BlinkCmpSource", { link = "Boolean" })
 
   -- completion scroll thumb color
-  vim.api.nvim_set_hl(0, "BlinkCmpScrollBarThumb", { bg = get_hl_colors("String").foreground, nocombine = true })
+  vim.api.nvim_set_hl(0, "BlinkCmpScrollBarThumb", { bg = color.get_hl_colors("String").foreground, nocombine = true })
 
   -- completion highlight coloring
   vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { link = "Function" })
 
   -- lazygit border color
   vim.api.nvim_set_hl(0, "FloatBorder", { link = "Identifier" })
-
-  -- flash label
-  vim.api.nvim_set_hl(0, "FlashLabel", {
-    fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
-    bg = get_hl_colors("Boolean").foreground,
-  })
-
-  -- flash selected
-  vim.api.nvim_set_hl(0, "FlashMatch", {
-    fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
-    bg = get_hl_colors("@variable.parameter").foreground,
-  })
 end
 vim.api.nvim_create_autocmd("ColorScheme", { pattern = "*", callback = update_colors })
 
