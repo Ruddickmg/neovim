@@ -134,6 +134,10 @@ return {
           },
           documentation = {
             auto_show = true,
+            window = {
+              border = "rounded",
+              winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+            },
           },
         },
         snippets = {

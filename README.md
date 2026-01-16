@@ -58,11 +58,13 @@ npm install -g ts-node typescript
   - add nvim-ufo (maybe?)
 - configuration
   - figure out how to substitute from system clipboard
-  - style doc popup to have a border
-  - configure sql lsp for autocompletion
-  - use tree sitter to get lsp suggestions etc in embedded code (sql, etc)
   - configure snacks
-  - configure noice
+  - configure sql lsp for autocompletion
+  - create plugin for postgresql lsp
+    - integrate with tree sitter to get lsp suggestions etc in embedded code (sql, etc)
+    - add crud operations for connections
+    - integrate with snacks picker for connections
+    - add connection status? lualine?
   - fixes
     - fix runsnip code snippet runner
     - fix flash selection color issues
