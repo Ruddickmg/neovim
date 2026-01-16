@@ -57,17 +57,20 @@ return {
         },
       })
 
+      local text_hl_colors = function(group)
+        return {
+          fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
+          bg = color.get_hl_colors(group).foreground,
+        }
+      end
+
       -- flash label
-      vim.api.nvim_set_hl(0, "FlashLabel", {
-        fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
-        bg = color.get_hl_colors("Boolean").foreground,
-      })
+      vim.api.nvim_set_hl(0, "FlashLabel", text_hl_colors("Boolean"))
 
       -- flash selected
-      vim.api.nvim_set_hl(0, "FlashMatch", {
-        fg = "black", --[[  get_hl_colors("@namespace.builtin").foreground, ]]
-        bg = color.get_hl_colors("@variable.parameter").foreground,
-      })
+      vim.api.nvim_set_hl(0, "FlashMatch", text_hl_colors("@variable.parameter"))
+      vim.api.nvim_set_hl(0, "IncSearch", text_hl_colors("@variable.parameter"))
+      vim.api.nvim_set_hl(0, "Search", text_hl_colors("@variable.parameter"))
     end,
   },
 }

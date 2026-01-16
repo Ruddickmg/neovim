@@ -62,7 +62,6 @@ cargo install evcxr_repl
 
 - configuration
   - fixes
-    - fix flash selection color issues
     - fix snacks scrolling weirdness (maybe replace with neoscroll)
     - fix luasnip, snippets not showing up in autocompletion
     - fix rust lsp
