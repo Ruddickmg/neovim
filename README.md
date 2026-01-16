@@ -54,22 +54,29 @@ npm install -g ts-node typescript
 
 ## TODO
 
-- plugins
-  - add nvim-ufo (maybe?)
 - configuration
   - figure out how to substitute from system clipboard
-  - configure snacks
-  - configure sql lsp for autocompletion
-  - create plugin for postgresql lsp
-    - integrate with tree sitter to get lsp suggestions etc in embedded code (sql, etc)
-    - add crud operations for connections
-    - integrate with snacks picker for connections
-    - add connection status? lualine?
   - fixes
     - fix runsnip code snippet runner
     - fix flash selection color issues
     - fix snacks scrolling weirdness (maybe replace with neoscroll)
     - fix rust lsp
+- plugins
+  - create plugin for sql (connect to postgresql lsp)
+    - configure sql lsp for autocompletion
+    - integrate with tree sitter to get lsp suggestions etc in embedded code (sql, etc)
+    - add connection status? lualine
+    - add crud operations for connections
+      - add ui for creating new connections (host, port, name, password, etc)
+    - integrate with snacks picker for connections
+      - allow selection of lsp (if multiple sql lsps are available)
+      - allow selection of connection (if multiple connections are available)
+        - display connections
+        - connect
+        - disconnect
+        - deleting selection
+        - edit connection
+  - add nvim-ufo (maybe?)
 - ai
   - look into avante.nvim
   - augment.nvim
