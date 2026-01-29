@@ -70,10 +70,25 @@ return {
     after = function()
       local treesitter = require("nvim-treesitter")
       treesitter.setup({
+        -- TODO: These will have to be kept in sync with flake.nix
         ensure_installed = {
-          "typescript",
           "latex",
+          "nix",
+          "liquid",
+          "markdown",
+          "html",
+          "tsx",
+          "vim",
+          "svelte",
+          "javascript",
+          "typescript",
+          "regex",
+          "lua",
           "bash",
+          "markdown",
+          "markdown_inline",
+          "rust",
+          "sql",
         },
       })
 
