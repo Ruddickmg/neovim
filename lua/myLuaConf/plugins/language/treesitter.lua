@@ -84,6 +84,7 @@ return {
           "typescript",
           "regex",
           "lua",
+          "toml",
           "bash",
           "markdown",
           "markdown_inline",
