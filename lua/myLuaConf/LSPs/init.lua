@@ -33,7 +33,6 @@ return {
     -- and it will run for all specs with type(plugin.lsp) == table
     -- when their filetype trigger loads them
     lsp = function(plugin)
-      vim.notify("configuring: " .. plugin.name .. ", it " .. (plugin.lsp and "has config" or "has no config"))
       vim.lsp.config(plugin.name, plugin.lsp or {})
       vim.lsp.enable(plugin.name)
     end,
