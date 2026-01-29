@@ -33,6 +33,7 @@ return {
     -- and it will run for all specs with type(plugin.lsp) == table
     -- when their filetype trigger loads them
     lsp = function(plugin)
+      vim.notify("configuring: " .. plugin.name .. ", it " .. (plugin.lsp and "has config" or "has no config"))
       vim.lsp.config(plugin.name, plugin.lsp or {})
       vim.lsp.enable(plugin.name)
     end,
@@ -53,9 +54,8 @@ return {
       require("mason").setup()
       -- auto install will make it install servers when lspconfig is called on them.
       require("mason-lspconfig").setup({
-        -- these will have to be kept in sync with nix, haven't found a better solution
+        -- TODO: these will have to be kept in sync with nix, haven't found a better solution
         ensure_installed = {
-          "lua_ls",
           "ts_ls",
           "yamlls",
           "jsonls",
@@ -67,6 +67,9 @@ return {
           -- nix
           "rnix",
           "nil_ls",
+          -- lua
+          "lua_ls",
+          "stylua",
         },
         automatic_installation = true,
       })

@@ -5,6 +5,7 @@ return {
     "rnix",
     -- mason doesn't have nixd
     enabled = not catUtils.isNixCats,
+    event = { "BufReadPre", "BufNewFile" },
     lsp = {
       filetypes = { "nix" },
     },
@@ -13,6 +14,7 @@ return {
     "nil_ls",
     -- mason doesn't have nixd
     enabled = not catUtils.isNixCats,
+    event = { "BufReadPre", "BufNewFile" },
     lsp = {
       filetypes = { "nix" },
     },
@@ -20,6 +22,7 @@ return {
   {
     "nixd",
     enabled = catUtils.isNixCats and (nixCats("nix") or nixCats("neonixdev")) or false,
+    event = { "BufReadPre", "BufNewFile" },
     lsp = {
       filetypes = { "nix" },
       settings = {

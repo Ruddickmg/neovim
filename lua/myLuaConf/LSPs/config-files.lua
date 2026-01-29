@@ -3,6 +3,7 @@ local in_package_json = string.find(vim.api.nvim_buf_get_name(0), "package.json"
 return {
   {
     "yamlls",
+    event = { "BufReadPre", "BufNewFile" },
     lsp = {
       settings = {
         yaml = {
@@ -27,6 +28,7 @@ return {
   },
   {
     "jsonls",
+    event = { "BufReadPre", "BufNewFile" },
     lsp = {
       settings = {
         json = {

@@ -1,6 +1,7 @@
 return {
   {
     "lua_ls",
+    event = { "BufReadPre", "BufNewFile" },
     lsp = {
       filetypes = { "lua" },
       settings = {
@@ -11,7 +12,7 @@ return {
           },
           signatureHelp = { enabled = true },
           diagnostics = {
-            globals = { "nixCats", "vim" },
+            globals = { "nixCats", "vim", "Snacks" },
             disable = { "missing-fields" },
           },
           telemetry = { enabled = false },
