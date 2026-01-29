@@ -11,41 +11,16 @@ lazygit
 brew install lazygit
 ```
 
-### Node
+### Dependencies
+
+#### Node
 
 provider
 ```bash
 npm install -g neovim
 ```
 
-### LSP
-
-typescript
-```bash
-npm i -g typescript-language-server typescript
-```
-
-json
-```bash
-npm i -g vscode-langservers-extracted
-```
-
-yaml
-```bash
-npm i -g yaml-language-server
-```
-
-lua
-```bash
-brew install lua-language-server in
-```
-
-docker
-```bash
-brew install docker-language-server
-```
-
-### Code Snippet Runner
+#### Code Snippet Runner
 
 typescript
 ```bash
@@ -56,7 +31,6 @@ rust
 ```bash
 cargo install evcxr_repl
 ```
-
 
 ## TODO
 
@@ -86,4 +60,6 @@ cargo install evcxr_repl
   - augment.nvim
   - opencode.nvim
   - mcphub.nvim
-- make which-key key bindings pretty
+- visual
+  - make which-key key bindings pretty
+  - set up icons

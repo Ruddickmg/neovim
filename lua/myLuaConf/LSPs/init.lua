@@ -52,7 +52,24 @@ return {
       vim.cmd.packadd("mason-lspconfig.nvim")
       require("mason").setup()
       -- auto install will make it install servers when lspconfig is called on them.
-      require("mason-lspconfig").setup({ automatic_installation = true })
+      require("mason-lspconfig").setup({
+        -- these will have to be kept in sync with nix, haven't found a better solution
+        ensure_installed = {
+          "lua_ls",
+          "ts_ls",
+          "yamlls",
+          "jsonls",
+          "terraformls",
+          "dockerls",
+          "just",
+          "rust_analyzer",
+          "tombi",
+          -- nix
+          "rnix",
+          "nil_ls",
+        },
+        automatic_installation = true,
+      })
     end,
   },
   {
