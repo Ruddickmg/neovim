@@ -142,7 +142,7 @@
                   plugins: with plugins; [
                     nix
                     liquid
-                    markdown
+                    toml
                     html
                     tsx
                     vim
