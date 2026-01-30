@@ -29,6 +29,9 @@
             rust = with pkgs; [
               vscode-extensions.vadimcn.vscode-lldb.adapter
             ];
+	    javascript = with pkgs.vimPlugins; [
+             typescript-tools-nvim
+	    ];
             rust-analyzer = with pkgs; [
               rust-analyzer
             ];
@@ -93,6 +96,7 @@
                 neotest
                 FixCursorHold-nvim
                 neotest-plenary
+		neotest-jest
               ];
             };
             debug = with pkgs; {
@@ -111,7 +115,7 @@
               ];
             };
             markdown = with pkgs.vimPlugins; [
-              markdown-preview-nvim
+	      render-markdown-nvim
             ];
             neonixdev = with pkgs.vimPlugins; [
               lazydev-nvim
@@ -120,20 +124,26 @@
               lualine-lsp-progress
               lualine-nvim
               monokai-pro-nvim
+	      smear-cursor-nvim
+	      inc-rename-nvim
             ];
             file-manager = with pkgs.vimPlugins; [
               nvim-lsp-file-operations
               oil-nvim
               yazi-nvim
+	      aerial-nvim
             ];
             session-manager = with pkgs.vimPlugins; [
+	      project-nvim
               persistence-nvim
+	      project-nvim
             ];
             general = {
               blink = with pkgs.vimPlugins; [
-                luasnip
+		blink-cmp-npm-nvim
                 blink-cmp
                 blink-compat
+                luasnip
                 colorful-menu-nvim
               ];
               treesitter = with pkgs.vimPlugins; [
@@ -170,14 +180,23 @@
                 trouble-nvim
               ];
               utility = with pkgs.vimPlugins; [
+	        nui-nvim
+	        undotree
                 substitute-nvim
                 todo-comments-nvim
                 auto-session
                 comment-nvim
+		# completion
                 nvim-ts-autotag
                 nvim-autopairs
                 which-key-nvim
-                undotree
+		# search functionality
+		flash-nvim
+		# run code in files
+		sniprun
+		# config file completion
+		SchemaStore-nvim
+		package-info-nvim
               ];
             };
           };
@@ -226,6 +245,7 @@
               javascript = true;
               rust = true;
               rust-analyzer = false;
+	      typescript = true;
               utility = true;
               testing = true;
               debug = true;
