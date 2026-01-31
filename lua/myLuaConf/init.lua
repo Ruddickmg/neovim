@@ -9,7 +9,7 @@ local lazy_packages = {
   { import = "myLuaConf.colors" },
 }
 
-require("project_nvim").setup()
+-- require("project_nvim").setup()
 require("myLuaConf.opts_and_keys")
 
 if nixCats("debug") then

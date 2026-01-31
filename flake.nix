@@ -29,9 +29,9 @@
             rust = with pkgs; [
               vscode-extensions.vadimcn.vscode-lldb.adapter
             ];
-	    javascript = with pkgs.vimPlugins; [
-             typescript-tools-nvim
-	    ];
+            javascript = with pkgs.vimPlugins; [
+              typescript-tools-nvim
+            ];
             rust-analyzer = with pkgs; [
               rust-analyzer
             ];
@@ -59,6 +59,9 @@
             rust = with pkgs.vimPlugins; [
               rustaceanvim
             ];
+            session-manager = with pkgs.vimPlugins; [
+              project-nvim
+            ];
             debug = with pkgs.vimPlugins; [
               nvim-nio
             ];
@@ -73,6 +76,7 @@
                 (nvim-notify.overrideAttrs { doCheck = false; }) # TODO: remove overrideAttrs after check is fixed
               ];
               utility = [
+                SchemaStore-nvim
                 snacks-nvim
                 direnv-vim
                 noice-nvim
@@ -96,7 +100,7 @@
                 neotest
                 FixCursorHold-nvim
                 neotest-plenary
-		neotest-jest
+                neotest-jest
               ];
             };
             debug = with pkgs; {
@@ -115,7 +119,7 @@
               ];
             };
             markdown = with pkgs.vimPlugins; [
-	      render-markdown-nvim
+              render-markdown-nvim
             ];
             neonixdev = with pkgs.vimPlugins; [
               lazydev-nvim
@@ -124,23 +128,21 @@
               lualine-lsp-progress
               lualine-nvim
               monokai-pro-nvim
-	      smear-cursor-nvim
-	      inc-rename-nvim
+              smear-cursor-nvim
+              inc-rename-nvim
             ];
             file-manager = with pkgs.vimPlugins; [
               nvim-lsp-file-operations
               oil-nvim
               yazi-nvim
-	      aerial-nvim
+              aerial-nvim
             ];
             session-manager = with pkgs.vimPlugins; [
-	      project-nvim
               persistence-nvim
-	      project-nvim
             ];
             general = {
               blink = with pkgs.vimPlugins; [
-		blink-cmp-npm-nvim
+                blink-cmp-npm-nvim
                 blink-cmp
                 blink-compat
                 luasnip
@@ -180,23 +182,22 @@
                 trouble-nvim
               ];
               utility = with pkgs.vimPlugins; [
-	        nui-nvim
-	        undotree
+                nui-nvim
+                undotree
                 substitute-nvim
                 todo-comments-nvim
                 auto-session
                 comment-nvim
-		# completion
+                # completion
                 nvim-ts-autotag
                 nvim-autopairs
                 which-key-nvim
-		# search functionality
-		flash-nvim
-		# run code in files
-		sniprun
-		# config file completion
-		SchemaStore-nvim
-		package-info-nvim
+                # search functionality
+                flash-nvim
+                # run code in files
+                sniprun
+                # config file completion
+                package-info-nvim
               ];
             };
           };
@@ -245,7 +246,7 @@
               javascript = true;
               rust = true;
               rust-analyzer = false;
-	      typescript = true;
+              typescript = true;
               utility = true;
               testing = true;
               debug = true;
