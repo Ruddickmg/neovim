@@ -1,5 +1,12 @@
 return {
   {
+    "project.nvim",
+    lazy = false,
+    after = function()
+      require("project").setup()
+    end,
+  },
+  {
     "persistence.nvim",
     for_cat = "session-manager",
     dep_of = "snacks.nvim",

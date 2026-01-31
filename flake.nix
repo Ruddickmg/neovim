@@ -32,6 +32,10 @@
             javascript = with pkgs.vimPlugins; [
               typescript-tools-nvim
             ];
+            configuration-files = with pkgs; [
+              yaml-language-server
+              vscode-json-languageserver
+            ];
             rust-analyzer = with pkgs; [
               rust-analyzer
             ];
@@ -42,6 +46,9 @@
               stylua
               nixfmt
               rustfmt
+            ];
+            git = with pkgs; [
+              lazygit
             ];
             general = with pkgs; [
               tombi
@@ -59,9 +66,6 @@
             rust = with pkgs.vimPlugins; [
               rustaceanvim
             ];
-            session-manager = with pkgs.vimPlugins; [
-              project-nvim
-            ];
             debug = with pkgs.vimPlugins; [
               nvim-nio
             ];
@@ -76,6 +80,7 @@
                 (nvim-notify.overrideAttrs { doCheck = false; }) # TODO: remove overrideAttrs after check is fixed
               ];
               utility = [
+                project-nvim
                 SchemaStore-nvim
                 snacks-nvim
                 direnv-vim
@@ -95,12 +100,16 @@
               vim-dadbod-ui
               vim-dadbod-completion
             ];
-            testing = {
-              default = with pkgs.vimPlugins; [
+            testing = with pkgs.vimPlugins; {
+              javascript = [
+                neotest-playwright
+                neotest-vitest
+                neotest-jest
+              ];
+              default = [
                 neotest
                 FixCursorHold-nvim
                 neotest-plenary
-                neotest-jest
               ];
             };
             debug = with pkgs; {
@@ -238,6 +247,7 @@
             categories = {
               profiling = false;
               session-manager = true;
+              configuration-files = true;
               diagnostics = true;
               file-manager = true;
               git = true;
