@@ -1,4 +1,11 @@
 return {
+  {
+    "<leader>ps",
+    function()
+      Snacks.profiler.scratch()
+    end,
+    desc = "Profiler Scratch Bufer",
+  },
   -- Top Pickers & Explorer
   {
     "<leader><space>",

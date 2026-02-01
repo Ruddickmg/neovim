@@ -26,6 +26,7 @@ return {
         extensions = { "trouble", "fugitive", "nvim-dap-ui", "oil" },
         sections = {
           lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+          lualine_x = {},
           lualine_y = {
             { "progress", separator = " ", padding = { left = 1, right = 0 } },
             { "location", padding = { left = 0, right = 1 } },
@@ -73,7 +74,7 @@ return {
 
       local base = "#ECBE7B"
       local main = "#a9a1e1"
-
+      table.insert(config.sections.lualine_x, Snacks.profiler.status())
       table.insert(config.sections.lualine_c, {
         "lsp_progress",
         colors = {

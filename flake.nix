@@ -51,6 +51,7 @@
               lazygit
             ];
             general = with pkgs; [
+              tree-sitter
               tombi
               universal-ctags
               ripgrep

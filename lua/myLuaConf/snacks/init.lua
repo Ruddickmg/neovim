@@ -58,6 +58,7 @@ return {
         layout = { enabled = true },
         quickfile = { enabled = true },
         scope = { enabled = true },
+        profiler = { enabled = true },
         scroll = {
           enabled = true,
           animate = {
@@ -85,6 +86,10 @@ return {
           },
         },
       })
+      -- Toggle the profiler
+      Snacks.toggle.profiler():map("<leader>pp")
+      -- Toggle the profiler highlights
+      Snacks.toggle.profiler_highlights():map("<leader>ph")
     end,
   },
 }

@@ -131,17 +131,4 @@ vim.keymap.set(
   { noremap = true, silent = true, desc = "Yank line to clipboard" }
 )
 vim.keymap.set({ "n", "v", "x" }, "<C-a>", "gg0vG$", { noremap = true, silent = true, desc = "Select all" })
-vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p', { noremap = true, silent = true, desc = "Paste from clipboard" })
-vim.keymap.set(
-  "i",
-  "<C-p>",
-  "<C-r><C-p>+",
-  { noremap = true, silent = true, desc = "Paste from clipboard from within insert mode" }
-)
-vim.keymap.set(
-  "x",
-  "<leader>P",
-  '"_dP',
-  { noremap = true, silent = true, desc = "Paste over selection without erasing unnamed register" }
-)
 -- vim.lsp.set_log_level(vim.log.levels.DEBUG)
