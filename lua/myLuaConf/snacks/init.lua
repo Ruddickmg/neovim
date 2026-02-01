@@ -37,6 +37,9 @@ return {
             ignored = true,
           },
           sources = {
+            files = {
+              hidden = true, -- Shows dotfiles
+            },
             gh_issue = {},
             gh_pr = {},
           },
