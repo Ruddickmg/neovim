@@ -61,7 +61,6 @@ return {
           "terraformls",
           "dockerls",
           "just",
-          "rust_analyzer",
           "tombi",
           -- nix
           "rnix",

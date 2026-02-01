@@ -32,6 +32,20 @@ rust
 cargo install evcxr_repl
 ```
 
+#### LSP
+
+rust
+```bash
+# add rust analyzer lsp
+rustup component add rust-analyzer
+
+# add lspmux rust analyzer multiplexer
+cargo install lspmux
+
+# run lspmux server
+lspmux server
+```
+
 ## TODO
 
 - configuration
