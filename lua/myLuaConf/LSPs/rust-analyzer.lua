@@ -32,6 +32,11 @@ vim.g.rustaceanvim = {
           method = "connect",
           server = "rust-analyzer",
         },
+        runnables = {
+          extraTestBinaryArgs = {
+            "--nocapture",
+          },
+        },
         installCargo = false,
         installRustc = false,
         cargo = {

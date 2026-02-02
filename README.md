@@ -68,6 +68,16 @@ lspmux server
         - disconnect
         - deleting selection
         - edit connection
+  - set up script runner with language adapters
+    - per language
+      - rust -> just
+      - javascript -> package.json scripts
+      - etc
+    - same keymap
+    - allow script execution/viewing from anywhere in the project
+    - show script progress (status) for integration with lualine, etc
+    - create hook for output for integration with notify, etc
+    - allow viewing output from script runs
   - add nvim-ufo (maybe?)
 - ai
   - look into avante.nvim

@@ -54,7 +54,7 @@ return {
           autostart = false,
           hide_up_to_date = true,
         })
-        Snacks.keymap.set("n", "<LEADER>td", info.toggle, { noremap = true, desc = "[d]ependencies" })
+        Snacks.keymap.set("n", "<leader>fd", info.toggle, { noremap = true, desc = "[d]ependencies" })
         Snacks.keymap.set("n", "<leader>cv", info.change_version, { noremap = true, desc = "[v]ersion" })
         Snacks.keymap.set("n", "<leader>js", require("myLuaConf.utilities.javascript").scripts, { desc = "[s]cripts" })
       end

@@ -25,7 +25,9 @@ return {
       end
 
       if rust_enabled then
-        addAdapter(require("rustaceanvim.neotest"))
+        addAdapter(require("rustaceanvim.neotest")({
+          args = { "--no-capture" },
+        }))
       end
 
       if javascript.enabled then
@@ -40,14 +42,16 @@ return {
         adapters = includedAdapters,
       })
 
-      Snacks.keymap.set("n", "<leader>rt", neotest.run.run, { desc = "[T]est (nearest)" })
-      Snacks.keymap.set("n", "<leader>ra", function()
+      Snacks.keymap.set("n", "<leader>tn", neotest.run.run, { desc = "[t]est" })
+      Snacks.keymap.set("n", "<leader>ta", function()
         neotest.run.run(vim.fn.expand("%"))
-      end, { desc = "[A]ll tests in current file" })
-      Snacks.keymap.set("n", "<leader>rd", function()
+      end, { desc = "[a]ll" })
+      Snacks.keymap.set("n", "<leader>td", function()
         neotest.run.run({ strategy = "dap" })
-      end, { desc = "[D]ebug tests" })
-      Snacks.keymap.set("n", "<leader>xt", neotest.run.stop, { desc = "Stop tests" })
+      end, { desc = "[d]ebug" })
+      Snacks.keymap.set("n", "<leader>ts", neotest.run.stop, { desc = "[s]top" })
+      Snacks.keymap.set("n", "<leader>to", "<cmd>Neotest output<cr>", { desc = "[o]utput" })
+      Snacks.keymap.set("n", "<leader>tv", "<cmd>Neotest summary<cr>", { desc = "[v]iew (summary)" })
     end,
   },
 }
