@@ -8,8 +8,8 @@ local function file_exists(name)
   end
 end
 
-local function project_root()
-  local project_markers = { "package.json" }
+local function project_root(markers)
+  local project_markers = markers or { ".git" }
   local current_file_path = vim.api.nvim_buf_get_name(0) -- Get the path of the current buffer's file
   return vim.fs.root(current_file_path, project_markers)
 end

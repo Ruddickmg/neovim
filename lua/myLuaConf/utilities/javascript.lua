@@ -2,7 +2,7 @@ local location = require("myLuaConf.utilities.location")
 
 local function detect_package_manager()
   local path = location.project_root()
-  local pm = "npm"
+  local package_manager = "npm"
   local package_managers = {
     pnpm = "pnpm-lock.yaml",
     yarn = "yarn.lock",
@@ -11,10 +11,10 @@ local function detect_package_manager()
 
   for manager, filename in pairs(package_managers) do
     if location.file_exists(path .. "/" .. filename) then
-      pm = manager
+      package_manager = manager
     end
   end
-  return pm
+  return package_manager
 end
 
 local function scripts()
