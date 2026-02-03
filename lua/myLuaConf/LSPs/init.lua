@@ -55,6 +55,7 @@ return {
       require("mason-lspconfig").setup({
         -- TODO: these will have to be kept in sync with nix, haven't found a better solution
         ensure_installed = {
+          "postgres_lsp",
           "ts_ls",
           "yamlls",
           "jsonls",
