@@ -1,3 +1,4 @@
+local node = require("myLuaConf.utilities.javascript")
 local js_enabled = nixCats("javascript") or false
 
 return {
@@ -32,13 +33,12 @@ return {
         },
       }),
       require("neotest-jest")({
-        jestCommand = "npm test --",
-        jestArguments = function(defaultArguments, context)
+        jestCommand = node.package_manager() .. " run jest",
+        jestArguments = function(defaultArguments)
           return defaultArguments
         end,
-        jestConfigFile = "custom.jest.config.ts",
-        env = { CI = true },
-        cwd = function(path)
+        jestConfigFile = "kest.config.ts",
+        cwd = function()
           return vim.fn.getcwd()
         end,
         isTestFile = require("neotest-jest.jest-util").defaultIsTestFile,

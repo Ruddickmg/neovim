@@ -1,23 +1,7 @@
-local M = {}
-
-local function file_exists(name)
-  local f = io.open(name, "r")
-  if f ~= nil then
-    io.close(f)
-    return true
-  else
-    return false
-  end
-end
-
-local function project_root()
-  local project_markers = { "package.json" }
-  local current_file_path = vim.api.nvim_buf_get_name(0) -- Get the path of the current buffer's file
-  return vim.fs.root(current_file_path, project_markers)
-end
+local location = require("myLuaConf.utilities.location")
 
 local function detect_package_manager()
-  local path = project_root()
+  local path = location.project_root()
   local pm = "npm"
   local package_managers = {
     pnpm = "pnpm-lock.yaml",
@@ -26,24 +10,24 @@ local function detect_package_manager()
   }
 
   for manager, filename in pairs(package_managers) do
-    if file_exists(path .. "/" .. filename) then
+    if location.file_exists(path .. "/" .. filename) then
       pm = manager
     end
   end
   return pm
 end
 
-M.scripts = function()
+local function scripts()
   Snacks.picker.pick({
     title = "Scripts",
     format = "text",
     preview = "preview",
-    finder = function(opts, ctx)
-      local json = vim.fn.json_decode(vim.fn.readfile(project_root() .. "/package.json"))
-      local scripts = json and json.scripts or {}
+    finder = function()
+      local json = vim.fn.json_decode(vim.fn.readfile(location.project_root() .. "/package.json"))
+      local script_definitions = json and json.scripts or {}
       local items = {}
-      local package_manager = detect_package_manager()
-      for name, cmd in pairs(scripts) do
+      local package_manager = location.node_package_manager()
+      for name, cmd in pairs(script_definitions) do
         table.insert(items, {
           text = name,
           cmd = cmd,
@@ -61,7 +45,7 @@ M.scripts = function()
           :new({
             command = detect_package_manager(),
             args = { "run", item.text },
-            cwd = project_root(),
+            cwd = location.project_root(),
             on_exit = function(job, code)
               local result = job:result()
               local message = ""
@@ -77,4 +61,7 @@ M.scripts = function()
   })
 end
 
-return M
+return {
+  package_manager = detect_package_manager,
+  scripts = scripts,
+}
