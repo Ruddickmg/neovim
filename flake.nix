@@ -162,6 +162,7 @@
                 pkgs.neovimPlugins.treesitter-textobjects
                 (nvim-treesitter.withPlugins (
                   plugins: with plugins; [
+                    query
                     nix
                     liquid
                     toml

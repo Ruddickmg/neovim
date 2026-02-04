@@ -66,12 +66,13 @@ return {
   {
     "nvim-treesitter",
     lazy = false,
-    dep_of = { "treesitter-textobjects" },
+    dep_of = { "treesitter-textobjects", "otter.nvim" },
     after = function()
       local treesitter = require("nvim-treesitter")
       treesitter.setup({
         -- TODO: These will have to be kept in sync with flake.nix
         ensure_installed = {
+          "query",
           "latex",
           "nix",
           "liquid",

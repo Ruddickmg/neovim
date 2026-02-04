@@ -1,6 +1,9 @@
 -- load the plugins via paq-nvim when not on nix
 
 require("nixCatsUtils.catPacker").setup({
+  -- my plugin
+  -- { "/var/www/connect.nvim", opt = true },
+
   --  NOTE:  we take care of lazy loading elsewhere in an autocommand
   -- so that we can use the same code on and off nix.
   -- so here we just tell it not to auto load it
@@ -67,6 +70,8 @@ require("nixCatsUtils.catPacker").setup({
   { "neovim/nvim-lspconfig", opt = true },
   { "pmizio/typescript-tools.nvim", opt = true },
   { "vuki656/package-info.nvim", opt = true },
+  { "jmbuhr/otter.nvim", opt = true },
+
   { "b0o/schemastore.nvim" },
   { "mrcjkb/rustaceanvim" },
 
