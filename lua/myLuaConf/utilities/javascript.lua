@@ -10,7 +10,7 @@ local function detect_package_manager()
   }
 
   for manager, filename in pairs(package_managers) do
-    if location.file_exists(path .. "/" .. filename) then
+    if location.file_exists((path or "") .. "/" .. filename) then
       package_manager = manager
     end
   end
