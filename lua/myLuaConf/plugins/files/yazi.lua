@@ -12,7 +12,7 @@ return {
     },
     after = function()
       require("yazi").setup({
-        open_for_directories = false,
+        open_for_directories = true,
         yazi_floating_window_winblend = 0,
         integrations = {
           grep_in_directory = function(directory)
