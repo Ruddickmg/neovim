@@ -1,6 +1,6 @@
 return {
   {
-    "postgres_ls",
+    "postgres_lsp",
     for_cat = "database",
     event = { "BufReadPre", "BufNewFile" },
     lsp = {
