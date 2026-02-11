@@ -34,14 +34,7 @@ return {
       require("Comment").setup()
     end,
   },
-  {
-    "nvim-surround",
-    for_cat = "general.always",
-    event = "DeferredUIEnter",
-    after = function()
-      require("nvim-surround").setup()
-    end,
-  },
+  { import = "myLuaConf.plugins.surround" },
   { import = "myLuaConf.plugins.files" },
   { import = "myLuaConf.plugins.helpers" },
   { import = "myLuaConf.plugins.test" },

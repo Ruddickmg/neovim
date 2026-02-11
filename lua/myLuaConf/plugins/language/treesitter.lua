@@ -66,7 +66,7 @@ return {
   {
     "nvim-treesitter",
     lazy = false,
-    dep_of = { "treesitter-textobjects", "otter.nvim" },
+    dep_of = { "treesitter-textobjects", "otter.nvim", "comment.nvim" },
     after = function()
       local treesitter = require("nvim-treesitter")
       treesitter.setup({

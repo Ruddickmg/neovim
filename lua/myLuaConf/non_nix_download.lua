@@ -71,7 +71,7 @@ require("nixCatsUtils.catPacker").setup({
   { "pmizio/typescript-tools.nvim", opt = true },
   { "vuki656/package-info.nvim", opt = true },
   { "jmbuhr/otter.nvim", opt = true },
-
+  { "Ruddickmg/connect.nvim", opt = true },
   { "b0o/schemastore.nvim" },
   { "mrcjkb/rustaceanvim" },
 
