@@ -71,7 +71,7 @@ require("nixCatsUtils.catPacker").setup({
   { "pmizio/typescript-tools.nvim", opt = true },
   { "vuki656/package-info.nvim", opt = true },
   { "jmbuhr/otter.nvim", opt = true },
-  { "Ruddickmg/connect.nvim", opt = true },
+  -- { "Ruddickmg/connect.nvim", opt = true },
   { "b0o/schemastore.nvim" },
   { "mrcjkb/rustaceanvim" },
 
@@ -100,4 +100,12 @@ require("nixCatsUtils.catPacker").setup({
   { "lewis6991/gitsigns.nvim", opt = true },
   { "NeogitOrg/neogit", opt = true },
   { "sindrets/diffview.nvim", opt = true },
+
+  -- ai
+  { "folke/sidekick.nvim", opt = true },
+  { "nickjvandyke/opencode.nvim", opt = true },
+  { "carlos-algms/agentic.nvim", opt = true },
+  -- { "github/copilot.lua", opt = true },
+  -- { "copilotlsp-nvim/copilot-lsp", opt = true },
+  -- { "CopilotC-Nvim/CopilotChat.nvim", opt = true },
 })

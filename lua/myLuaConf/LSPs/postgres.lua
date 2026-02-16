@@ -6,7 +6,7 @@ return {
     lsp = {
       filetypes = { "sql" },
       cmd = { "postgres-language-server", "lsp-proxy" },
-      root_markers = { "postgres-language-server.jsonc" },
+      -- root_markers = { "postgres-language-server.jsonc" },
     },
   },
 }

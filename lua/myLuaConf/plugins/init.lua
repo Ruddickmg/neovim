@@ -41,4 +41,5 @@ return {
   { import = "myLuaConf.plugins.database" },
   { import = "myLuaConf.plugins.vcs" },
   { import = "myLuaConf.plugins.ui" },
+  { import = "myLuaConf.plugins.ai" },
 }

@@ -2,6 +2,16 @@ local keymap = {
   preset = "super-tab",
   -- ["<CR>"] = { "accept", "fallback" },
   ["<C-y>"] = { "accept", "fallback" },
+  -- ["<Tab>"] = {
+  --   "snippet_forward",
+  --   function() -- sidekick next edit suggestion
+  --     return require("sidekick").nes_jump_or_apply()
+  --   end,
+  --   function() -- if you are using Neovim's native inline completions
+  --     return "<Tab>"
+  --   end,
+  --   "fallback",
+  -- },
 }
 
 return {
@@ -169,8 +179,6 @@ return {
               module = "blink-cmp-npm",
               async = true,
               score_offset = 100,
-              ---@module "blink-cmp-npm"
-              ---@type blink-cmp-npm.Options
               opts = {
                 ignore = {},
                 only_semantic_versions = false,

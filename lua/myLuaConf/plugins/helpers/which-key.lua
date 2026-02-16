@@ -8,6 +8,10 @@ return {
       require("which-key").add({
         { "<leader><leader>", group = "buffer commands" },
         { "<leader><leader>_", hidden = true },
+        { "<leader>a", group = "[a]ssistant" },
+        { "<leader>a_", hidden = true },
+        { "<leader>b", group = "[b]uffer" },
+        { "<leader>b_", hidden = true },
         { "<leader>c", group = "[c]hange" },
         { "<leader>c_", hidden = true },
         { "<leader>d", group = "[d]ocument" },
