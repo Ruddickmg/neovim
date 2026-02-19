@@ -393,6 +393,7 @@ return {
       Snacks.picker.lsp_references()
     end,
     nowait = true,
+    noremap = true,
     desc = "References",
   },
   {
@@ -403,11 +404,11 @@ return {
     desc = "Goto Implementation",
   },
   {
-    "gy",
+    "gt",
     function()
       Snacks.picker.lsp_type_definitions()
     end,
-    desc = "Goto T[y]pe Definition",
+    desc = "Goto [T]ype Definition",
   },
   {
     "gai",
