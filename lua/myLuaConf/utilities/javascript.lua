@@ -26,7 +26,7 @@ local function scripts()
       local json = vim.fn.json_decode(vim.fn.readfile(location.project_root() .. "/package.json"))
       local script_definitions = json and json.scripts or {}
       local items = {}
-      local package_manager = location.node_package_manager()
+      local package_manager = detect_package_manager()
       for name, cmd in pairs(script_definitions) do
         table.insert(items, {
           text = name,

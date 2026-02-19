@@ -7,6 +7,7 @@ return function(_, bufnr)
   end
 
   -- vim.lsp.buf.completion(): Trigger code completion.
+  -- INFO: this is handled by code-actions.lua, the key map is "ca"
   -- nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
   nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")

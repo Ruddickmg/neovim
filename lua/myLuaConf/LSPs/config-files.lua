@@ -1,5 +1,3 @@
-local in_package_json = string.find(vim.api.nvim_buf_get_name(0), "package.json") or false
-
 return {
   {
     "yamlls",
@@ -46,18 +44,19 @@ return {
   },
   {
     "package-info.nvim",
-    enable = in_package_json,
+    event = { "BufReadPre", "BufNewFile" },
+    enable = function()
+      return string.find(vim.api.nvim_buf_get_name(0), "package.json") or false
+    end,
     after = function()
-      if in_package_json then
-        local info = require("package-info")
-        info.setup({
-          autostart = false,
-          hide_up_to_date = true,
-        })
-        Snacks.keymap.set("n", "<leader>fd", info.toggle, { noremap = true, desc = "[d]ependencies" })
-        Snacks.keymap.set("n", "<leader>cv", info.change_version, { noremap = true, desc = "[v]ersion" })
-        Snacks.keymap.set("n", "<leader>js", require("myLuaConf.utilities.javascript").scripts, { desc = "[s]cripts" })
-      end
+      local info = require("package-info")
+      info.setup({
+        autostart = false,
+        hide_up_to_date = true,
+      })
+      Snacks.keymap.set("n", "<leader>d", info.toggle, { noremap = true, desc = "[d]ependencies" })
+      Snacks.keymap.set("n", "<leader>v", info.change_version, { noremap = true, desc = "[v]ersion" })
+      Snacks.keymap.set("n", "<leader>rs", require("myLuaConf.utilities.javascript").scripts, { desc = "[s]cripts" })
     end,
   },
 }
