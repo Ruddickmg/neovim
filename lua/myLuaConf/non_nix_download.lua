@@ -104,6 +104,6 @@ require("nixCatsUtils.catPacker").setup({
   -- ai
   { "folke/sidekick.nvim", opt = true },
   { "nickjvandyke/opencode.nvim", opt = true },
-  { "github/copilot.lua", opt = true },
+  { "zbirenbaum/copilot.lua", opt = true },
   { "CopilotC-Nvim/CopilotChat.nvim", opt = true },
 })
