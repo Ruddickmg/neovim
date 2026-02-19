@@ -2,16 +2,18 @@ local keymap = {
   preset = "super-tab",
   -- ["<CR>"] = { "accept", "fallback" },
   ["<C-y>"] = { "accept", "fallback" },
-  -- ["<Tab>"] = {
-  --   "snippet_forward",
-  --   function() -- sidekick next edit suggestion
-  --     return require("sidekick").nes_jump_or_apply()
-  --   end,
-  --   function() -- if you are using Neovim's native inline completions
-  --     return "<Tab>"
-  --   end,
-  --   "fallback",
-  -- },
+  ["<Tab>"] = {
+    "snippet_forward",
+    function() -- sidekick next edit suggestion
+      return require("sidekick").nes_jump_or_apply()
+    end,
+    -- TODO: uncomment when on neovim version 12+
+    -- function() -- if you are using Neovim's native inline completions
+    --   return vim.lsp.inline_completion.get()
+    -- end,
+    "accept",
+    "fallback",
+  },
 }
 
 return {
@@ -73,6 +75,8 @@ return {
     version = "1.*",
     event = "DeferredUIEnter",
     after = function()
+      -- TODO: uncomment this when on neovim version 12+
+      -- vim.lsp.inline_completion.enable()
       require("blink.cmp").setup({
         keymap = keymap,
         cmdline = {
