@@ -75,8 +75,6 @@ return {
     version = "1.*",
     event = "DeferredUIEnter",
     after = function()
-      -- TODO: uncomment this when on neovim version 12+
-      -- vim.lsp.inline_completion.enable()
       require("blink.cmp").setup({
         keymap = keymap,
         cmdline = {

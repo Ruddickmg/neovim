@@ -6,7 +6,8 @@ return function(_, bufnr)
     Snacks.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  -- vim.lsp.buf.completion(): Trigger code completion.
+  -- TODO: uncomment this when on neovim version 12+
+  -- vim.lsp.inline_completion.enable()
 
   nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
   nmap("K", vim.lsp.buf.hover, "Hover Documentation")
