@@ -74,7 +74,6 @@ return {
 
       local base = "#ECBE7B"
       local main = "#a9a1e1"
-      table.insert(config.sections.lualine_x, Snacks.profiler.status())
       table.insert(config.sections.lualine_c, {
         "lsp_progress",
         colors = {

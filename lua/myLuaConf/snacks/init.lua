@@ -96,7 +96,6 @@ return {
               and vim.bo[buf].buftype ~= "terminal"
           end,
         },
-        statuscolumn = { enabled = true },
         words = { enabled = true },
         styles = {
           notification = {

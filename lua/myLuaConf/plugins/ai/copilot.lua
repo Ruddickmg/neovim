@@ -1,10 +1,12 @@
 return {
   {
     "CopilotChat.nvim",
-    cmd = { "CopilotChatToggle", "CopilotChatOpen" },
+    cmd = { "CopilotChatToggle", "CopilotChatOpen", "CopilotChatModels" },
     keys = {
       { "<leader>ac", desc = "Toggle [C]opilot Chat" },
       { "<leader>aC", desc = "Open [C]opilot Chat" },
+      { "<leader>am", desc = "Select Copilot Chat [M]odel" },
+      { "<leader>ap", desc = "Select Copilot Chat [P]rompts" },
     },
     after = function()
       vim.api.nvim_create_autocmd("BufEnter", {
@@ -39,13 +41,15 @@ return {
       })
       Snacks.keymap.set("n", "<leader>ac", "<cmd>CopilotChatToggle<CR>", { desc = "Toggle [C]opilot Chat" })
       Snacks.keymap.set("n", "<leader>aC", "<cmd>CopilotChatOpen<CR>", { desc = "Open [C]opilot Chat" })
+      Snacks.keymap.set("n", "<leader>am", "<cmd>CopilotChatModels<CR>", { desc = "Select Copilot Chat [M]odel" })
+      Snacks.keymap.set("n", "<leader>ap", "<cmd>CopilotChatPrompts<CR>", { desc = "Select Copilot Chat [P]rompts" })
     end,
   },
   {
     "copilot.lua",
     cmd = { "Copilot" },
     keys = {
-      { "<leader>as", desc = "[S]et up Copilot" },
+      { "<leader>aS", desc = "[S]et up Copilot" },
     },
     after = function()
       Snacks.keymap.set("n", "<leader>as", "<cmd>Copilot setup<CR>", { desc = "[S]et up Copilot" })

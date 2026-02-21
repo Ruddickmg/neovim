@@ -131,3 +131,15 @@ vim.keymap.set(
 )
 vim.keymap.set({ "n", "v", "x" }, "<C-a>", "gg0vG$", { noremap = true, silent = true, desc = "Select all" })
 -- vim.lsp.set_log_level(vim.log.levels.DEBUG)
+
+-- Autocmd to switch off relative numbers in Insert mode
+vim.api.nvim_create_autocmd({ "InsertEnter" }, {
+  pattern = { "*" },
+  command = "set norelativenumber",
+})
+
+-- Autocmd to switch on relative numbers and number in Normal mode (hybrid)
+vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+  pattern = { "*" },
+  command = "set number relativenumber",
+})
