@@ -72,6 +72,7 @@ return {
       treesitter.setup({
         -- TODO: These will have to be kept in sync with flake.nix
         ensure_installed = {
+          "diff",
           "query",
           "latex",
           "nix",

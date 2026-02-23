@@ -29,3 +29,10 @@ lze.register_handlers(require("lzextras").lsp)
 lze.load(lazy_packages)
 
 vim.cmd.colorscheme(colorscheme)
+
+vim.filetype.add({
+  extension = {
+    cjs = "javascript",
+    mjs = "javascript",
+  },
+})

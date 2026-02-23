@@ -1,11 +1,11 @@
 return {
-  {
-    "connect.nvim",
-    ft = { "rust", "javascript", "typescript", "javascriptreact", "typescriptreact", "tsx" },
-    after = function()
-      require("connect").setup()
-    end,
-  },
+  -- {
+  --   "connect.nvim",
+  --   ft = { "rust", "javascript", "typescript", "javascriptreact", "typescriptreact", "tsx" },
+  --   after = function()
+  --     require("connect").setup()
+  --   end,
+  -- },
   {
     "otter.nvim",
     ft = { "markdown" },

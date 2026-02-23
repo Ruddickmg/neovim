@@ -49,6 +49,8 @@ lspmux server
 ## TODO
 
 - configuration
+  - clean up configuration
+    - split opts_and_keys.lua into more specific files for options or keymappings
   - fixes
     - fix luasnip, snippets not showing up in autocompletion
     - fix rust lsp
