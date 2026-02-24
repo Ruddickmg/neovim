@@ -4,8 +4,16 @@ local keymap = {
   ["<C-y>"] = { "accept", "fallback" },
   ["<Tab>"] = {
     "snippet_forward",
-    function() -- sidekick next edit suggestion
-      return require("sidekick").nes_jump_or_apply()
+    function(cmp)
+      if vim.b[vim.api.nvim_get_current_buf()].nes_state then
+        cmp.hide()
+        return (require("copilot-lsp.nes").apply_pending_nes() and require("copilot-lsp.nes").walk_cursor_end_edit())
+      end
+      if cmp.snippet_active() then
+        return cmp.accept()
+      else
+        return cmp.select_and_accept()
+      end
     end,
     -- TODO: uncomment when on neovim version 12+
     -- function() -- if you are using Neovim's native inline completions
