@@ -106,4 +106,5 @@ require("nixCatsUtils.catPacker").setup({
   { "nickjvandyke/opencode.nvim", opt = true },
   { "zbirenbaum/copilot.lua", opt = true },
   { "CopilotC-Nvim/CopilotChat.nvim", opt = true },
+  { "fang2hou/blink-copilot", opt = true },
 })

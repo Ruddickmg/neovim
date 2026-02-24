@@ -53,7 +53,7 @@ lspmux server
     - split opts_and_keys.lua into more specific files for options or keymappings
   - fixes
     - fix luasnip, snippets not showing up in autocompletion
-    - fix rust lsp
+    - fix rust lsp (nixos problem)
     - fix snacks scrolling weirdness (maybe replace with neoscroll)
 - plugins
   - create plugin for sql (connect to postgresql lsp)
@@ -69,9 +69,6 @@ lspmux server
     - allow viewing output from script runs
   - add nvim-ufo (maybe?)
 - ai
-  - look into avante.nvim
-  - augment.nvim
-  - opencode.nvim
   - mcphub.nvim
 - visual
   - make which-key key bindings pretty

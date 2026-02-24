@@ -168,8 +168,14 @@ return {
           end,
         },
         sources = {
-          default = { "lsp", "omni", "npm", "path", "snippets", "buffer" },
+          default = { "lsp", "copilot", "omni", "npm", "path", "snippets", "buffer" },
           providers = {
+            copilot = {
+              name = "copilot",
+              module = "blink-copilot",
+              score_offset = 100,
+              async = true,
+            },
             path = {
               score_offset = 60,
             },
