@@ -93,6 +93,7 @@ require("nixCatsUtils.catPacker").setup({
   -- lint and format
   { "mfussenegger/nvim-lint", opt = true },
   { "stevearc/conform.nvim", opt = true },
+  { "esmuellert/nvim-eslint", opt = true },
 
   -- vcs
   { "mbbill/undotree", opt = true },

@@ -1,5 +1,12 @@
 return {
   {
+    "nvim-eslint",
+    ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "tsx", "cjs", "mjs" },
+    after = function()
+      require("nvim-eslint").setup({})
+    end,
+  },
+  {
     "typescript-tools.nvim",
     ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "tsx", "cjs", "mjs" },
     after = function()
