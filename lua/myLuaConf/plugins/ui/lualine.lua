@@ -40,14 +40,14 @@ return {
             },
           },
           lualine_c = {
-            {
-              "aerial",
-              sep = " ) ",
-              depth = nil,
-              dense = false,
-              dense_sep = ".",
-              colored = true,
-            },
+            -- {
+            --   "aerial",
+            --   sep = " ) ",
+            --   depth = nil,
+            --   dense = false,
+            --   dense_sep = ".",
+            --   colored = true,
+            -- },
             "lsp_progress",
           },
         },
@@ -64,11 +64,11 @@ return {
         tabline = {
           lualine_a = { "buffers" },
           lualine_z = { "tabs" },
-          lualine_x = {
-            function()
-              return require("auto-session.lib").current_session_name(true)
-            end,
-          },
+          -- lualine_x = {
+          --   function()
+          --     return require("auto-session.lib").current_session_name(true)
+          --   end,
+          -- },
         },
       }
 
