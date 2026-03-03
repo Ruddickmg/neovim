@@ -75,11 +75,6 @@ require("nixCatsUtils.catPacker").setup({
   { "b0o/schemastore.nvim" },
   { "mrcjkb/rustaceanvim" },
 
-  -- database
-  { "tpope/vim-dadbod", opt = true },
-  { "kristijanhusak/vim-dadbod-ui", opt = true },
-  { "kristijanhusak/vim-dadbod-completion", opt = true },
-
   -- completion
   { "L3MON4D3/LuaSnip", opt = true, as = "luasnip" },
   { "Saghen/blink.cmp", opt = true, branch = "v1.8.0" },
@@ -99,8 +94,6 @@ require("nixCatsUtils.catPacker").setup({
   { "mbbill/undotree", opt = true },
   { "sindrets/diffview.nvim", opt = true },
   { "lewis6991/gitsigns.nvim", opt = true },
-  { "NeogitOrg/neogit", opt = true },
-  { "sindrets/diffview.nvim", opt = true },
 
   -- ai
   { "nickjvandyke/opencode.nvim", opt = true },
