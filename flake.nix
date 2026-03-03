@@ -86,7 +86,7 @@
                 snacks-nvim
                 direnv-vim
                 noice-nvim
-                vim-repeat
+                # vim-repeat
               ];
             };
           };
@@ -146,9 +146,6 @@
               oil-nvim
               yazi-nvim
               aerial-nvim
-            ];
-            session-manager = with pkgs.vimPlugins; [
-              persistence-nvim
             ];
             general = {
               blink = with pkgs.vimPlugins; [

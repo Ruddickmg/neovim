@@ -12,17 +12,18 @@ require("nixCatsUtils.catPacker").setup({
   { "BirdeeHub/lzextras" },
 
   -- actions
-  { "tpope/vim-repeat" },
+  -- { "tpope/vim-repeat" },
   { "gbprod/substitute.nvim", opt = true },
   { "folke/flash.nvim", opt = true },
   { "numToStr/Comment.nvim", opt = true, as = "comment.nvim" },
   { "antosha417/nvim-lsp-file-operations", opt = true },
   { "michaelb/sniprun", build = "sh ./install.sh 1", opt = true },
 
-  -- file system
+  -- file system & navigation
   { "ahmedkhalf/project.nvim" },
   { "stevearc/oil.nvim" },
   { "mikavilpas/yazi.nvim", opt = true },
+  { "stevearc/aerial.nvim", opt = true },
 
   -- testing
   { "nvim-lua/plenary.nvim" },
@@ -41,24 +42,22 @@ require("nixCatsUtils.catPacker").setup({
   { "folke/trouble.nvim", opt = true },
 
   -- ui
+  { "MunifTanjim/nui.nvim", opt = true },
+  { "nvim-tree/nvim-web-devicons" },
+  { "folke/snacks.nvim" },
+  { "folke/which-key.nvim", opt = true },
+  { "folke/todo-comments.nvim", opt = true },
+  { "aznhe21/actions-preview.nvim", opt = true },
+
+  -- aesthetic
+  { "nvim-lualine/lualine.nvim", opt = true },
+  { "arkav/lualine-lsp-progress", opt = true },
+  { "rachartier/tiny-inline-diagnostic.nvim", opt = true },
+  { "folke/noice.nvim", opt = true },
+  { "loctvl842/monokai-pro.nvim" },
   { "sphamba/smear-cursor.nvim", opt = true },
   { "smjonas/inc-rename.nvim", opt = true },
-  { "MunifTanjim/nui.nvim", opt = true },
   { "MeanderingProgrammer/render-markdown.nvim", opt = true },
-  { "nvim-tree/nvim-web-devicons" },
-  { "loctvl842/monokai-pro.nvim" },
-  { "rcarriga/nvim-notify" },
-  { "folke/snacks.nvim" },
-  { "folke/noice.nvim", opt = true },
-  { "folke/which-key.nvim", opt = true },
-  { "folke/persistence.nvim", opt = true },
-  { "folke/todo-comments.nvim", opt = true },
-  { "folke/which-key.nvim", opt = true },
-  { "nvim-lualine/lualine.nvim", opt = true },
-  { "rachartier/tiny-inline-diagnostic.nvim", opt = true },
-  { "aznhe21/actions-preview.nvim", opt = true },
-  { "arkav/lualine-lsp-progress", opt = true },
-  { "stevearc/aerial.nvim", opt = true },
 
   -- language
   { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", opt = true, as = "treesitter-textobjects" },
@@ -100,4 +99,7 @@ require("nixCatsUtils.catPacker").setup({
   { "zbirenbaum/copilot.lua", opt = true },
   { "CopilotC-Nvim/CopilotChat.nvim", opt = true },
   { "fang2hou/blink-copilot", opt = true },
+
+  -- to remove
+  { "rcarriga/nvim-notify" },
 })
