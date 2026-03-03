@@ -1,5 +1,3 @@
-vim.notify = require("notify")
-
 local nixColorScheme = nixCats("colorscheme")
 local colorscheme = type(nixColorScheme) == "string" and nixColorScheme or "monokai-pro"
 local lze = require("lze")

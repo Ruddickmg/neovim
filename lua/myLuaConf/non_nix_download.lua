@@ -99,7 +99,4 @@ require("nixCatsUtils.catPacker").setup({
   { "zbirenbaum/copilot.lua", opt = true },
   { "CopilotC-Nvim/CopilotChat.nvim", opt = true },
   { "fang2hou/blink-copilot", opt = true },
-
-  -- to remove
-  { "rcarriga/nvim-notify" },
 })
