@@ -66,7 +66,6 @@ return {
           "tombi",
           -- nix
           "rnix",
-          "nil_ls",
           -- lua
           "lua_ls",
           "stylua",
