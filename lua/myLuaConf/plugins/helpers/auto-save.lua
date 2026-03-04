@@ -4,9 +4,12 @@ return {
     event = "FileType",
     after = function()
       require("auto-save").setup({
-        debounce_delay = 1000,
+        execution_message = {
+          enabled = false,
+        },
+        debounce_delay = 4000,
       })
-      Snacks.keymap("n", "<leader>S", ":ASToggle<CR>", { desc = "Toggle Auto Save" })
+      Snacks.keymap.set("n", "<leader>S", ":ASToggle<CR>", { desc = "Toggle Auto Save" })
     end,
   },
 }

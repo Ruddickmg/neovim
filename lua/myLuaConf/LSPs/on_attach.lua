@@ -6,9 +6,6 @@ return function(_, bufnr)
     Snacks.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  -- TODO: uncomment this when on neovim version 12+
-  -- vim.lsp.inline_completion.enable()
-
   nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
   nmap("K", vim.lsp.buf.hover, "Hover Documentation")
   nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")

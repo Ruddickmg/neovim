@@ -2,6 +2,7 @@ return {
   {
     "yamlls",
     event = { "BufReadPre", "BufNewFile" },
+    ft = { "yaml" },
     lsp = {
       settings = {
         yaml = {
@@ -27,6 +28,7 @@ return {
   {
     "jsonls",
     event = { "BufReadPre", "BufNewFile" },
+    ft = { "json" },
     lsp = {
       settings = {
         json = {

@@ -6,11 +6,35 @@ return {
   },
   {
     "copilot-lsp",
-    dep_of = { "copilot", "sidekick" },
+    dep_of = { "copilot" },
     event = { "InsertEnter" },
     after = function()
       vim.g.copilot_nes_debounce = 500
       vim.lsp.enable("copilot")
+    end,
+  },
+  {
+    "copilot.lua",
+    cmd = { "Copilot" },
+    event = { "InsertEnter" },
+    after = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "BlinkCmpMenuOpen",
+        callback = function()
+          vim.b.copilot_suggestion_hidden = true
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "BlinkCmpMenuClose",
+        callback = function()
+          vim.b.copilot_suggestion_hidden = false
+        end,
+      })
     end,
   },
   {
@@ -57,30 +81,6 @@ return {
       Snacks.keymap.set("n", "<leader>aC", "<cmd>CopilotChatOpen<CR>", { desc = "Open [C]opilot Chat" })
       Snacks.keymap.set("n", "<leader>am", "<cmd>CopilotChatModels<CR>", { desc = "Select Copilot Chat [M]odel" })
       Snacks.keymap.set("n", "<leader>ap", "<cmd>CopilotChatPrompts<CR>", { desc = "Select Copilot Chat [P]rompts" })
-    end,
-  },
-  {
-    "copilot.lua",
-    cmd = { "Copilot" },
-    event = { "InsertEnter" },
-    after = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "BlinkCmpMenuOpen",
-        callback = function()
-          vim.b.copilot_suggestion_hidden = true
-        end,
-      })
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "BlinkCmpMenuClose",
-        callback = function()
-          vim.b.copilot_suggestion_hidden = false
-        end,
-      })
     end,
   },
 }
