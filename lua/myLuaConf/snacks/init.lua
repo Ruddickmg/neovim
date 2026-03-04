@@ -1,6 +1,10 @@
 local dashboard = require("myLuaConf.snacks.dashboard")
 local keymap = require("myLuaConf.snacks.keys")
 
+function is_empty(t)
+  return next(t) == nil
+end
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
   callback = function()
@@ -30,20 +34,8 @@ return {
     keys = keymap,
     after = function()
       require("snacks").setup({
+        picker = require("myLuaConf.snacks.picker"),
         dashboard = dashboard,
-        picker = {
-          files = {
-            hidden = true,
-            ignored = true,
-          },
-          sources = {
-            files = {
-              hidden = true, -- Shows dotfiles
-            },
-            gh_issue = {},
-            gh_pr = {},
-          },
-        },
         image = { enabled = true },
         bufdelete = { enabled = true },
         -- indent = { enabled = true },

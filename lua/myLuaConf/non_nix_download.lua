@@ -24,6 +24,7 @@ require("nixCatsUtils.catPacker").setup({
   { "stevearc/oil.nvim" },
   { "mikavilpas/yazi.nvim", opt = true },
   { "stevearc/aerial.nvim", opt = true },
+  { "Pocco81/auto-save.nvim", opt = true },
 
   -- testing
   { "nvim-lua/plenary.nvim" },
