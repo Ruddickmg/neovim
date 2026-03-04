@@ -1,7 +1,7 @@
 return {
   {
     "blink-copilot",
-    dep_of = { "copilot-lsp", "sidekick", "copilot", "blink.cmp" },
+    dep_of = { "copilot-lsp", "copilot", "blink.cmp" },
     event = { "InsertEnter" },
   },
   {
@@ -23,14 +23,14 @@ return {
         panel = { enabled = false },
       })
       vim.api.nvim_create_autocmd("User", {
-        pattern = "BlinkCmpMenuOpen",
+        pattern = { "BlinkCmpMenuOpen", "InsertEnter" },
         callback = function()
           vim.b.copilot_suggestion_hidden = true
         end,
       })
 
       vim.api.nvim_create_autocmd("User", {
-        pattern = "BlinkCmpMenuClose",
+        pattern = { "BlinkCmpMenuClose", "InsertLeave" },
         callback = function()
           vim.b.copilot_suggestion_hidden = false
         end,
