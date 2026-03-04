@@ -1,4 +1,5 @@
 return {
+  { import = "myLuaConf.plugins.helpers.auto-save" },
   { import = "myLuaConf.plugins.helpers.rename" },
   { import = "myLuaConf.plugins.helpers.flash" },
   { import = "myLuaConf.plugins.helpers.auto-pairs" },
