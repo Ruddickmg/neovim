@@ -6,17 +6,17 @@ return {
   --     require("connect").setup()
   --   end,
   -- },
-  {
-    "otter.nvim",
-    ft = { "markdown" },
-    after = function()
-      require("otter").activate({
-        diagnostic_update_events = { "BufWritePost", "InsertLeave" },
-        buffers = {
-          set_filetype = true,
-          write_to_disk = true,
-        },
-      })
-    end,
-  },
+  -- {
+  --   "otter.nvim",
+  --   ft = { "markdown" },
+  --   after = function()
+  --     require("otter").activate({
+  --       diagnostic_update_events = { "BufWritePost", "InsertLeave" },
+  --       buffers = {
+  --         set_filetype = true,
+  --         write_to_disk = true,
+  --       },
+  --     })
+  --   end,
+  -- },
 }
