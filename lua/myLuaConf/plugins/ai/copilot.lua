@@ -1,18 +1,22 @@
 return {
   {
     "blink-copilot",
-    dep_of = { "copilot-lsp", "copilot", "blink.cmp" },
+    dep_of = {
+      -- "copilot-lsp",
+      "copilot",
+      "blink.cmp",
+    },
     event = { "InsertEnter" },
   },
-  {
-    "copilot-lsp",
-    dep_of = { "copilot" },
-    event = { "InsertEnter" },
-    after = function()
-      vim.g.copilot_nes_debounce = 500
-      vim.lsp.enable("copilot")
-    end,
-  },
+  -- {
+  --   "copilot-lsp",
+  --   dep_of = { "copilot" },
+  --   event = { "InsertEnter" },
+  --   after = function()
+  --     vim.g.copilot_nes_debounce = 500
+  --     vim.lsp.enable("copilot")
+  --   end,
+  -- },
   {
     "copilot.lua",
     cmd = { "Copilot" },
@@ -21,6 +25,9 @@ return {
       require("copilot").setup({
         suggestion = { enabled = false },
         panel = { enabled = false },
+        nes = {
+          enabled = false,
+        },
       })
       vim.api.nvim_create_autocmd("User", {
         pattern = { "BlinkCmpMenuOpen", "InsertEnter" },
