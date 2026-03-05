@@ -174,7 +174,7 @@ return {
     desc = "GitHub Pull Requests (all)",
   },
   {
-    "<leader>gG",
+    "<leader>gg",
     function()
       Snacks.lazygit.open()
     end,
