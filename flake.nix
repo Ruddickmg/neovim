@@ -137,7 +137,6 @@
               lualine-lsp-progress
               lualine-nvim
               monokai-pro-nvim
-              smear-cursor-nvim
               inc-rename-nvim
             ];
             file-manager = with pkgs.vimPlugins; [

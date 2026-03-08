@@ -29,7 +29,7 @@ return {
           -- Throttle update frequency in milliseconds to improve performance
           -- Higher values reduce CPU usage but may feel less responsive
           -- Set to 0 for immediate updates (may cause lag on slow systems)
-          throttle = 20,
+          throttle = 100,
 
           -- Minimum number of characters before wrapping long messages
           softwrap = 30,
@@ -49,7 +49,7 @@ return {
             always_show = true,
           },
           -- Automatically disable diagnostics when opening diagnostic float windows
-          override_open_float = false,
+          override_open_float = true,
           -- Break long messages into separate lines
           break_line = {
             enabled = false, -- Enable automatic line breaking

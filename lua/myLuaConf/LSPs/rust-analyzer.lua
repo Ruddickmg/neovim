@@ -2,6 +2,12 @@ local features = "all"
 -- local lspmux_path = "/run/user/1000/lspmux/lspmux.sock
 
 vim.g.rustaceanvim = {
+  tools = {
+    float_win_config = {
+      -- Options: "none", "single", "double", "rounded", "solid", "shadow"
+      border = "rounded", -- Example: set to 'rounded'
+    },
+  },
   server = {
     on_attach = function()
       local bufnr = vim.api.nvim_get_current_buf()

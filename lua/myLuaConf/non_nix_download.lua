@@ -1,5 +1,4 @@
 -- load the plugins via paq-nvim when not on nix
-
 require("nixCatsUtils.catPacker").setup({
   -- my plugin
   -- { "/var/www/connect.nvim", opt = true },
@@ -56,7 +55,6 @@ require("nixCatsUtils.catPacker").setup({
   { "rachartier/tiny-inline-diagnostic.nvim", opt = true },
   { "folke/noice.nvim", opt = true },
   { "loctvl842/monokai-pro.nvim" },
-  { "sphamba/smear-cursor.nvim", opt = true },
   { "smjonas/inc-rename.nvim", opt = true },
   { "MeanderingProgrammer/render-markdown.nvim", opt = true },
 
@@ -77,7 +75,7 @@ require("nixCatsUtils.catPacker").setup({
 
   -- completion
   { "L3MON4D3/LuaSnip", opt = true, as = "luasnip" },
-  { "Saghen/blink.cmp", opt = true, branch = "v1.8.0" },
+  { "saghen/blink.cmp", branch = "main", build = "cargo build --release", opt = true },
   { "Saghen/blink.compat", opt = true },
   { "xzbdmw/colorful-menu.nvim", opt = true },
   { "kylechui/nvim-surround", opt = true },
