@@ -41,6 +41,7 @@ vim.g.rustaceanvim = {
           method = "connect",
           server = "rust-analyzer",
         },
+
         runnables = {
           extraTestBinaryArgs = {
             "--nocapture",
@@ -48,10 +49,23 @@ vim.g.rustaceanvim = {
         },
         installCargo = false,
         installRustc = false,
+        files = {
+          watcher = "server",
+          exclude = {
+            "**/.git/**",
+            "**/target/**",
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/out/**",
+          },
+        },
         cargo = {
+          allTargets = true,
+          targetDir = "target/ra",
           features = features,
         },
         check = {
+          allTargets = true,
           features = features,
           command = "clippy",
         },
