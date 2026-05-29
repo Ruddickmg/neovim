@@ -39,11 +39,6 @@ vim.api.nvim_create_autocmd("User", {
         for _, session in ipairs(args.data.sessions) do
           if max_file_path_size < vim.fn.strdisplaywidth(session.cwd) then
             max_file_path_size = vim.fn.strdisplaywidth(session.cwd)
-            vim.notify(
-              "Updating max file path size: " .. session.cwd .. ", size: " .. max_file_path_size,
-              vim.log.levels.DEBUG,
-              { title = "Hermes" }
-            )
           end
           table.insert(items, {
             text = vim.trim(session.title:match("^(.-)%-") or session.title),
