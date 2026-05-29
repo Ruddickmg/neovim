@@ -75,7 +75,7 @@ require("nixCatsUtils.catPacker").setup({
 
   -- completion
   { "L3MON4D3/LuaSnip", opt = true, as = "luasnip" },
-  { "saghen/blink.cmp", branch = "main", build = "cargo build --release", opt = true },
+  { "saghen/blink.cmp", branch = "v1", build = "cargo build --release", opt = true },
   { "Saghen/blink.compat", opt = true },
   { "xzbdmw/colorful-menu.nvim", opt = true },
   { "kylechui/nvim-surround", opt = true },
