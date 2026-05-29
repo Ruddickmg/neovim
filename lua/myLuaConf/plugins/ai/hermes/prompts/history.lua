@@ -1,16 +1,8 @@
 local M = {}
 
-vim.api.nvim_create_autocmd("User", {
-  group = "hermes",
-  pattern = "SessionsListed",
-  callback = function(args)
-    local max_file_path_size = 0
-    Snacks.picker({
-      title = "Select Session",
-      preview = false,
-      layout = {
-        preview = false,
-      },
+M.history = function(history)
+  Snacks.picker({
+      title = "Prompt History",
       format = function(item, ctx)
         local left = item.text or ""
         local right = item.time or ""
@@ -56,20 +48,6 @@ vim.api.nvim_create_autocmd("User", {
         M.sessionId = session_id
       end,
     })
-  end,
-})
-
-vim.api.nvim_create_autocmd("User", {
-  group = "hermes",
-  pattern = "SessionLoaded",
-  callback = function()
-    vim.notify("Session loaded", vim.log.levels.INFO, { title = "Hermes" })
-  end,
-})
-
-M.selectSession = function()
-  local hermes = require("hermes")
-  hermes.list_sessions()
 end
 
 return M
