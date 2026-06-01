@@ -1,28 +1,34 @@
 local M = {}
 
--- NOTE: This function is for defining a paq.nvim fallback method of downloading plugins
--- when nixCats was not used to install your config.
+local function setup_build_hooks()
+  vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(ev)
+      local name, kind = ev.data.spec.name, ev.data.kind
+      if kind == 'install' or kind == 'update' then
+        if name == 'nvim-treesitter' then
+          vim.cmd('TSUpdate')
+        elseif name == 'sniprun' then
+          vim.system({ 'sh', './install.sh', '1' }, { cwd = ev.data.path })
+        elseif name == 'blink.cmp' then
+          vim.system({ 'cargo', 'build', '--release' }, { cwd = ev.data.path })
+        end
+      end
+    end,
+  })
+end
+
+-- Swap this to a custom function for finer-grained loading control:
+--   M.load = function(info)
+--     -- info.spec, info.path
+--   end
+---@type boolean|fun(info: {spec: vim.pack.Spec, path: string})|nil
+M.load = false
+
 function M.setup(v)
   if not vim.g[ [[nixCats-special-rtp-entry-nixCats]] ] then
-    local function clone_paq()
-      local path = vim.fn.stdpath("data") .. "/site/pack/paqs/start/paq-nvim"
-      local is_installed = vim.fn.empty(vim.fn.glob(path)) == 0
-      if not is_installed then
-        vim.fn.system { "git", "clone", "--depth=1", "https://github.com/savq/paq-nvim.git", path }
-        return true
-      end
-    end
-    local function bootstrap_paq(packages)
-      local first_install = clone_paq()
-      vim.cmd.packadd("paq-nvim")
-      local paq = require("paq")
-      if first_install then
-        vim.notify("Installing plugins... If prompted, hit Enter to continue.")
-      end
-      paq(packages)
-      paq.install()
-    end
-    bootstrap_paq(vim.list_extend({"savq/paq-nvim"},v))
+    setup_build_hooks()
+    vim.pack.add(v, { load = M.load })
   end
 end
+
 return M

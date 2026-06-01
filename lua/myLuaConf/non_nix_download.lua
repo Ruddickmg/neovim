@@ -1,101 +1,70 @@
--- load the plugins via paq-nvim when not on nix
+local gh = function(x) return 'https://github.com/' .. x end
+
 require("nixCatsUtils.catPacker").setup({
-  -- my plugin
-  -- { "/var/www/connect.nvim", opt = true },
-
-  --  NOTE:  we take care of lazy loading elsewhere in an autocommand
-  -- so that we can use the same code on and off nix.
-  -- so here we just tell it not to auto load it
-  { "folke/lazydev.nvim", opt = true },
-  { "BirdeeHub/lze" },
-  { "BirdeeHub/lzextras" },
-
-  -- actions
-  -- { "tpope/vim-repeat" },
-  { "gbprod/substitute.nvim", opt = true },
-  { "folke/flash.nvim", opt = true },
-  { "numToStr/Comment.nvim", opt = true, as = "comment.nvim" },
-  { "antosha417/nvim-lsp-file-operations", opt = true },
-  { "michaelb/sniprun", build = "sh ./install.sh 1", opt = true },
-
-  -- file system & navigation
-  { "ahmedkhalf/project.nvim" },
-  { "stevearc/oil.nvim" },
-  { "mikavilpas/yazi.nvim", opt = true },
-  { "stevearc/aerial.nvim", opt = true },
-  { "Pocco81/auto-save.nvim", opt = true },
-
-  -- testing
-  { "nvim-lua/plenary.nvim" },
-  { "antoinemadec/FixCursorHold.nvim", opt = true },
-  { "nvim-neotest/nvim-nio" },
-  { "nvim-neotest/neotest", opt = true },
-  { "nvim-neotest/neotest-plenary", opt = true },
-  { "nvim-neotest/neotest-jest", opt = true },
-  { "thenbe/neotest-playwright", opt = true },
-  { "marilari88/neotest-vitest", opt = true },
-
-  -- debugging
-  { "rcarriga/nvim-dap-ui", opt = true },
-  { "theHamsta/nvim-dap-virtual-text", opt = true },
-  { "mfussenegger/nvim-dap", opt = true },
-  { "folke/trouble.nvim", opt = true },
-
-  -- ui
-  { "MunifTanjim/nui.nvim", opt = true },
-  { "nvim-tree/nvim-web-devicons" },
-  { "folke/snacks.nvim" },
-  { "folke/which-key.nvim", opt = true },
-  { "folke/todo-comments.nvim", opt = true },
-  { "aznhe21/actions-preview.nvim", opt = true },
-
-  -- aesthetic
-  { "nvim-lualine/lualine.nvim", opt = true },
-  { "arkav/lualine-lsp-progress", opt = true },
-  { "rachartier/tiny-inline-diagnostic.nvim", opt = true },
-  { "folke/noice.nvim", opt = true },
-  { "loctvl842/monokai-pro.nvim" },
-  { "smjonas/inc-rename.nvim", opt = true },
-  { "MeanderingProgrammer/render-markdown.nvim", opt = true },
-
-  -- language
-  { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main", opt = true, as = "treesitter-textobjects" },
-  { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate", opt = true },
-
-  -- lsp
-  { "williamboman/mason.nvim", opt = true },
-  { "williamboman/mason-lspconfig.nvim", opt = true },
-  { "neovim/nvim-lspconfig", opt = true },
-  { "pmizio/typescript-tools.nvim", opt = true },
-  { "vuki656/package-info.nvim", opt = true },
-  { "jmbuhr/otter.nvim", opt = true },
-  -- { "Ruddickmg/connect.nvim", opt = true },
-  { "b0o/schemastore.nvim" },
-  { "mrcjkb/rustaceanvim" },
-
-  -- completion
-  { "L3MON4D3/LuaSnip", opt = true, as = "luasnip" },
-  { "saghen/blink.cmp", branch = "v1", build = "cargo build --release", opt = true },
-  { "Saghen/blink.compat", opt = true },
-  { "xzbdmw/colorful-menu.nvim", opt = true },
-  { "kylechui/nvim-surround", opt = true },
-  { "windwp/nvim-autopairs", opt = true },
-  { "windwp/nvim-ts-autotag", opt = true },
-  { "alexandre-abrioux/blink-cmp-npm.nvim", opt = true },
-
-  -- lint and format
-  { "mfussenegger/nvim-lint", opt = true },
-  { "stevearc/conform.nvim", opt = true },
-  { "esmuellert/nvim-eslint", opt = true },
-
-  -- vcs
-  { "mbbill/undotree", opt = true },
-  { "sindrets/diffview.nvim", opt = true },
-  { "lewis6991/gitsigns.nvim", opt = true },
-
-  -- ai
-  { "nickjvandyke/opencode.nvim", opt = true },
-  { "zbirenbaum/copilot.lua", opt = true },
-  { "CopilotC-Nvim/CopilotChat.nvim", opt = true },
-  { "fang2hou/blink-copilot", opt = true },
+  { src = gh("folke/lazydev.nvim") },
+  gh("BirdeeHub/lze"),
+  gh("BirdeeHub/lzextras"),
+  { src = gh("gbprod/substitute.nvim") },
+  { src = gh("folke/flash.nvim") },
+  { src = gh("numToStr/Comment.nvim"), name = "comment.nvim" },
+  { src = gh("antosha417/nvim-lsp-file-operations") },
+  { src = gh("michaelb/sniprun") },
+  gh("ahmedkhalf/project.nvim"),
+  gh("stevearc/oil.nvim"),
+  { src = gh("mikavilpas/yazi.nvim") },
+  { src = gh("stevearc/aerial.nvim") },
+  { src = gh("Pocco81/auto-save.nvim") },
+  gh("nvim-lua/plenary.nvim"),
+  { src = gh("antoinemadec/FixCursorHold.nvim") },
+  gh("nvim-neotest/nvim-nio"),
+  { src = gh("nvim-neotest/neotest") },
+  { src = gh("nvim-neotest/neotest-plenary") },
+  { src = gh("nvim-neotest/neotest-jest") },
+  { src = gh("thenbe/neotest-playwright") },
+  { src = gh("marilari88/neotest-vitest") },
+  { src = gh("rcarriga/nvim-dap-ui") },
+  { src = gh("theHamsta/nvim-dap-virtual-text") },
+  { src = gh("mfussenegger/nvim-dap") },
+  { src = gh("folke/trouble.nvim") },
+  { src = gh("MunifTanjim/nui.nvim") },
+  gh("nvim-tree/nvim-web-devicons"),
+  gh("folke/snacks.nvim"),
+  { src = gh("folke/which-key.nvim") },
+  { src = gh("folke/todo-comments.nvim") },
+  { src = gh("aznhe21/actions-preview.nvim") },
+  { src = gh("nvim-lualine/lualine.nvim") },
+  { src = gh("arkav/lualine-lsp-progress") },
+  { src = gh("rachartier/tiny-inline-diagnostic.nvim") },
+  { src = gh("folke/noice.nvim") },
+  gh("loctvl842/monokai-pro.nvim"),
+  { src = gh("smjonas/inc-rename.nvim") },
+  { src = gh("MeanderingProgrammer/render-markdown.nvim") },
+  { src = gh("nvim-treesitter/nvim-treesitter-textobjects"), name = "treesitter-textobjects", version = "main" },
+  { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
+  { src = gh("williamboman/mason.nvim") },
+  { src = gh("williamboman/mason-lspconfig.nvim") },
+  { src = gh("neovim/nvim-lspconfig") },
+  { src = gh("pmizio/typescript-tools.nvim") },
+  { src = gh("vuki656/package-info.nvim") },
+  { src = gh("jmbuhr/otter.nvim") },
+  gh("b0o/schemastore.nvim"),
+  gh("mrcjkb/rustaceanvim"),
+  { src = gh("L3MON4D3/LuaSnip"), name = "luasnip" },
+  { src = gh("saghen/blink.cmp"), version = "v1" },
+  { src = gh("Saghen/blink.compat") },
+  { src = gh("xzbdmw/colorful-menu.nvim") },
+  { src = gh("kylechui/nvim-surround") },
+  { src = gh("windwp/nvim-autopairs") },
+  { src = gh("windwp/nvim-ts-autotag") },
+  { src = gh("alexandre-abrioux/blink-cmp-npm.nvim") },
+  { src = gh("mfussenegger/nvim-lint") },
+  { src = gh("stevearc/conform.nvim") },
+  { src = gh("esmuellert/nvim-eslint") },
+  { src = gh("mbbill/undotree") },
+  { src = gh("sindrets/diffview.nvim") },
+  { src = gh("lewis6991/gitsigns.nvim") },
+  { src = gh("nickjvandyke/opencode.nvim") },
+  { src = gh("zbirenbaum/copilot.lua") },
+  { src = gh("CopilotC-Nvim/CopilotChat.nvim") },
+  { src = gh("fang2hou/blink-copilot") },
 })
