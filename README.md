@@ -46,6 +46,13 @@ cargo install lspmux
 lspmux server
 ```
 
+## Known Issues
+
+- `utilities/color.lua:7` — `nvim_get_hl` uses `link = false`, so linked highlight groups
+  (e.g. "String" in many themes) don't resolve `fg`/`bg`. This makes the blink.cmp scrollbar
+  thumb invisible (`BlinkCmpScrollBarThumb` gets `bg = "none"`). Need to either remove
+  `link = false` or resolve links manually.
+
 ## TODO
 
 - configuration

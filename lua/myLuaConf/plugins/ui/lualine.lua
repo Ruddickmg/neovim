@@ -23,7 +23,7 @@ return {
           theme = auto,
           transparent = true,
         },
-        extensions = { "trouble", "fugitive", "nvim-dap-ui", "oil" },
+        extensions = { "trouble", "nvim-dap-ui", "oil" },
         sections = {
           lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
           lualine_x = {},
@@ -39,17 +39,7 @@ return {
               separator = { right = "" },
             },
           },
-          lualine_c = {
-            -- {
-            --   "aerial",
-            --   sep = " ) ",
-            --   depth = nil,
-            --   dense = false,
-            --   dense_sep = ".",
-            --   colored = true,
-            -- },
-            "lsp_progress",
-          },
+          lualine_c = {},
         },
         inactive_sections = {
           lualine_b = {

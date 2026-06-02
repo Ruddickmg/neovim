@@ -37,7 +37,7 @@ return {
         jestArguments = function(defaultArguments)
           return defaultArguments
         end,
-        jestConfigFile = "kest.config.ts",
+        jestConfigFile = "jest.config.ts",
         cwd = function()
           return vim.fn.getcwd()
         end,
