@@ -1,5 +1,7 @@
 local M = {}
 
+local gh = function(x) return 'https://github.com/' .. x end
+
 local function setup_build_hooks()
   vim.api.nvim_create_autocmd('PackChanged', {
     callback = function(ev)
@@ -30,11 +32,16 @@ function M.setup(v)
     local start_specs, lazy_specs = {}, {}
     for _, spec in ipairs(v) do
       if type(spec) == "string" then
-        table.insert(lazy_specs, spec)
-      elseif spec.lazy == false then
-        table.insert(start_specs, { src = spec.src, name = spec.name, version = spec.version })
+        table.insert(lazy_specs, { src = gh(spec) })
       else
-        table.insert(lazy_specs, { src = spec.src, name = spec.name, version = spec.version })
+        local clean = { src = gh(spec[1]) }
+        if spec.name then clean.name = spec.name end
+        if spec.version then clean.version = spec.version end
+        if spec.lazy == false then
+          table.insert(start_specs, clean)
+        else
+          table.insert(lazy_specs, clean)
+        end
       end
     end
     if #start_specs > 0 then
