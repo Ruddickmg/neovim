@@ -22,12 +22,27 @@ end
 --     -- info.spec, info.path
 --   end
 ---@type boolean|fun(info: {spec: vim.pack.Spec, path: string})|nil
-M.load = false
+M.load = function(_) end
 
 function M.setup(v)
   if not vim.g[ [[nixCats-special-rtp-entry-nixCats]] ] then
     setup_build_hooks()
-    vim.pack.add(v, { load = M.load })
+    local start_specs, lazy_specs = {}, {}
+    for _, spec in ipairs(v) do
+      if type(spec) == "string" then
+        table.insert(lazy_specs, spec)
+      elseif spec.lazy == false then
+        table.insert(start_specs, { src = spec.src, name = spec.name, version = spec.version })
+      else
+        table.insert(lazy_specs, { src = spec.src, name = spec.name, version = spec.version })
+      end
+    end
+    if #start_specs > 0 then
+      vim.pack.add(start_specs)
+    end
+    if #lazy_specs > 0 then
+      vim.pack.add(lazy_specs, { load = M.load })
+    end
   end
 end
 
