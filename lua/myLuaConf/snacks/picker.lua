@@ -18,7 +18,7 @@ return {
       for _, file in ipairs(selected) do
         local path = file.file or file.path
         if path then
-          local sys = vim.loop.os_uname().sysname
+          local sys = vim.uv.os_uname().sysname
           local cmd
 
           if sys == "Darwin" then

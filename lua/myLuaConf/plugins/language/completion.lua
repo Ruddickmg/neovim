@@ -15,10 +15,9 @@ local keymap = {
         return cmp.select_and_accept()
       end
     end,
-    -- TODO: uncomment when on neovim version 12+
-    -- function() -- if you are using Neovim's native inline completions
-    --   return vim.lsp.inline_completion.get()
-    -- end,
+    function() -- if you are using Neovim's native inline completions
+      return vim.lsp.inline_completion.get()
+    end,
     "accept",
     "fallback",
   },

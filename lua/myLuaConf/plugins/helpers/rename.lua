@@ -12,7 +12,7 @@ return {
         preview_empty_name = true,
         show_message = true,
         save_in_cmdline_history = true,
-        input_buffer_type = "noice",
+        input_buffer_type = "dummy",
       })
       Snacks.keymap.set("n", "<leader>cn", function()
         return ":IncRename " .. vim.fn.expand("<cword>")

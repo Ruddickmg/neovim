@@ -42,6 +42,12 @@ vim.o.shiftwidth = 2
 -- stops line wrapping from being confusing
 vim.o.breakindent = true
 
+-- Neovim 0.12 native UI (ui2) replaces noice.nvim
+vim.o.cmdheight = 0
+vim.opt.winborder = "rounded"
+vim.opt.completeopt:append("popup")
+require("vim._core.ui2").enable({})
+
 -- Save undo history
 vim.o.undofile = true
 
@@ -77,7 +83,7 @@ vim.api.nvim_create_autocmd("FileType", {
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.hl_op()
   end,
   group = highlight_group,
   pattern = "*",

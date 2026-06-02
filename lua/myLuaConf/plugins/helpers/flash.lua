@@ -1,7 +1,7 @@
 return {
   {
     "flash.nvim",
-    event = { "CmdlineEnter" },
+    event = { "UIEnter" },
     keys = {
       {
         "<c-s>",
@@ -38,7 +38,6 @@ return {
             "blink-cmp-signature",
             "notify",
             "cmp_menu",
-            "noice",
             "flash_prompt",
             function(win)
               -- exclude non-focusable windows
@@ -63,6 +62,11 @@ return {
           bg = color.get_hl_colors(group).foreground,
         }
       end
+
+      -- toggle flash search in cmdline mode
+      vim.keymap.set("c", "<c-s>", function()
+        require("flash").toggle()
+      end, { desc = "Toggle flash search labels" })
 
       -- flash label
       vim.api.nvim_set_hl(0, "FlashLabel", text_hl_colors("Boolean"))

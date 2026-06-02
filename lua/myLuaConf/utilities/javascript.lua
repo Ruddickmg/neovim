@@ -23,7 +23,7 @@ local function scripts()
     format = "text",
     preview = "preview",
     finder = function()
-      local json = vim.fn.json_decode(vim.fn.readfile(location.project_root() .. "/package.json"))
+      local json = vim.json.decode(vim.fn.readfile(location.project_root() .. "/package.json"))
       local script_definitions = json and json.scripts or {}
       local items = {}
       local package_manager = detect_package_manager()

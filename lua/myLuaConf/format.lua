@@ -8,10 +8,6 @@ return {
     },
     after = function()
       local conform = require("conform")
-      -- local formatting_options = {
-      --   timeout_ms = 1000,
-      --   lsp_format = false,
-      -- }
 
       conform.setup({
         formatters_by_ft = {
@@ -19,11 +15,10 @@ return {
           nix = { "nixfmt" },
           rust = { "rustfmt" },
         },
-        -- format_on_save = formatting_options,
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>FF", function()
-        conform.format(formatting_options)
+        conform.format({ timeout_ms = 1000, lsp_format = false })
       end, { desc = "[F]ormat [F]ile" })
     end,
   },

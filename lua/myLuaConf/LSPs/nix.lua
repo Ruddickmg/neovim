@@ -45,9 +45,7 @@ return {
               expr = nixCats.extra("nixdExtras.home_manager_options"),
             },
           },
-          formatting = {
-            command = { "nixfmt" },
-          },
+
           diagnostic = {
             suppress = {
               "sema-escaping-with",
