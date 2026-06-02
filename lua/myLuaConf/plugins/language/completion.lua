@@ -206,10 +206,10 @@ return {
             buffer = {
               score_offset = 30,
             },
-            dadbod = {
-              name = "Dadbod",
-              module = "vim_dadbod_completion.blink",
-            },
+            -- dadbod = {
+            --   name = "Dadbod",
+            --   module = "vim_dadbod_completion.blink",
+            -- },
             cmdline = {
               module = "blink.cmp.sources.cmdline",
             },

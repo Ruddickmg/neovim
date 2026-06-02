@@ -33,7 +33,7 @@ end
 M.load = function(_) end
 
 function M.setup(v)
-  if not vim.g[['nixCats-special-rtp-entry-nixCats']] then
+  if not vim.g['nixCats-special-rtp-entry-nixCats'] then
     setup_build_hooks()
     local start_specs, lazy_specs = {}, {}
     for _, spec in ipairs(v) do

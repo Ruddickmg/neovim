@@ -1,5 +1,5 @@
 return {
-  "diffview.nvim",
+  { "diffview.nvim" },
   {
     keys = {
       {
