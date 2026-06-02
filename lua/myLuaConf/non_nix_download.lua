@@ -28,7 +28,12 @@ require("nixCatsUtils.catPacker").setup({
   "MeanderingProgrammer/render-markdown.nvim",
   "mfussenegger/nvim-dap",
   "mfussenegger/nvim-lint",
-  "michaelb/sniprun",
+  {
+    "michaelb/sniprun",
+    build = function(ev)
+      vim.system({ "sh", "./install.sh", "1" }, { cwd = ev.data.path })
+    end,
+  },
   "mikavilpas/yazi.nvim",
   { "mrcjkb/rustaceanvim", lazy = false },
   "MunifTanjim/nui.nvim",
@@ -42,14 +47,24 @@ require("nixCatsUtils.catPacker").setup({
   "nvim-neotest/neotest-plenary",
   { "nvim-neotest/nvim-nio", lazy = false },
   { "nvim-tree/nvim-web-devicons", lazy = false },
-  { "nvim-treesitter/nvim-treesitter", version = "main" },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    version = "main",
+    build = "TSUpdate",
+  },
   { "nvim-treesitter/nvim-treesitter-textobjects", name = "treesitter-textobjects", version = "main" },
   "pmizio/typescript-tools.nvim",
   "Pocco81/auto-save.nvim",
   "rachartier/tiny-cmdline.nvim",
   "rachartier/tiny-inline-diagnostic.nvim",
   "rcarriga/nvim-dap-ui",
-  { "saghen/blink.cmp", version = "v1" },
+  {
+    "saghen/blink.cmp",
+    version = "v1",
+    build = function(ev)
+      vim.system({ "cargo", "build", "--release" }, { cwd = ev.data.path })
+    end,
+  },
   "Saghen/blink.compat",
   "sindrets/diffview.nvim",
   "smjonas/inc-rename.nvim",
