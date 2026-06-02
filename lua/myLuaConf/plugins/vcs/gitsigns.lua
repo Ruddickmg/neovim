@@ -72,8 +72,8 @@ return {
           map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
         end,
       })
-      vim.cmd([[hi GitSignsAdd guifg=#04de21]])
-      vim.cmd([[hi GitSignsChange guifg=#83fce6]])
-      vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
+      vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#04de21" })
+      vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#83fce6" })
+      vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#fa2525" })
     end,
   }
