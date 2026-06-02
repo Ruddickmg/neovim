@@ -58,7 +58,6 @@ require("nixCatsUtils.catPacker").setup({
   "mfussenegger/nvim-lint",
   "stevearc/conform.nvim",
   "esmuellert/nvim-eslint",
-  "mbbill/undotree",
   "sindrets/diffview.nvim",
   "lewis6991/gitsigns.nvim",
   "nickjvandyke/opencode.nvim",

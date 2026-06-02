@@ -189,7 +189,6 @@
               ];
               utility = with pkgs.vimPlugins; [
                 nui-nvim
-                undotree
                 substitute-nvim
                 todo-comments-nvim
                 auto-session
