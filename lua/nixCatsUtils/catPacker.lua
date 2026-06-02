@@ -45,10 +45,10 @@ function M.setup(v)
       end
     end
     if #start_specs > 0 then
-      vim.pack.add(start_specs)
+      vim.pack.add(start_specs, { confirm = false })
     end
     if #lazy_specs > 0 then
-      vim.pack.add(lazy_specs, { load = M.load })
+      vim.pack.add(lazy_specs, { load = M.load, confirm = false })
     end
   end
 end
