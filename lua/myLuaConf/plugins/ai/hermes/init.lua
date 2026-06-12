@@ -4,11 +4,14 @@ return {
   --   -- in development, plugin is loaded from source
   -- end,
   after = function()
+    vim.api.nvim_create_augroup("hermes", { clear = true })
     local hermes = require("hermes")
     local sessions = require("myLuaConf.plugins.ai.hermes.sessions")
+    local registry = require("myLuaConf.plugins.ai.hermes.agents")
     local prompts = require("myLuaConf.plugins.ai.hermes.prompts")
 
     Snacks.keymap.set("n", "<leader>as", sessions.selectSession, { desc = "[S]essions" })
+    Snacks.keymap.set("n", "<leader>ac", registry.selectAgent, { desc = "[C]onnect" })
     Snacks.keymap.set("n", "<leader>aA", function()
       prompts.text.ask(sessions.sessionId)
     end, { desc = "[A]sk" })
