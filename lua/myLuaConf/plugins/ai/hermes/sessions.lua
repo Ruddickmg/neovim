@@ -2,7 +2,7 @@ local M = {}
 
 vim.api.nvim_create_autocmd("User", {
   group = "hermes",
-  pattern = "SessionsListed",
+  pattern = "Agents",
   callback = function(args)
     local max_file_path_size = 0
     Snacks.picker({
