@@ -54,17 +54,24 @@ vim.api.nvim_create_autocmd("User", {
           end
         end
       end
-      input_keys[key] = { action_name, mode = { "n", "i" } }
+      input_keys[key] = { action_name, mode = { "n" } }
       list_keys[key] = { action_name, mode = { "n", "i" } }
     end
 
     Snacks.picker({
+      focus = "input",
+      enter = true,
       title = "Select Agent",
       format = function(item)
         return {
           { "󰚥 ", "Special" },
           { item.text, "Title" },
         }
+      end,
+      on_show = function(_picker)
+        vim.schedule(function()
+          vim.cmd("startinsert")
+        end)
       end,
       actions = actions,
       win = {
@@ -159,7 +166,6 @@ vim.api.nvim_create_autocmd("User", {
         local agent_id = item.data.id
         local dist = item.data.selected_distribution
         picker:close()
-        vim.notify("Loading agent: " .. agent_id, vim.log.levels.INFO, { title = "Hermes" })
         require("hermes").connect(agent_id, dist and { distribution = dist } or nil)
         M.agentId = agent_id
       end,
@@ -169,7 +175,6 @@ vim.api.nvim_create_autocmd("User", {
 
 M.selectAgent = function()
   local hermes = require("hermes")
-  vim.notify("getting agents")
   hermes.agents({
     update = false,
   })
