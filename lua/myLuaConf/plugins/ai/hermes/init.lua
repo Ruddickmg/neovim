@@ -23,6 +23,9 @@ return {
         auto = false,
       },
       log = {
+        notification = {
+          level = "info",
+        },
         file = {
           level = "trace",
         },
