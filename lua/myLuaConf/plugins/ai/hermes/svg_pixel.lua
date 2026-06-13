@@ -279,7 +279,14 @@ local function parse(tokens)
           table.insert(cmds, { cmd = "A", args = { rx, ry, rot, laf, sf, x, y } })
         end
       elseif c:match("^[Zz]$") then
-        table.insert(cmds, { cmd = "Z", args = {} })
+        local sx, sy = 0, 0
+        for j = #cmds, 1, -1 do
+          if cmds[j].cmd == "M" then
+            sx, sy = cmds[j].args[1], cmds[j].args[2]
+            break
+          end
+        end
+        table.insert(cmds, { cmd = "Z", args = { sx, sy } })
       end
     else
       i = i + 1
