@@ -1,6 +1,24 @@
 local M = {}
 
-local svg_pixel = require("myLuaConf.plugins.ai.hermes.svg_pixel")
+local function pixel_data_to_icon(data)
+  if not data or not data.pixels or not data.width or not data.height then
+    return nil
+  end
+  local w, h = data.width, data.height
+  local pixels = data.pixels
+  local chars = { " ", "▓", "█" }
+  local lines = {}
+  for y = 0, h - 1 do
+    local line = {}
+    for x = 0, w - 1 do
+      local v = pixels[y * w + x + 1] or 0
+      local idx = math.floor(v / 255 * 2) + 1
+      line[x + 1] = chars[idx]
+    end
+    lines[y + 1] = table.concat(line)
+  end
+  return lines
+end
 
 vim.api.nvim_set_hl(0, "HermesPixelArt", { fg = "#ffffff" })
 
@@ -79,7 +97,10 @@ vim.api.nvim_create_autocmd("User", {
         table.insert(lines, pad(4) .. string.rep("─", #data.name + 2))
         table.insert(lines, "")
 
-        local icon_lines = data.icon and svg_pixel.get_icon(data.icon, { width = 22, height = 12 })
+        local icon_lines
+        if data.icon_pixel_data then
+          icon_lines = pixel_data_to_icon(data.icon_pixel_data)
+        end
         local icon_start_buf
         if icon_lines then
           icon_start_buf = #lines
