@@ -34,6 +34,17 @@ local function tokenize(d)
           end
           has_dot = true
           i = i + 1
+        elseif nc == "e" or nc == "E" then
+          i = i + 1
+          if i <= len then
+            local sign = d:sub(i, i)
+            if sign == "-" or sign == "+" then i = i + 1 end
+          end
+          while i <= len do
+            local ed = d:sub(i, i)
+            if ed:match("^%d$") then i = i + 1 else break end
+          end
+          break
         else
           break
         end
@@ -52,7 +63,7 @@ end
 local function parse(tokens)
   local cmds = {}
   local i, n = 1, #tokens
-  local prev_qcp
+  local prev_qcp, prev_cp2
   while i <= n do
     if tokens[i].type == "c" then
       local c = tokens[i].val
@@ -74,6 +85,8 @@ local function parse(tokens)
           end
           if first then
             table.insert(cmds, { cmd = "M", args = { x, y } })
+            prev_cp2 = nil
+            prev_qcp = nil
             first = false
           else
             table.insert(cmds, { cmd = "L", args = { x, y } })
@@ -157,6 +170,35 @@ local function parse(tokens)
             x, y = px + x, py + y
           end
           table.insert(cmds, { cmd = "C", args = { x1, y1, x2, y2, x, y } })
+          prev_cp2 = { x2, y2 }
+        end
+      elseif c:match("^[Ss]$") then
+        local rel = c == "s"
+        while i <= n and tokens[i].type == "n" do
+          local x2 = tokens[i].val
+          local y2 = tokens[i + 1] and tokens[i + 1].val
+          local x = tokens[i + 2] and tokens[i + 2].val
+          local y = tokens[i + 3] and tokens[i + 3].val
+          if not y then break end
+          i = i + 4
+          local prev = cmds[#cmds]
+          local px, py = 0, 0
+          if prev and prev.args and #prev.args >= 2 then
+            px, py = prev.args[#prev.args - 1], prev.args[#prev.args]
+          end
+          local x1, y1
+          if prev_cp2 then
+            x1 = 2 * px - prev_cp2[1]
+            y1 = 2 * py - prev_cp2[2]
+          else
+            x1, y1 = px, py
+          end
+          if rel then
+            x2, y2 = px + x2, py + y2
+            x, y = px + x, py + y
+          end
+          table.insert(cmds, { cmd = "C", args = { x1, y1, x2, y2, x, y } })
+          prev_cp2 = { x2, y2 }
         end
       elseif c:match("^[Qq]$") then
         local rel = c == "q"
@@ -182,6 +224,7 @@ local function parse(tokens)
           local c2y = (2 * cy1 + y) / 3
           table.insert(cmds, { cmd = "C", args = { c1x, c1y, c2x, c2y, x, y } })
           prev_qcp = { cx1, cy1 }
+          prev_cp2 = { c2x, c2y }
         end
       elseif c:match("^[Tt]$") then
         local rel = c == "t"
@@ -211,6 +254,7 @@ local function parse(tokens)
           local c2y = (2 * cy1 + y) / 3
           table.insert(cmds, { cmd = "C", args = { c1x, c1y, c2x, c2y, x, y } })
           prev_qcp = { cx1, cy1 }
+          prev_cp2 = { c2x, c2y }
         end
       elseif c:match("^[Aa]$") then
         local rel = c == "a"
@@ -495,6 +539,7 @@ local function parse_svg(xml)
 
   local paths = {}
   local fill_stack = { svg_default_fill(xml) }
+  local pending_text
 
   local function cur_fill(tag)
     local f = attr(tag, "fill")
@@ -609,6 +654,23 @@ local function parse_svg(xml)
             if has_strk then
               emit({ d = d, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
             end
+          end
+
+        elseif el == "text" then
+          local tx = tonumber(attr(raw, "x") or 0)
+          local ty = tonumber(attr(raw, "y") or 0)
+          local fs = tonumber(attr(raw, "font%-size") or 16)
+          local anchor = attr(raw, "text%-anchor") or "start"
+          local content = xml:match("<text[^>]*>(.-)</text>")
+          if content and #content > 0 then
+            local tw = fs * #content * 0.35
+            local th = fs * 0.8
+            if anchor == "middle" then tx = tx - tw / 2
+            elseif anchor == "end" then tx = tx - tw end
+            local by = ty
+            local d = "M " .. tx .. " " .. (by - th) .. " L " .. (tx + tw) .. " " .. (by - th)
+                .. " L " .. (tx + tw) .. " " .. by .. " L " .. tx .. " " .. by .. " Z"
+            emit({ d = d, opacity = 1.0 })
           end
         end
       end
