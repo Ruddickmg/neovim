@@ -595,9 +595,11 @@ local function parse_svg(xml)
         elseif el == "circle" then
           local cx, cy, r = attr(raw, "cx"), attr(raw, "cy"), attr(raw, "r")
           if cx and cy and r then
-            local d = ellipse_to_path(tonumber(cx), tonumber(cy), tonumber(r), tonumber(r), 8)
-            if has_fill then emit({ d = d, opacity = 1.0 }) end
+            if has_fill then
+              emit({ type = "circle", cx = tonumber(cx), cy = tonumber(cy), r = tonumber(r), opacity = 1.0 })
+            end
             if has_strk then
+              local d = ellipse_to_path(tonumber(cx), tonumber(cy), tonumber(r), tonumber(r), 8)
               emit({ d = d, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
             end
           end
@@ -708,37 +710,41 @@ local function rasterize(paths, gw, gh, vw, vh)
     end
   end
 
-  for _, p in ipairs(paths) do
-    local toks = tokenize(p.d)
-    local cmds = parse(toks)
-    if p.matrix then
-      cmds = apply_matrix_to_cmds(cmds, p.matrix)
-    end
-    local segs = to_segments(cmds)
-    local ss = 2
+  local ss = math.max(2, math.ceil(math.max(vw, vh) / 60))
 
-    for sy = 0, gh * ss - 1 do
-      for sx = 0, gw * ss - 1 do
-        local vx = (sx + 0.5) / (gw * ss) * vw
-        local vy = (sy + 0.5) / (gh * ss) * vh
-        local hit
-        if p.stroke_width then
-          hit = point_near_stroke(vx, vy, segs, p.stroke_width)
-        else
-          hit = inside(vx, vy, segs)
-        end
-        if hit then
-          local gx = math.floor(sx / ss)
-          local gy = math.floor(sy / ss)
-          grid[gy][gx] = grid[gy][gx] + (p.opacity or 1.0) / (ss * ss)
+  for _, p in ipairs(paths) do
+    if p.type == "circle" then
+      local cx_px = p.cx / vw * gw
+      local cy_px = p.cy / vh * gh
+      local gx = math.floor(cx_px)
+      local gy = math.floor(cy_px)
+      if gx >= 0 and gx < gw and gy >= 0 and gy < gh then
+        grid[gy][gx] = grid[gy][gx] + 1.0
+      end
+    else
+      local toks = tokenize(p.d)
+      local cmds = parse(toks)
+      if p.matrix then
+        cmds = apply_matrix_to_cmds(cmds, p.matrix)
+      end
+      local segs = to_segments(cmds)
+      for sy = 0, gh * ss - 1 do
+        for sx = 0, gw * ss - 1 do
+          local vx = (sx + 0.5) / (gw * ss) * vw
+          local vy = (sy + 0.5) / (gh * ss) * vh
+          local hit
+          if p.stroke_width then
+            hit = point_near_stroke(vx, vy, segs, p.stroke_width)
+          else
+            hit = inside(vx, vy, segs)
+          end
+          if hit then
+            local gx = math.floor(sx / ss)
+            local gy = math.floor(sy / ss)
+            grid[gy][gx] = grid[gy][gx] + (p.opacity or 1.0) / (ss * ss)
+          end
         end
       end
-    end
-  end
-
-  for y = 0, gh - 1 do
-    for x = 0, gw - 1 do
-      grid[y][x] = math.min(1, grid[y][x])
     end
   end
 
@@ -747,7 +753,8 @@ local function rasterize(paths, gw, gh, vw, vh)
   for y = 0, gh - 1 do
     local line = {}
     for x = 0, gw - 1 do
-      local idx = math.floor(grid[y][x] * 2) + 1
+      local v = math.min(1, grid[y][x])
+      local idx = math.floor(v * 2) + 1
       line[x + 1] = chars[idx]
     end
     lines[y + 1] = table.concat(line)
