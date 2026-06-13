@@ -140,6 +140,10 @@ vim.api.nvim_create_autocmd("User", {
         vim.bo[buf].modifiable = true
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
         vim.bo[buf].modifiable = false
+        pcall(function()
+          vim.wo[ctx.win].number = false
+          vim.wo[ctx.win].relativenumber = false
+        end)
 
         if icon_start_buf and icon_lines then
           local ns = vim.api.nvim_create_namespace("HermesPixelArt")
