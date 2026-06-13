@@ -52,6 +52,7 @@ end
 local function parse(tokens)
   local cmds = {}
   local i, n = 1, #tokens
+  local prev_qcp
   while i <= n do
     if tokens[i].type == "c" then
       local c = tokens[i].val
@@ -156,6 +157,60 @@ local function parse(tokens)
             x, y = px + x, py + y
           end
           table.insert(cmds, { cmd = "C", args = { x1, y1, x2, y2, x, y } })
+        end
+      elseif c:match("^[Qq]$") then
+        local rel = c == "q"
+        while i <= n and tokens[i].type == "n" do
+          local cx1 = tokens[i].val
+          local cy1 = tokens[i + 1] and tokens[i + 1].val
+          local x = tokens[i + 2] and tokens[i + 2].val
+          local y = tokens[i + 3] and tokens[i + 3].val
+          if not y then break end
+          i = i + 4
+          local prev = cmds[#cmds]
+          local px, py = 0, 0
+          if prev and prev.args and #prev.args >= 2 then
+            px, py = prev.args[#prev.args - 1], prev.args[#prev.args]
+          end
+          if rel then
+            cx1, cy1 = px + cx1, py + cy1
+            x, y = px + x, py + y
+          end
+          local c1x = (px + 2 * cx1) / 3
+          local c1y = (py + 2 * cy1) / 3
+          local c2x = (2 * cx1 + x) / 3
+          local c2y = (2 * cy1 + y) / 3
+          table.insert(cmds, { cmd = "C", args = { c1x, c1y, c2x, c2y, x, y } })
+          prev_qcp = { cx1, cy1 }
+        end
+      elseif c:match("^[Tt]$") then
+        local rel = c == "t"
+        while i <= n and tokens[i].type == "n" do
+          local x = tokens[i].val
+          local y = tokens[i + 1] and tokens[i + 1].val
+          if not y then break end
+          i = i + 2
+          local prev = cmds[#cmds]
+          local px, py = 0, 0
+          if prev and prev.args and #prev.args >= 2 then
+            px, py = prev.args[#prev.args - 1], prev.args[#prev.args]
+          end
+          if rel then
+            x, y = px + x, py + y
+          end
+          local cx1, cy1
+          if prev_qcp then
+            cx1 = 2 * px - prev_qcp[1]
+            cy1 = 2 * py - prev_qcp[2]
+          else
+            cx1, cy1 = px, py
+          end
+          local c1x = (px + 2 * cx1) / 3
+          local c1y = (py + 2 * cy1) / 3
+          local c2x = (2 * cx1 + x) / 3
+          local c2y = (2 * cy1 + y) / 3
+          table.insert(cmds, { cmd = "C", args = { c1x, c1y, c2x, c2y, x, y } })
+          prev_qcp = { cx1, cy1 }
         end
       elseif c:match("^[Aa]$") then
         local rel = c == "a"
@@ -303,6 +358,26 @@ local function inside(px, py, segs)
   return hit
 end
 
+local function point_near_stroke(px, py, segs, sw)
+  local t2 = ((sw or 1) / 2) ^ 2
+  for _, s in ipairs(segs) do
+    local dx = s.x2 - s.x1
+    local dy = s.y2 - s.y1
+    local len2 = dx * dx + dy * dy
+    if len2 > 0 then
+      local t = math.max(0, math.min(1, ((px - s.x1) * dx + (py - s.y1) * dy) / len2))
+      local cx = s.x1 + t * dx
+      local cy = s.y1 + t * dy
+      local d2 = (px - cx) ^ 2 + (py - cy) ^ 2
+      if d2 < t2 then return true end
+    else
+      local d2 = (px - s.x1) ^ 2 + (py - s.y1) ^ 2
+      if d2 < t2 then return true end
+    end
+  end
+  return false
+end
+
 local function ellipse_to_path(cx, cy, rx, ry, n)
   local parts = {}
   for i = 0, n - 1 do
@@ -317,20 +392,6 @@ local function ellipse_to_path(cx, cy, rx, ry, n)
   end
   table.insert(parts, "Z")
   return table.concat(parts, " ")
-end
-
-local function line_to_path(x1, y1, x2, y2, sw)
-  local dx, dy = x2 - x1, y2 - y1
-  local len = math.sqrt(dx * dx + dy * dy)
-  if len < 0.001 then
-    sw = sw or 1
-    local r = sw / 2
-    return "M " .. (x1 - r) .. " " .. (y1 - r) .. " L " .. (x1 + r) .. " " .. (y1 - r) .. " L " .. (x1 + r) .. " " .. (y1 + r) .. " L " .. (x1 - r) .. " " .. (y1 + r) .. " Z"
-  end
-  local hw = (sw or 1) / 2
-  local nx = -dy / len * hw
-  local ny = dx / len * hw
-  return "M " .. (x1 + nx) .. " " .. (y1 + ny) .. " L " .. (x2 + nx) .. " " .. (y2 + ny) .. " L " .. (x2 - nx) .. " " .. (y2 - ny) .. " L " .. (x1 - nx) .. " " .. (y1 - ny) .. " Z"
 end
 
 local function rounded_rect_path(x, y, w, h, rx)
@@ -358,14 +419,57 @@ local function attr(tag, name)
   return v
 end
 
-local function has_visible_fill(tag)
-  local fill = attr(tag, "fill")
-  return fill and fill ~= "none"
-end
-
 local function has_visible_stroke(tag)
   local stroke = attr(tag, "stroke")
   return stroke and stroke ~= "none"
+end
+
+local function svg_default_fill(xml)
+  local f = xml:match('<svg[^>]*fill="(.-)"')
+  if not f then f = xml:match("<svg[^>]*fill='(.-)'") end
+  return f
+end
+
+local function parse_matrix(str)
+  if not str then return nil end
+  local a, b, c, d, e, f = str:match("matrix%(([%d%.%-]+),([%d%.%-]+),([%d%.%-]+),([%d%.%-]+),([%d%.%-]+),([%d%.%-]+)%)")
+  if a then
+    return { a = tonumber(a), b = tonumber(b), c = tonumber(c), d = tonumber(d), e = tonumber(e), f = tonumber(f) }
+  end
+  return nil
+end
+
+local function multiply_matrices(m1, m2)
+  return {
+    a = m1.a * m2.a + m1.c * m2.b,
+    b = m1.b * m2.a + m1.d * m2.b,
+    c = m1.a * m2.c + m1.c * m2.d,
+    d = m1.b * m2.c + m1.d * m2.d,
+    e = m1.a * m2.e + m1.c * m2.f + m1.e,
+    f = m1.b * m2.e + m1.d * m2.f + m1.f,
+  }
+end
+
+local function apply_matrix_to_cmds(cmds, m)
+  for _, cmd in ipairs(cmds) do
+    local args = cmd.args
+    if cmd.cmd == "M" or cmd.cmd == "L" then
+      local x, y = args[1], args[2]
+      args[1] = m.a * x + m.c * y + m.e
+      args[2] = m.b * x + m.d * y + m.f
+    elseif cmd.cmd == "C" then
+      for i = 1, 6, 2 do
+        local x, y = args[i], args[i + 1]
+        args[i] = m.a * x + m.c * y + m.e
+        args[i + 1] = m.b * x + m.d * y + m.f
+      end
+    elseif cmd.cmd == "A" then
+      local x, y = args[6], args[7]
+      args[6] = m.a * x + m.c * y + m.e
+      args[7] = m.b * x + m.d * y + m.f
+    end
+  end
+  return cmds
 end
 
 local function parse_svg(xml)
@@ -377,82 +481,137 @@ local function parse_svg(xml)
       vw, vh = tonumber(c), tonumber(d)
     end
   end
+
+  local combined = nil
+  for tag in xml:gmatch('<g[^>]*>') do
+    local t = attr(tag, "transform")
+    if t then
+      local m = parse_matrix(t)
+      if m then
+        combined = combined and multiply_matrices(combined, m) or m
+      end
+    end
+  end
+
   local paths = {}
+  local fill_stack = { svg_default_fill(xml) }
 
-  for tag in xml:gmatch('<path[^>]*/>') do
-    local d = attr(tag, "d")
-    if d and (has_visible_fill(tag) or has_visible_stroke(tag)) then
-      local opa_str = tag:match('fill%-opacity="(.-)"')
-      if not opa_str then opa_str = tag:match("fill%-opacity='(.-)'") end
-      local opa = opa_str and tonumber(opa_str) or 1.0
-      if not d:match("Z%s*$") then d = d .. " Z" end
-      table.insert(paths, { d = d, opacity = opa })
-    end
+  local function cur_fill(tag)
+    local f = attr(tag, "fill")
+    return f ~= nil and f or fill_stack[#fill_stack]
   end
 
-  for tag in xml:gmatch('<line[^>]*/>') do
-    local x1, y1 = attr(tag, "x1"), attr(tag, "y1")
-    local x2, y2 = attr(tag, "x2"), attr(tag, "y2")
-    local sw = attr(tag, "stroke%-width")
-    if x1 and y1 and x2 and y2 and has_visible_stroke(tag) then
-      table.insert(paths, { d = line_to_path(tonumber(x1), tonumber(y1), tonumber(x2), tonumber(y2), tonumber(sw or 1)), opacity = 1.0 })
-    end
+  local function emit(entry)
+    if combined then entry.matrix = combined end
+    table.insert(paths, entry)
   end
 
-  for tag in xml:gmatch('<circle[^>]*/>') do
-    local cx, cy, r = attr(tag, "cx"), attr(tag, "cy"), attr(tag, "r")
-    if cx and cy and r and (has_visible_fill(tag) or has_visible_stroke(tag)) then
-      table.insert(paths, { d = ellipse_to_path(tonumber(cx), tonumber(cy), tonumber(r), tonumber(r), 8), opacity = 1.0 })
-    end
-  end
-
-  for tag in xml:gmatch('<ellipse[^>]*/>') do
-    local cx, cy, rx, ry = attr(tag, "cx"), attr(tag, "cy"), attr(tag, "rx"), attr(tag, "ry")
-    if cx and cy and rx and ry and (has_visible_fill(tag) or has_visible_stroke(tag)) then
-      table.insert(paths, { d = ellipse_to_path(tonumber(cx), tonumber(cy), tonumber(rx), tonumber(ry), 8), opacity = 1.0 })
-    end
-  end
-
-  for tag in xml:gmatch('<rect[^>]*/>') do
-    local x, y, w, h = attr(tag, "x"), attr(tag, "y"), attr(tag, "width"), attr(tag, "height")
-    local rx = attr(tag, "rx")
-    if x and y and w and h and (has_visible_fill(tag) or has_visible_stroke(tag)) then
-      table.insert(paths, { d = rounded_rect_path(tonumber(x), tonumber(y), tonumber(w), tonumber(h), rx and tonumber(rx) or 0), opacity = 1.0 })
-    end
-  end
-
-  for tag in xml:gmatch('<polygon[^>]*/>') do
-    local pts = attr(tag, "points")
-    if pts and (has_visible_fill(tag) or has_visible_stroke(tag)) then
-      local parts = {}
-      local first = true
-      for x, y in pts:gmatch("([%d%.%-]+)[%s,]+([%d%.%-]+)") do
-        if first then
-          table.insert(parts, "M " .. x .. " " .. y)
-          first = false
+  for raw in xml:gmatch("<[^>]*>") do
+    local is_close = raw:match("^</")
+    local el = raw:match("^</?([%w]+)")
+    if el then
+      if el == "g" then
+        if is_close then
+          if #fill_stack > 1 then table.remove(fill_stack) end
         else
-          table.insert(parts, "L " .. x .. " " .. y)
+          table.insert(fill_stack, attr(raw, "fill"))
+        end
+      elseif not is_close then
+        local has_fill = cur_fill(raw) ~= "none"
+        local has_strk = has_visible_stroke(raw)
+
+        if el == "path" then
+          local d = attr(raw, "d")
+          if d then
+            if has_fill then
+              local opa_str = raw:match('fill%-opacity="(.-)"')
+              if not opa_str then opa_str = raw:match("fill%-opacity='(.-)'") end
+              local opa = opa_str and tonumber(opa_str) or 1.0
+              if not d:match("Z%s*$") then d = d .. " Z" end
+              emit({ d = d, opacity = opa })
+            elseif has_strk then
+              emit({ d = d, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
+            end
+          end
+
+        elseif el == "line" and has_strk then
+          local x1, y1, x2, y2 = attr(raw, "x1"), attr(raw, "y1"), attr(raw, "x2"), attr(raw, "y2")
+          if x1 and y1 and x2 and y2 then
+            emit({ d = "M " .. x1 .. " " .. y1 .. " L " .. x2 .. " " .. y2, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
+          end
+
+        elseif el == "circle" then
+          local cx, cy, r = attr(raw, "cx"), attr(raw, "cy"), attr(raw, "r")
+          if cx and cy and r then
+            local d = ellipse_to_path(tonumber(cx), tonumber(cy), tonumber(r), tonumber(r), 8)
+            if has_fill then emit({ d = d, opacity = 1.0 }) end
+            if has_strk then
+              emit({ d = d, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
+            end
+          end
+
+        elseif el == "ellipse" then
+          local cx, cy, rx, ry = attr(raw, "cx"), attr(raw, "cy"), attr(raw, "rx"), attr(raw, "ry")
+          if cx and cy and rx and ry then
+            local d = ellipse_to_path(tonumber(cx), tonumber(cy), tonumber(rx), tonumber(ry), 8)
+            if has_fill then emit({ d = d, opacity = 1.0 }) end
+            if has_strk then
+              emit({ d = d, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
+            end
+          end
+
+        elseif el == "rect" then
+          local x, y, w, h, rx = attr(raw, "x"), attr(raw, "y"), attr(raw, "width"), attr(raw, "height"), attr(raw, "rx")
+          if x and y and w and h then
+            local d = rounded_rect_path(tonumber(x), tonumber(y), tonumber(w), tonumber(h), rx and tonumber(rx) or 0)
+            if has_fill then emit({ d = d, opacity = 1.0 }) end
+            if has_strk then
+              emit({ d = d, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
+            end
+          end
+
+        elseif el == "polygon" then
+          local pts = attr(raw, "points")
+          if pts then
+            local parts = {}
+            local first = true
+            for x, y in pts:gmatch("([%d%.%-]+)[%s,]+([%d%.%-]+)") do
+              if first then
+                table.insert(parts, "M " .. x .. " " .. y)
+                first = false
+              else
+                table.insert(parts, "L " .. x .. " " .. y)
+              end
+            end
+            table.insert(parts, "Z")
+            local d = table.concat(parts, " ")
+            if has_fill then emit({ d = d, opacity = 1.0 }) end
+            if has_strk then
+              emit({ d = d, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
+            end
+          end
+
+        elseif el == "polyline" then
+          local pts = attr(raw, "points")
+          if pts then
+            local parts = {}
+            local first = true
+            for x, y in pts:gmatch("([%d%.%-]+)[%s,]+([%d%.%-]+)") do
+              if first then
+                table.insert(parts, "M " .. x .. " " .. y)
+                first = false
+              else
+                table.insert(parts, "L " .. x .. " " .. y)
+              end
+            end
+            local d = table.concat(parts, " ")
+            if has_fill then emit({ d = d, opacity = 1.0 }) end
+            if has_strk then
+              emit({ d = d, stroke_width = tonumber(attr(raw, "stroke%-width") or 1) })
+            end
+          end
         end
       end
-      table.insert(parts, "Z")
-      table.insert(paths, { d = table.concat(parts, " "), opacity = 1.0 })
-    end
-  end
-
-  for tag in xml:gmatch('<polyline[^>]*/>') do
-    local pts = attr(tag, "points")
-    if pts and (has_visible_fill(tag) or has_visible_stroke(tag)) then
-      local parts = {}
-      local first = true
-      for x, y in pts:gmatch("([%d%.%-]+)[%s,]+([%d%.%-]+)") do
-        if first then
-          table.insert(parts, "M " .. x .. " " .. y)
-          first = false
-        else
-          table.insert(parts, "L " .. x .. " " .. y)
-        end
-      end
-      table.insert(paths, { d = table.concat(parts, " "), opacity = 1.0 })
     end
   end
 
@@ -483,6 +642,9 @@ local function rasterize(paths, gw, gh, vw, vh)
   for _, p in ipairs(paths) do
     local toks = tokenize(p.d)
     local cmds = parse(toks)
+    if p.matrix then
+      cmds = apply_matrix_to_cmds(cmds, p.matrix)
+    end
     local segs = to_segments(cmds)
     local ss = 2
 
@@ -490,10 +652,16 @@ local function rasterize(paths, gw, gh, vw, vh)
       for sx = 0, gw * ss - 1 do
         local vx = (sx + 0.5) / (gw * ss) * vw
         local vy = (sy + 0.5) / (gh * ss) * vh
-        if inside(vx, vy, segs) then
+        local hit
+        if p.stroke_width then
+          hit = point_near_stroke(vx, vy, segs, p.stroke_width)
+        else
+          hit = inside(vx, vy, segs)
+        end
+        if hit then
           local gx = math.floor(sx / ss)
           local gy = math.floor(sy / ss)
-          grid[gy][gx] = grid[gy][gx] + p.opacity / (ss * ss)
+          grid[gy][gx] = grid[gy][gx] + (p.opacity or 1.0) / (ss * ss)
         end
       end
     end
