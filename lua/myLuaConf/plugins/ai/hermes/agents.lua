@@ -168,6 +168,7 @@ vim.api.nvim_create_autocmd("User", {
         picker:close()
         require("hermes").connect(agent_id, dist and { distribution = dist } or nil)
         M.agentId = agent_id
+        M.distribution = dist
       end,
     })
   end,

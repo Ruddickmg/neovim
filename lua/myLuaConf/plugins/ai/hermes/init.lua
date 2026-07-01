@@ -32,13 +32,43 @@ return {
       },
     })
 
+    local state = require("myLuaConf.plugins.ai.hermes.state")
+    local saved = state.load()
+    local auto_connect = saved and saved.agent_id
+    local auto_session_id = saved and saved.session_id
+
+    if auto_connect then
+      sessions.sessionId = auto_session_id
+      registry.agentId = saved.agent_id
+      hermes.connect(saved.agent_id, saved.distribution and { distribution = saved.distribution } or nil)
+    end
+
     vim.api.nvim_create_autocmd("User", {
       group = "hermes",
       pattern = "ConnectionInitialized",
       callback = function(args)
         local info = args.data.agentInfo
         vim.notify("Connected to " .. info.name .. " " .. info.version, vim.log.levels.INFO, { title = "Hermes" })
-        hermes.list_sessions()
+        state.current.agent_id = state.current.agent_id or registry.agentId
+        state.save()
+        if auto_session_id then
+          hermes.load_session(auto_session_id)
+        elseif not auto_connect then
+          hermes.list_sessions()
+        end
+        auto_connect = false
+        auto_session_id = nil
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+      group = "hermes",
+      pattern = "SessionLoaded",
+      callback = function()
+        if state.current.agent_id and sessions.sessionId then
+          state.current.session_id = sessions.sessionId
+          state.save()
+        end
       end,
     })
 
