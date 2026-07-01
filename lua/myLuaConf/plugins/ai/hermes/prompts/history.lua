@@ -43,7 +43,7 @@ vim.api.nvim_create_autocmd("User", {
       prompt_groups[prompt_id] = {
         id = prompt_id,
         identifier = "",
-        timestamp = os.date("%Y-%m-%d %H:%M:%S"),
+        timestamp = os.date("%Y/%m/%d %H:%M"),
         messages = {},
       }
     end
@@ -151,9 +151,9 @@ M.history = function()
     end,
     format = function(item)
       return {
-        { item.text, "Title" },
-        { " | ", "Comment" },
         { item.time, "Keyword" },
+        { " | ", "Comment" },
+        { item.text, "Title" },
       }
     end,
     preview = function(ctx)
