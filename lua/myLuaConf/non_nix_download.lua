@@ -53,7 +53,7 @@ require("nixCatsUtils.catPacker").setup({
   },
   { "nvim-treesitter/nvim-treesitter-textobjects", name = "treesitter-textobjects", version = "main" },
   "pmizio/typescript-tools.nvim",
-  "Pocco81/auto-save.nvim",
+  "okuuva/auto-save.nvim",
   "rachartier/tiny-cmdline.nvim",
   "rachartier/tiny-inline-diagnostic.nvim",
   "rcarriga/nvim-dap-ui",
