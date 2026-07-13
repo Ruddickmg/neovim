@@ -97,11 +97,6 @@
               actions-preview-nvim
               tiny-inline-diagnostic-nvim
             ];
-            database = with pkgs.vimPlugins; [
-              vim-dadbod
-              vim-dadbod-ui
-              vim-dadbod-completion
-            ];
             testing = with pkgs.vimPlugins; {
               javascript = [
                 neotest-playwright
@@ -188,7 +183,6 @@
               git = with pkgs.vimPlugins; [
                 gitsigns-nvim
                 diffview-nvim
-                neogit
               ];
               always = with pkgs.vimPlugins; [
                 nvim-lspconfig
@@ -201,7 +195,6 @@
                 nui-nvim
                 substitute-nvim
                 todo-comments-nvim
-                auto-session
                 comment-nvim
                 # completion
                 nvim-ts-autotag
@@ -261,7 +254,6 @@
               file-manager = true;
               ai = true;
               git = true;
-              database = true;
               markdown = true;
               javascript = true;
               rust = true;
