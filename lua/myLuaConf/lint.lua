@@ -8,8 +8,6 @@ return {
         -- NOTE: download some linters in lspsAndRuntimeDeps
         -- and configure them here
         -- markdown = {'vale',},
-        javascript = { "eslint" },
-        typescript = { "eslint" },
       }
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {

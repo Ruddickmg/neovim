@@ -29,9 +29,11 @@
             rust = with pkgs; [
               vscode-extensions.vadimcn.vscode-lldb.adapter
             ];
-            javascript = with pkgs.vimPlugins; [
+            javascript = with pkgs; [
+              vscode-langservers-extracted
+            ] ++ (with pkgs.vimPlugins; [
               typescript-tools-nvim
-            ];
+            ]);
             configuration-files = with pkgs; [
               yaml-language-server
               vscode-json-languageserver
@@ -84,7 +86,7 @@
                 SchemaStore-nvim
                 snacks-nvim
                 direnv-vim
-                noice-nvim
+                # noice-nvim
                 # vim-repeat
               ];
             };
@@ -145,6 +147,12 @@
               yazi-nvim
               aerial-nvim
             ];
+            ai = with pkgs.vimPlugins; [
+              CopilotChat-nvim
+              blink-copilot
+              copilot-lua
+              opencode-nvim
+            ];
             general = {
               blink = with pkgs.vimPlugins; [
                 blink-cmp-npm-nvim
@@ -186,6 +194,8 @@
                 nvim-lspconfig
                 nvim-surround
                 trouble-nvim
+                mason-nvim
+                mason-lspconfig-nvim
               ];
               utility = with pkgs.vimPlugins; [
                 nui-nvim
@@ -203,6 +213,9 @@
                 sniprun
                 # config file completion
                 package-info-nvim
+                auto-save-nvim
+                tiny-cmdline-nvim
+                otter-nvim
               ];
             };
           };
@@ -246,6 +259,7 @@
               configuration-files = true;
               diagnostics = true;
               file-manager = true;
+              ai = true;
               git = true;
               database = true;
               markdown = true;

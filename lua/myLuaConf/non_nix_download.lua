@@ -9,7 +9,6 @@ require("nixCatsUtils.catPacker").setup({
   { "BirdeeHub/lze", lazy = false },
   { "BirdeeHub/lzextras", lazy = false },
   "CopilotC-Nvim/CopilotChat.nvim",
-  "esmuellert/nvim-eslint",
   "fang2hou/blink-copilot",
   "folke/flash.nvim",
   "folke/lazydev.nvim",

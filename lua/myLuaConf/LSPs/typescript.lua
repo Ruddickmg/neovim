@@ -2,12 +2,6 @@ local javascript_ft = { "javascript", "typescript", "javascriptreact", "typescri
 
 return {
   {
-    "nvim-eslint",
-    after = function()
-      require("nvim-eslint").setup({})
-    end,
-  },
-  {
     "typescript-tools.nvim",
     ft = javascript_ft,
     after = function()
@@ -24,6 +18,11 @@ return {
   {
     "ts_ls",
     dep_of = { "typescript-tools.nvim" },
+    ft = javascript_ft,
+    lsp = {},
+  },
+  {
+    "eslint",
     ft = javascript_ft,
     lsp = {},
   },
