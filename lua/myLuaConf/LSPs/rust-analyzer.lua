@@ -1,5 +1,5 @@
 local features = "all"
--- local lspmux_path = "/run/user/1000/lspmux/lspmux.sock
+local lspmux_path = "/run/user/1000/lspmux/lspmux.sock"
 
 vim.g.rustaceanvim = {
   tools = {
@@ -27,10 +27,13 @@ vim.g.rustaceanvim = {
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
       end, { desc = "[t]oggle lsp inlay hints", silent = true, buffer = bufnr })
     end,
-    cmd = { "lspmux" },
-    -- cmd = function()
-    --   return vim.lsp.rpc.connect(lspmux_path)
-    -- end,
+    cmd = function()
+      if vim.fn.filereadable(lspmux_path) == 1 then
+        return vim.lsp.rpc.connect(lspmux_path)
+      else
+        return { "lspmux" }
+      end
+    end,
     settings = {
       ["rust-analyzer"] = {
         lspMux = {
