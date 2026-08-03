@@ -147,6 +147,7 @@
               blink-copilot
               copilot-lua
               opencode-nvim
+              hermes-nvim
             ];
             general = {
               blink = with pkgs.vimPlugins; [
