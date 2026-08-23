@@ -8,6 +8,10 @@
       url = "github:nvim-treesitter/nvim-treesitter-textobjects/main";
       flake = false;
     };
+    plugins-hermes-nvim = {
+      url = "github:Ruddickmg/hermes.nvim";
+      flake = false;
+    };
   };
 
   outputs =
@@ -147,7 +151,7 @@
               blink-copilot
               copilot-lua
               opencode-nvim
-              hermes-nvim
+              { name = "hermes.nvim"; plugin = pkgs.neovimPlugins.hermes-nvim; }
             ];
             general = {
               blink = with pkgs.vimPlugins; [
