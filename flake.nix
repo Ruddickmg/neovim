@@ -162,7 +162,7 @@
               blink-copilot
               copilot-lua
               opencode-nvim
-              hermes-nvim
+              { name = "hermes.nvim"; plugin = pkgs.neovimPlugins.hermes-nvim; }
             ];
             general = {
               blink = with pkgs.vimPlugins; [
