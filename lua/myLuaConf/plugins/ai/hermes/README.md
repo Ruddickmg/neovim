@@ -1,0 +1,32 @@
+# Hermes UI
+
+### TODO:
+- [ ] Visual/Display
+  - [ ] Buffer agent messages
+  - [ ] Display messages
+  - [ ] Display Status bar (lualine)
+    - [ ] Agent state
+      - [ ] thinking
+      - [ ] finished
+      - [ ] requesting permission
+      - [ ] requesting response (elicitation)
+      - [ ] performing compaction
+    - [ ] Number of connected agents
+    - [ ] Mode
+    - [ ] Model
+    - [ ] Token usage
+  - [ ] Display list of active/connected agents
+    - [ ] Allow disconnection of specific agents
+  - [ ] Display active session list
+    - [ ] Allow switching between active sessions (regardless of agent)
+    - [ ] Allow closing specific sessions (regardless of agent)
+  - [ ] Show ANSI colors
+  - [ ] Show MCP servers
+- [ ] Prompting
+  - [ ] Allow sending highlighted code
+  - [ ] Allow including the current buffer
+  - [ ] Include selected files
+  - [ ] Include quickfix list
+  - [ ] Include selected buffers
+  - [ ] Include all buffers
+  - [ ] Allow sending lsp diagnostics
