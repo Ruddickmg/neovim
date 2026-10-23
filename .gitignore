@@ -3,4 +3,5 @@
 /.luarc.json
 .hermes
 .idea
+.hermes
 .git
