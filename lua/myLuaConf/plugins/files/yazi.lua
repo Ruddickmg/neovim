@@ -14,6 +14,10 @@ return {
       require("yazi").setup({
         open_for_directories = true,
         yazi_floating_window_winblend = 0,
+        keymaps = {
+          -- <Tab> is needed by the whoosh.yazi bookmark menu (directory history)
+          cycle_open_buffers = "<S-Tab>",
+        },
         integrations = {
           grep_in_directory = function(directory)
             Snacks.picker.grep({ dirs = { directory } })

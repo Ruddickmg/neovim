@@ -75,17 +75,38 @@ function M.toggle()
 end
 
 function M.setup()
-  local desc = "Toggle Hermes [E]nvironment"
+  local desc = "[E]nvironment (development)"
   local ok, Snacks = pcall(require, "snacks")
   if ok then
-    Snacks.keymap.set("n", "<leader>aE", M.toggle, { desc = desc })
+    local toggle = Snacks.toggle.new({
+      name = "Development",
+      get = M.enabled,
+      set = function(state)
+        if state then
+          if not M.enable() then
+            return
+          end
+        else
+          M.disable()
+        end
+      end,
+      notify = function(state)
+        if M.enabled() ~= state then
+          return -- enable failed; M.enable() already notified why
+        end
+        local env = state and ("local dev (" .. M.dev_path .. ")") or "installed"
+        notify("Hermes environment: " .. env .. " — restarting...")
+        vim.cmd("restart")
+      end,
+    })
+    toggle:map("<leader>aE")
+    vim.api.nvim_create_user_command("HermesEnvironment", function()
+      toggle:toggle()
+    end, { desc = desc })
   else
     vim.keymap.set("n", "<leader>aE", M.toggle, { desc = desc })
+    vim.api.nvim_create_user_command("HermesEnvironment", M.toggle, { desc = desc })
   end
-
-  vim.api.nvim_create_user_command("HermesEnvironment", M.toggle, {
-    desc = desc,
-  })
 end
 
 return M

@@ -2,6 +2,55 @@ local M = {}
 
 local prompt_groups = {}
 
+---@generic T
+---@class Record
+---@field raw T
+---@field text string
+---@field timestamp number
+---@field type string
+
+---@alias Prompts table<string, Record[]>
+
+---@class History
+---@field prompt Prompts
+local History = {}
+
+---@return History
+function History.new()
+  return {
+    prompt = {}
+  }
+end
+
+---@generic T
+---@param prompt_id string
+---@param data T
+---@param text string
+---@param type string
+function History:add(prompt_id, data, text, type)
+  table.insert(
+    self.prompt[prompt_id],
+    {
+      raw = data,
+      text = text,
+      timestamp = os.time(),
+      type = type
+    }
+  )
+end
+
+vim.api.nvim_create_autocmd("User", {
+  group  = "hermes",
+  pattern = { "ToolCall", "ToolCallUpdate" },
+  callback = function (args)
+    require("hermes")
+    ---@type HermesToolCall
+    local data = args.data
+    data.update.name
+    vim.notify("data: " .. vim.inspect(data), vim.log.levels.INFO, { title = "Hermes tool call" })
+  end
+})
+
 vim.api.nvim_create_autocmd("User", {
   group = "hermes",
   pattern = {
@@ -10,6 +59,7 @@ vim.api.nvim_create_autocmd("User", {
     "AgentTextThought",
   },
   callback = function(args)
+    --
     local data = args.data
     if not data or not data.sessionId or not data.promptId then
       vim.notify("no sessionId")

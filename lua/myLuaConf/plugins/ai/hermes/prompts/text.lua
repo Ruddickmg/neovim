@@ -1,6 +1,7 @@
 local M = {}
 
 M.ask = function(session_id)
+  vim.notify("asking", vim.log.levels.INFO, { title = "Hermes questions!" })
   if session_id == nil then
     vim.notify("Please select a session before attempting to prompt", vim.log.levels.WARN, { title = "Hermes" })
     return

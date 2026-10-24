@@ -4,6 +4,9 @@ vim.api.nvim_create_autocmd("User", {
   group = "hermes",
   pattern = "SessionsListed",
   callback = function(args)
+    ---@type HermesSessionsListed
+    local data = args.data
+    vim.notify("Got these sessions: " .. vim.inspect(data.sessions), vim.log.levels.INFO, { title = "Hermes Sessions" })
     local max_file_path_size = 0
     Snacks.picker({
       title = "Select Session",
@@ -36,7 +39,7 @@ vim.api.nvim_create_autocmd("User", {
       end,
       finder = function()
         local items = {}
-        for _, session in ipairs(args.data.sessions) do
+        for _, session in ipairs(data.sessions) do
           if max_file_path_size < vim.fn.strdisplaywidth(session.cwd) then
             max_file_path_size = vim.fn.strdisplaywidth(session.cwd)
           end
