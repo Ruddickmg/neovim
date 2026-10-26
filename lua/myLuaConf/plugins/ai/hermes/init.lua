@@ -1,8 +1,5 @@
 return {
   "hermes.nvim",
-  -- load = function ()
-  --   -- in development, plugin is loaded from source
-  -- end,
   after = function()
     local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging")
     logger:trace("Starting hermes UI")
@@ -27,7 +24,9 @@ return {
     Snacks.keymap.set("n", "<leader>aA", function()
       prompts.text.ask(sessions.sessionId)
     end, { desc = "[A]sk" })
-    -- Snacks.keymap.set("n", "<leader>ah", prompts.history, { desc = "[H]istory" })
+    Snacks.keymap.set("n", "<leader>ah", function ()
+      prompts.show_history(prompts.history)
+    end, { desc = "[H]istory" })
     -- Snacks.keymap.set({ "v" }, "<leader>aA", prompts.embedded.ask, { desc = "[A]sk" })
 
     hermes.setup({
@@ -62,7 +61,9 @@ return {
         ---@type HermesConnectionInitialized
         local data = args.data
         local info = data.agentInfo
-        logger:info("Connected to " .. info.name .. " " .. info.version)
+        if info then
+          logger:info("Connected to " .. info.name .. " " .. info.version)
+        end
         state.agent_id = state.agent_id or registry.agentId
         state:save()
         if auto_session_id then

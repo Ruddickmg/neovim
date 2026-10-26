@@ -71,8 +71,8 @@ vim.api.nvim_create_autocmd("User", {
   group = "hermes",
   pattern = Event.SessionLoaded,
   callback = function()
-    local history = require("myLuaConf.plugins.ai.hermes.prompts.history")
-    logger:info(history:render())
+    local history = require("myLuaConf.plugins.ai.hermes.prompts").history
+    logger:debug(history:render())
   end,
 })
 

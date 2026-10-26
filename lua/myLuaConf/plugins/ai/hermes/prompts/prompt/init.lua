@@ -4,7 +4,8 @@ local render = require("myLuaConf.plugins.ai.hermes.prompts.prompt.render")
 ---@class Prompt
 ---@field data T
 ---@field timestamp number
----@field type string
+---@field date_time osdate | string
+---@field type HermesAutocommand
 local Prompt = {}
 
 ---@return Prompt
@@ -14,6 +15,7 @@ function Prompt.new(type, data)
   local self = {
     data = data,
     type = type,
+    date_time = os.date("%Y/%m/%d %H:%M"),
     timestamp = os.time(),
   }
   setmetatable(self, { __index = Prompt })

@@ -1,7 +1,12 @@
 # Hermes UI
 
 ### TODO:
+- [ ] Session Management
+  - [ ] Create new session
+    - [ ] Automatically if no session exists
+    - [ ] On demand
 - [ ] Visual/Display
+  - [x] Show history in snacks picker
   - [ ] Buffer agent messages
   - [ ] Display messages
   - [ ] Display Status bar (lualine)
