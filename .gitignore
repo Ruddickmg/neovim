@@ -1,5 +1,6 @@
 /result
 /tags
 /.luarc.json
+.hermes
 .idea
 .git
