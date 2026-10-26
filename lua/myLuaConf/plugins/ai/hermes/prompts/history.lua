@@ -106,6 +106,8 @@ local events = {
   Event.AgentImageThought,
   Event.AgentResourceLinkThought,
   Event.AgentResourceLinkMessage,
+  Event.UserResourceLinkMessage,
+  Event.UserResourceMessage,
   Event.AvailableCommands,
   Event.ModeCurrent,
   Event.ConfigurationOption,
