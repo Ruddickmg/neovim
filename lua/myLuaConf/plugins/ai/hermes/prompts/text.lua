@@ -2,7 +2,7 @@ local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging").new("Ask
 local M = {}
 
 M.ask = function(session_id)
-  logger:info("asking")
+  logger:trace("asking")
   if session_id == nil then
     logger:warn("Please select a session before attempting to prompt")
     return
