@@ -1,12 +1,17 @@
-local M = {}
+local hermes = require("hermes")
+local Event = hermes.Autocommand
+local Logger = require("myLuaConf.plugins.ai.hermes.utilities.logging")
+local logger = Logger.new("Session")
+local M = {
+  state = require("myLuaConf.plugins.ai.hermes.session.state")
+}
 
 vim.api.nvim_create_autocmd("User", {
   group = "hermes",
-  pattern = "SessionsListed",
+  pattern = Event.SessionsListed,
   callback = function(args)
     ---@type HermesSessionsListed
     local data = args.data
-    vim.notify("Got these sessions: " .. vim.inspect(data.sessions), vim.log.levels.INFO, { title = "Hermes Sessions" })
     local max_file_path_size = 0
     Snacks.picker({
       title = "Select Session",
@@ -54,7 +59,7 @@ vim.api.nvim_create_autocmd("User", {
       confirm = function(picker, item)
         local session_id = item.data.sessionId
         picker:close()
-        vim.notify("Loading session: " .. session_id, vim.log.levels.INFO, { title = "Hermes" })
+        logger:info("Loading session: " .. session_id)
         require("hermes").load_session(session_id)
         M.sessionId = session_id
       end,
@@ -64,14 +69,14 @@ vim.api.nvim_create_autocmd("User", {
 
 vim.api.nvim_create_autocmd("User", {
   group = "hermes",
-  pattern = "SessionLoaded",
+  pattern = Event.SessionLoaded,
   callback = function()
-    vim.notify("Session loaded", vim.log.levels.INFO, { title = "Hermes" })
+    local history = require("myLuaConf.plugins.ai.hermes.prompts.history")
+    logger:info(history:render())
   end,
 })
 
 M.selectSession = function()
-  local hermes = require("hermes")
   hermes.list_sessions()
 end
 

@@ -41,6 +41,7 @@ return {
         -- indent = { enabled = true },
         input = { enabled = true },
         notifier = {
+          level = "info",
           enabled = true,
           timeout = 3000,
         },

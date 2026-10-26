@@ -1,14 +1,15 @@
+local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging").new("Ask")
 local M = {}
 
 M.ask = function(session_id)
-  vim.notify("asking", vim.log.levels.INFO, { title = "Hermes questions!" })
+  logger:info("asking")
   if session_id == nil then
-    vim.notify("Please select a session before attempting to prompt", vim.log.levels.WARN, { title = "Hermes" })
+    logger:warn("Please select a session before attempting to prompt")
     return
   end
   vim.ui.input({ prompt = "Ask: " }, function(input)
     if input ~= "" then
-      vim.notify("Asking: " .. input .. ", session id: " .. (session_id or "empty"), vim.log.levels.INFO, { title = "Hermes" })
+      logger:debug("Asking: " .. input .. ", session id: " .. (session_id or "empty"))
       require("hermes").prompt(session_id, {
         type = "text",
         text = input,

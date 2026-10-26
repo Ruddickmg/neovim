@@ -1,237 +1,148 @@
-local M = {}
+local hermes = require("hermes")
+local Logger = require("myLuaConf.plugins.ai.hermes.utilities.logging")
+local promp = require("myLuaConf.plugins.ai.hermes.prompts.prompt")
+local Prompts = promp.Prompts
+local Prompt = promp.Prompt
+local Event = hermes.Autocommand
 
-local prompt_groups = {}
+---@class PromptHistory
+---@field prompts Prompts
+local PromptHistory = {}
 
----@generic T
----@class Record
----@field raw T
----@field text string
----@field timestamp number
----@field type string
-
----@alias Prompts table<string, Record[]>
-
----@class History
----@field prompt Prompts
-local History = {}
-
----@return History
-function History.new()
-  return {
-    prompt = {}
+---@return PromptHistory
+function PromptHistory.new()
+  ---@type PromptHistory
+  local self = {
+    prompts = Prompts.new(),
   }
+  setmetatable(self, { __index = PromptHistory })
+  return self
 end
 
 ---@generic T
 ---@param prompt_id string
 ---@param data T
----@param text string
 ---@param type string
-function History:add(prompt_id, data, text, type)
-  table.insert(
-    self.prompt[prompt_id],
-    {
-      raw = data,
-      text = text,
-      timestamp = os.time(),
-      type = type
-    }
-  )
+function PromptHistory:add(prompt_id, data, type)
+  self.prompts:add(prompt_id, Prompt.new(type, data))
 end
 
-vim.api.nvim_create_autocmd("User", {
-  group  = "hermes",
-  pattern = { "ToolCall", "ToolCallUpdate" },
-  callback = function (args)
-    require("hermes")
-    ---@type HermesToolCall
-    local data = args.data
-    data.update.name
-    vim.notify("data: " .. vim.inspect(data), vim.log.levels.INFO, { title = "Hermes tool call" })
+---@param callback fun(arg: Prompts)
+function PromptHistory:iter_prompts(callback)
+  self.prompts:iter(callback)
+end
+
+---@param callback fun(arg: Prompt)
+function PromptHistory:iter(callback)
+  self:iter_prompts(function (prompts)
+    for _, prompt in ipairs(prompts) do
+      callback(prompt)
+    end
+  end)
+end
+
+---@param callback fun(arg: Prompt)
+---@param types string[]
+function PromptHistory:iter_by_type(types, callback)
+  self.prompts:iter_by_type(types, function (prompts)
+    for _, prompt in ipairs(prompts) do
+      callback(prompt)
+    end
+  end)
+end
+
+---@return string
+function PromptHistory:render()
+  local text = ""
+  for _, prompt in ipairs(self:text_messages()) do
+    text = text .. prompt:render() .. "\n"
   end
-})
+  return text
+end
+
+---@return Prompt[][]
+function PromptHistory:tool_call_prompts()
+  return self.prompts:by_type({ Event.ToolCall, Event.ToolCallUpdate })
+end
+
+---@return Prompt[]
+function PromptHistory:tool_calls()
+  local tool_calls = {}
+  self:iter_by_type({ Event.ToolCall, Event.ToolCallUpdate }, function (prompt)
+    table.insert(tool_calls, prompt)
+  end)
+  return tool_calls
+end
+
+---@return Prompt[][]
+function PromptHistory:text_messages_prompts()
+  local text_messages_prompts = {}
+  self.prompts:iter_by_type({ Event.AgentTextMessage, Event.AgentTextThought, Event.UserTextMessage }, function(prompts)
+    table.insert(text_messages_prompts, prompts)
+  end)
+  return text_messages_prompts
+end
+
+---@return Prompt[]
+function PromptHistory:text_messages()
+  local text_messages = {}
+  self:iter_by_type({ Event.AgentTextMessage, Event.AgentTextThought, Event.UserTextMessage }, function(prompt)
+      table.insert(text_messages, prompt)
+  end)
+  return text_messages
+end
+
+local history = PromptHistory.new()
+
+local events = {
+  Event.Plan,
+  Event.ToolCall,
+  Event.ToolCallUpdate,
+  Event.UserTextMessage,
+  Event.AgentTextMessage,
+  Event.AgentTextThought,
+  Event.UserImageMessage,
+  Event.AgentImageMessage,
+  Event.AgentImageThought,
+  Event.AgentResourceLinkThought,
+  Event.AgentResourceLinkMessage,
+  Event.AvailableCommands,
+  Event.ModeCurrent,
+  Event.ConfigurationOption,
+  Event.UsageUpdate,
+  Event.CompactionUpdate,
+  Event.CompactionSummaryChunk,
+  Event.SessionUpdate,
+}
+
+local notice = Logger.new(Event.Notice)
 
 vim.api.nvim_create_autocmd("User", {
   group = "hermes",
-  pattern = {
-    "UserTextMessage",
-    "AgentTextMessage",
-    "AgentTextThought",
-  },
+  pattern = Event.Notice,
   callback = function(args)
-    --
+    ---@type HermesNotice
     local data = args.data
-    if not data or not data.sessionId or not data.promptId then
-      vim.notify("no sessionId")
-      return
+    local update = data.update
+    local severity = vim.log.levels.INFO
+    if update.severity == "error" then
+      severity = vim.log.levels.ERROR
+    elseif update.severity == "warning" then
+      severity = vim.log.levels.WARN
     end
-    if not data.update or not data.update.content or not data.update.content.text then
-      vim.notify("no text")
-      return
-    end
-
-    local prompt_id = data.promptId
-    local chunk_text = data.update.content.text
-    if chunk_text == "" then
-      vim.notify("chunk_text is empty")
-      return
-    end
-
-    local role
-    if args.match == "UserTextMessage" then
-      role = "user"
-    elseif args.match == "AgentTextMessage" then
-      role = "agent"
-    elseif args.match == "AgentTextThought" then
-      role = "thought"
-    else
-      vim.notify("invalid role")
-      return
-    end
-
-    if not prompt_groups[prompt_id] then
-      prompt_groups[prompt_id] = {
-        id = prompt_id,
-        identifier = "",
-        timestamp = os.date("%Y/%m/%d %H:%M"),
-        messages = {},
-      }
-    end
-
-    local group = prompt_groups[prompt_id]
-    local last = group.messages[#group.messages]
-    if last and last.role == role then
-      last.text = last.text .. chunk_text
-    else
-      table.insert(group.messages, { role = role, text = chunk_text })
-    end
-
-    if group.identifier == "" and role == "user" then
-      local trimmed = vim.trim(chunk_text)
-      group.identifier = trimmed:sub(1, 60)
-      if #trimmed > 60 then
-        group.identifier = group.identifier .. "..."
-      end
-    end
+    notice:log(update.description, severity)
   end,
 })
 
-local function format_preview(group)
-  local lines = {}
-  for _, msg in ipairs(group.messages) do
-    if msg.role == "user" then
-      table.insert(lines, "User:")
-      for _, line in ipairs(vim.split(msg.text, "\n", { plain = true })) do
-        table.insert(lines, "  " .. line)
-      end
-      table.insert(lines, "")
-    elseif msg.role == "agent" then
-      table.insert(lines, "Agent:")
-      for _, line in ipairs(vim.split(msg.text, "\n", { plain = true })) do
-        table.insert(lines, "  " .. line)
-      end
-      table.insert(lines, "")
-    elseif msg.role == "thought" then
-      table.insert(lines, "Thought:")
-      for _, line in ipairs(vim.split(msg.text, "\n", { plain = true })) do
-        table.insert(lines, "  " .. line)
-      end
-      table.insert(lines, "")
-    end
-  end
-  return lines
-end
-
-local function format_buffer(group)
-  local lines = {}
-  for _, msg in ipairs(group.messages) do
-    if msg.role == "user" then
-      table.insert(lines, "# User")
-      table.insert(lines, "")
-      for _, line in ipairs(vim.split(msg.text, "\n", { plain = true })) do
-        table.insert(lines, line)
-      end
-      table.insert(lines, "")
-    elseif msg.role == "agent" then
-      table.insert(lines, "# Agent")
-      table.insert(lines, "")
-      for _, line in ipairs(vim.split(msg.text, "\n", { plain = true })) do
-        table.insert(lines, line)
-      end
-      table.insert(lines, "")
-    elseif msg.role == "thought" then
-      table.insert(lines, "# Thought")
-      table.insert(lines, "")
-      for _, line in ipairs(vim.split(msg.text, "\n", { plain = true })) do
-        table.insert(lines, line)
-      end
-      table.insert(lines, "")
-    end
-  end
-  return lines
-end
-
-M.history = function()
-  local items = {}
-
-  for _, group in pairs(prompt_groups) do
-    local display_text = group.identifier ~= "" and group.identifier or "(no message)"
-    table.insert(items, {
-      text = display_text,
-      time = group.timestamp,
-      data = group,
-    })
-  end
-
-  table.sort(items, function(a, b)
-    return a.data.timestamp > b.data.timestamp
-  end)
-
-  if #items == 0 then
-    vim.notify("No prompt history", vim.log.levels.INFO, { title = "Hermes" })
-    return
-  end
-
-  vim.notify("Opening promt history")
-
-  Snacks.picker({
-    title = "Prompt History",
-    finder = function()
-      return items
-    end,
-    format = function(item)
-      return {
-        { item.time, "Keyword" },
-        { " | ", "Comment" },
-        { item.text, "Title" },
-      }
-    end,
-    preview = function(ctx)
-      local group = ctx.item.data
-      local lines = format_preview(group)
-      vim.bo[ctx.buf].modifiable = true
-      vim.api.nvim_buf_set_lines(ctx.buf, 0, -1, false, lines)
-      vim.bo[ctx.buf].modifiable = false
-      vim.bo[ctx.buf].filetype = "markdown"
-      pcall(function()
-        vim.wo[ctx.win].number = false
-        vim.wo[ctx.win].relativenumber = false
-      end)
-      return true
-    end,
-    confirm = function(picker, item)
-      picker:close()
-      local group = item.data
-      local buf = vim.api.nvim_create_buf(false, true)
-      local lines = format_buffer(group)
-      vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-      vim.bo[buf].filetype = "markdown"
-      vim.bo[buf].modifiable = false
-      vim.cmd("tabnew")
-      vim.api.nvim_set_current_buf(buf)
-      vim.bo[buf].modified = false
+for _, event in pairs(events) do
+  vim.api.nvim_create_autocmd("User", {
+    group = "hermes",
+    pattern = event,
+    callback = function(args)
+      local data = args.data
+      history:add(data.promptId, data, event)
     end,
   })
 end
 
-return M
+return history
