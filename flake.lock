@@ -17,17 +17,49 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1791966044,
-        "narHash": "sha256-t1hT8UW97rFCWCJO7/pClvu0AhLN5V3uir2M0ic4w/Q=",
+        "lastModified": 1792842277,
+        "narHash": "sha256-pGPnZGi8y9d76xNeracniXO3dsYVROEmMkMc8jD0Ihc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "319e4cebef10cbb636c6ea392137b52ad105336a",
+        "rev": "d3b13ad75cc492690728f9307e443dec9ef9a20e",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "plugins-budoux.lua": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775131306,
+        "narHash": "sha256-obBkZym7E4lMhFFIaGt8yWArFcVqi+jqUkSVFbbynpw=",
+        "owner": "delphinus",
+        "repo": "budoux.lua",
+        "rev": "7f23658b127b9a74aae5b388fefcd997be30cbfc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "delphinus",
+        "repo": "budoux.lua",
+        "type": "github"
+      }
+    },
+    "plugins-md-render.nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793002397,
+        "narHash": "sha256-CdGya90aCG3B/EDwskeCCkhTKcx6nJSX/Qae3f/tACM=",
+        "owner": "delphinus",
+        "repo": "md-render.nvim",
+        "rev": "4f6d73a276356bc23dbffa594d2a54dc978e98bb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "delphinus",
+        "repo": "md-render.nvim",
         "type": "github"
       }
     },
@@ -52,6 +84,8 @@
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
+        "plugins-budoux.lua": "plugins-budoux.lua",
+        "plugins-md-render.nvim": "plugins-md-render.nvim",
         "plugins-treesitter-textobjects": "plugins-treesitter-textobjects"
       }
     }

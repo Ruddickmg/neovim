@@ -8,6 +8,14 @@
       url = "github:nvim-treesitter/nvim-treesitter-textobjects/main";
       flake = false;
     };
+    "plugins-budoux.lua" = {
+      url = "github:delphinus/budoux.lua";
+      flake = false;
+    };
+    "plugins-md-render.nvim" = {
+      url = "github:delphinus/md-render.nvim";
+      flake = false;
+    };
   };
 
   outputs =
@@ -43,6 +51,11 @@
             ];
             database = with pkgs; [
               postgres-language-server
+            ];
+            markdown = with pkgs; [
+              curl
+              ffmpeg
+              imagemagick
             ];
             format = with pkgs; [
               stylua
@@ -124,8 +137,10 @@
                 conform-nvim
               ];
             };
-            markdown = with pkgs.vimPlugins; [
-              render-markdown-nvim
+            markdown = [
+              pkgs.vimPlugins.render-markdown-nvim
+              pkgs.neovimPlugins."budoux.lua"
+              pkgs.neovimPlugins."md-render.nvim"
             ];
             neonixdev = with pkgs.vimPlugins; [
               lazydev-nvim
