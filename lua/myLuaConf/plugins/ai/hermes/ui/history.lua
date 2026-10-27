@@ -2,6 +2,13 @@ require("myLuaConf.plugins.ai.hermes.prompts.history")
 local Event = require("hermes").Autocommand
 local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging").new("Prompt History")
 
+---@type table<HermesAutocommand, string>
+local icon_mapping = {
+  [Event.AgentTextMessage] = "🤖",
+  [Event.AgentTextThought] = "🤖",
+  [Event.UserTextMessage] = "💬",
+}
+
 ---@param prompts Prompt[]
 local function format_history(prompts)
   local lines = {}
@@ -29,26 +36,38 @@ local function format_history(prompts)
   return lines
 end
 
----@param state PromptHistory
-local history = function(state)
-  ---@class PromptItem
-  ---@field text HermesAutocommand
-  ---@field time number
-  ---@field data Prompt[]
+---@class PromptItem
+---@field text HermesAutocommand
+---@field time number
+---@field data Prompt[]
 
+---@param state PromptHistory
+---@param group_prompts boolean | nil
+local history = function(state, group_prompts)
   ---@type PromptItem[]
   local items = {}
 
   for _, prompts in ipairs(state:text_message_prompts()) do
     if #prompts > 0 then
-      local first_prompt = prompts[1]
-      logger:debug(first_prompt)
-      table.insert(items, {
-        text = first_prompt:render(),
-        time = first_prompt.date_time,
-        type = first_prompt.type,
-        data = prompts,
-      })
+      if group_prompts ~= nil and group_prompts then
+        local first_prompt = prompts[1]
+        logger:debug(first_prompt)
+        table.insert(items, {
+          text = first_prompt:render(),
+          time = first_prompt.date_time,
+          type = icon_mapping[first_prompt.type],
+          data = prompts,
+        })
+      else
+        for _, prompt in ipairs(prompts) do
+          table.insert(items, {
+            text = prompt:render(),
+            time = prompt.date_time,
+            type = icon_mapping[prompt.type],
+            data = { prompt },
+          })
+        end
+      end
     end
   end
 
@@ -66,13 +85,16 @@ local history = function(state)
     end,
     format = function(item)
       return {
-        { item.time, "Keyword" },
-        { " | ", "Comment" },
         { item.type, "Constant" },
+        { " | ", "Comment" },
+        { item.time, "Keyword" },
         { " | ", "Comment" },
         { item.text, "Title" },
       }
     end,
+    layout = {
+      preset = "dropdown",
+    },
     preview = function(ctx)
       -- Write lines, set filetype, and use vim.schedule to handle window options and trigger BufWinEnter
       vim.bo[ctx.buf].modifiable = true

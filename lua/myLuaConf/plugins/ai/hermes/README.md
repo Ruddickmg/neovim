@@ -7,7 +7,7 @@
     - [ ] On demand
 - [ ] Visual/Display
   - [x] Show history in snacks picker
-  - [ ] Display messages
+  - [x] Display messages
   - [ ] Display Status bar (lualine)
     - [ ] Agent state
       - [ ] thinking

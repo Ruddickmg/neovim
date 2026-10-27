@@ -1,5 +1,8 @@
 return {
   "hermes.nvim",
+  -- keys = {
+  --   { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" }
+  -- },
   after = function()
     local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging")
     logger:trace("Starting hermes UI")
@@ -11,13 +14,14 @@ return {
     local registry = require("myLuaConf.plugins.ai.hermes.agents")
     local prompts = require("myLuaConf.plugins.ai.hermes.prompts")
     local State = require("myLuaConf.plugins.ai.hermes.state")
+    local ui = require("myLuaConf.plugins.ai.hermes.ui")
     local Event = hermes.Autocommand
     local Format = hermes.LogFormat
     local Level = hermes.LogLevel
     local state = State.new()
 
-    Snacks.keymap.set("n", "<leader>as", sessions.selectSession, { desc = "[S]essions" })
     Snacks.keymap.set("n", "<leader>ac", registry.selectAgent, { desc = "[C]onnect" })
+    Snacks.keymap.set("n", "<leader>as", sessions.selectSession, { desc = "[S]essions" })
     Snacks.keymap.set("n", "<leader>aX", function()
       hermes.cancel(sessions.sessionId)
     end, { desc = "Cancel all session activity" })
@@ -25,10 +29,12 @@ return {
       prompts.text.ask(sessions.sessionId)
     end, { desc = "[A]sk" })
     Snacks.keymap.set("n", "<leader>ah", function ()
-      prompts.show_history(prompts.history)
+      ui.history(prompts.history, false)
     end, { desc = "[H]istory" })
+    Snacks.keymap.set("n", "<leader>aC", function ()
+      prompts.conversation:show():render(prompts.history)
+    end, { desc = "[C]onversation" })
     -- Snacks.keymap.set({ "v" }, "<leader>aA", prompts.embedded.ask, { desc = "[A]sk" })
-
     hermes.setup({
       download = {
         auto = false,

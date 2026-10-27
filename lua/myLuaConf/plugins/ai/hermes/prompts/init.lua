@@ -1,8 +1,10 @@
 local hermes = require("hermes")
 local Logger = require("myLuaConf.plugins.ai.hermes.utilities.logging")
 local PromptHistory = require("myLuaConf.plugins.ai.hermes.prompts.history")
+local Conversation = require("myLuaConf.plugins.ai.hermes.ui.conversation")
 local history = PromptHistory.new()
 local Event = hermes.Autocommand
+local conversation = Conversation.new()
 
 local events = {
   Event.Plan,
@@ -52,15 +54,15 @@ for _, event in pairs(events) do
     pattern = event,
     callback = function(args)
       local data = args.data
+      notice_logger:debug(data)
       history:add(data.promptId, data, event)
+      conversation:render(history)
     end,
   })
 end
 
 return {
   text = require("myLuaConf.plugins.ai.hermes.prompts.text"),
-  link = require("myLuaConf.plugins.ai.hermes.prompts.link"),
-  embedded = require("myLuaConf.plugins.ai.hermes.prompts.embedded"),
   history = history,
-  show_history = require("myLuaConf.plugins.ai.hermes.prompts.ui").history_selector
+  conversation = conversation,
 }
