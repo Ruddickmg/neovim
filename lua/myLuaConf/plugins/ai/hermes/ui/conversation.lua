@@ -6,6 +6,8 @@ local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging").new("Con
 ---@field buffer number
 ---@field window number
 ---@field position number
+---@field width number
+---@field height number
 local Conversation = {}
 
 ---@return Conversation
@@ -14,9 +16,14 @@ function Conversation.new()
     position = 1,
     history = nil,
     window = nil,
+    width = 60,
+    height = 40,
     buffer = vim.api.nvim_create_buf(false, true),
   }
   vim.bo[self.buffer].filetype = 'markdown'
+  vim.bo[self.buffer].undolevels = -1
+  vim.bo[self.buffer].modifiable = false
+  vim.bo[self.buffer].readonly = true
   setmetatable(self, { __index = Conversation })
   return self
 end
@@ -24,15 +31,22 @@ end
 ---@return Conversation
 function Conversation:show()
   logger:trace("Showing conversation")
-  self.window = vim.api.nvim_open_win(self.buffer, true, {
+  local window = vim.api.nvim_open_win(self.buffer, true, {
     relative = 'editor',
-    width = 50,
-    height = 50,
+    width = self.width,
+    height = self.height,
     col = 15,
     row = 5,
     style = 'minimal',
-    border = 'single', -- Options: 'none', 'single', 'double', 'rounded', etc.
+    border = 'rounded', -- Options: 'none', 'single', 'double', 'rounded', etc.
   })
+
+  vim.wo[window].number = false
+  vim.wo[window].relativenumber = false
+  vim.wo[window].foldenable = false
+
+  self.window = window
+
   return self
 end
 
@@ -82,7 +96,9 @@ function Conversation:render(history)
   logger:debug(lines)
 
   self.position = length + 1
+  vim.bo[self.buffer].modifiable = true
   vim.api.nvim_buf_set_lines(self.buffer, -1, -1, false, lines)
+  vim.bo[self.buffer].modifiable = false
   logger:trace("Rendered")
   return self
 end
