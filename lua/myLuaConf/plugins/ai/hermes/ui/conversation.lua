@@ -20,7 +20,7 @@ function Conversation.new()
     height = 40,
     buffer = vim.api.nvim_create_buf(false, true),
   }
-  vim.bo[self.buffer].filetype = 'markdown'
+  vim.bo[self.buffer].filetype = "markdown"
   vim.bo[self.buffer].undolevels = -1
   vim.bo[self.buffer].modifiable = false
   vim.bo[self.buffer].readonly = true
@@ -28,17 +28,33 @@ function Conversation.new()
   return self
 end
 
+---@return boolean
+function Conversation:window_ready()
+  return type(self.window) == "number" and vim.api.nvim_win_is_valid(self.window)
+end
+
+---@return boolean
+function Conversation:buffer_ready()
+  return type(self.buffer) == "number" and vim.api.nvim_buf_is_valid(self.buffer)
+end
+
+function Conversation:move_view_to_bottom()
+  if self:window_ready() then
+    vim.cmd("normal! Gzb")
+  end
+end
+
 ---@return Conversation
 function Conversation:show()
   logger:trace("Showing conversation")
   local window = vim.api.nvim_open_win(self.buffer, true, {
-    relative = 'editor',
+    relative = "editor",
     width = self.width,
     height = self.height,
     col = 15,
     row = 5,
-    style = 'minimal',
-    border = 'rounded', -- Options: 'none', 'single', 'double', 'rounded', etc.
+    style = "minimal",
+    border = "rounded", -- Options: 'none', 'single', 'double', 'rounded', etc.
   })
 
   vim.wo[window].number = false
@@ -46,6 +62,7 @@ function Conversation:show()
   vim.wo[window].foldenable = false
 
   self.window = window
+  self:move_view_to_bottom()
 
   return self
 end
@@ -58,6 +75,30 @@ function Conversation:hide()
     self.window = nil
   end
   return self
+end
+
+---@param lines string[]
+function Conversation:add_lines(lines)
+  if not self:buffer_ready() then
+    return
+  else
+    local total_lines = vim.api.nvim_buf_line_count(self.buffer)
+
+    vim.bo[self.buffer].modifiable = true
+    vim.api.nvim_buf_set_lines(self.buffer, -1, -1, false, lines)
+    vim.bo[self.buffer].modifiable = false
+
+    if self:window_ready() then
+      local last_visible_line = vim.fn.line("w$")
+      local is_at_bottom = (last_visible_line >= total_lines)
+      if is_at_bottom then
+        logger:debug("Move to bottom")
+        self:move_view_to_bottom()
+      end
+    end
+
+    logger:trace("Rendered")
+  end
 end
 
 ---@param history PromptHistory
@@ -96,9 +137,7 @@ function Conversation:render(history)
   logger:debug(lines)
 
   self.position = length + 1
-  vim.bo[self.buffer].modifiable = true
-  vim.api.nvim_buf_set_lines(self.buffer, -1, -1, false, lines)
-  vim.bo[self.buffer].modifiable = false
+  self:add_lines(lines, Event.AgentTextMessage)
   logger:trace("Rendered")
   return self
 end
