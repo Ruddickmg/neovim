@@ -1,5 +1,8 @@
 local Event = require("hermes").Autocommand
+local mouse = require("myLuaConf.plugins.ai.hermes.utilities.mouse")
 local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging").new("Conversation")
+local Mouse = mouse.Mouse
+local WindowMousePosition = mouse.WindowMousePosition
 
 ---@class Conversation
 ---@field history PromptHistory
@@ -8,14 +11,18 @@ local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging").new("Con
 ---@field position number
 ---@field width number
 ---@field height number
+---@field mouse Mouse
+---@field mouse_position WindowMousePosition
 local Conversation = {}
 
 ---@return Conversation
 function Conversation.new()
   local self = {
+    mouse_position = nil,
     position = 1,
     history = nil,
     window = nil,
+    mouse = Mouse.new(),
     width = 60,
     height = 40,
     buffer = vim.api.nvim_create_buf(false, true),
@@ -25,7 +32,42 @@ function Conversation.new()
   vim.bo[self.buffer].modifiable = false
   vim.bo[self.buffer].readonly = true
   setmetatable(self, { __index = Conversation })
+  vim.keymap.set("n", "<MouseMove>", function()
+    self:detect_mouse_position()
+    return "<MouseMove>"
+  end, { silent = true })
+  vim.keymap.set("n", "<LeftDrag>", function()
+    self:resize()
+    return "<LeftDrag>"
+  end, { silent = true })
   return self
+end
+
+function Conversation:detect_mouse_position()
+  if self:window_ready() then
+    local position = self.mouse:window_position(self.window)
+    if self.mouse_position ~= position then
+      self.mouse_position = position
+      logger:debug("Changed position to: " .. position)
+    end
+  end
+end
+
+function Conversation:resize()
+  local config = vim.api.nvim_win_get_config(self.window)
+  local mouse = vim.fn.getmousepos()
+  if self.mouse_position == WindowMousePosition.Bottom then
+    -- resize bottom
+    config.row = -- calculate with `mouse`
+  elseif self.mouse_position == WindowMousePosition.Top then
+    -- resize top 
+  elseif self.mouse_position == WindowMousePosition.Left then
+    -- resuze left side
+  elseif self.mouse_position == WindowMousePosition.Right then
+    -- resize right side  
+  end
+
+  logger:info("Mouse dragging coordinates: " .. mouse.screenrow .. ", " .. mouse.screencol)
 end
 
 ---@return boolean
@@ -137,9 +179,15 @@ function Conversation:render(history)
   logger:debug(lines)
 
   self.position = length + 1
-  self:add_lines(lines, Event.AgentTextMessage)
+  self:add_lines(lines)
   logger:trace("Rendered")
   return self
+end
+
+function Conversation:move_with_mouse()
+  if self.mouse == nil then
+    return
+  end
 end
 
 return Conversation
