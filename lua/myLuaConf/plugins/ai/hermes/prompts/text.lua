@@ -8,7 +8,7 @@ M.ask = function(session_id)
     return
   end
   vim.ui.input({ prompt = "Ask: " }, function(input)
-    if input ~= "" then
+    if input ~= "" and input ~= nil then
       logger:debug("Asking: " .. input .. ", session id: " .. (session_id or "empty"))
       require("hermes").prompt(session_id, {
         type = "text",

@@ -4,6 +4,17 @@ local logger = require("myLuaConf.plugins.ai.hermes.utilities.logging").new("Con
 local Mouse = mouse.Mouse
 local WindowMousePosition = mouse.WindowMousePosition
 
+local MIN_SIZE = 10
+
+---@class ConversationResizeState
+---@field side WindowMousePosition
+---@field row number
+---@field col number
+---@field width number
+---@field height number
+---@field start_row number
+---@field start_col number
+
 ---@class Conversation
 ---@field history PromptHistory
 ---@field buffer number
@@ -13,12 +24,14 @@ local WindowMousePosition = mouse.WindowMousePosition
 ---@field height number
 ---@field mouse Mouse
 ---@field mouse_position WindowMousePosition
+---@field resize_state ConversationResizeState|nil
 local Conversation = {}
 
 ---@return Conversation
 function Conversation.new()
   local self = {
     mouse_position = nil,
+    resize_state = nil,
     position = 1,
     history = nil,
     window = nil,
@@ -40,6 +53,10 @@ function Conversation.new()
     self:resize()
     return "<LeftDrag>"
   end, { silent = true })
+  vim.keymap.set("n", "<LeftRelease>", function()
+    self:stop_resize()
+    return "<LeftRelease>"
+  end, { silent = true })
   return self
 end
 
@@ -53,21 +70,72 @@ function Conversation:detect_mouse_position()
   end
 end
 
+---@param side WindowMousePosition
+---@return boolean
+function Conversation:is_resizable_side(side)
+  return side == WindowMousePosition.Bottom
+    or side == WindowMousePosition.Left
+    or side == WindowMousePosition.Right
+    or side == WindowMousePosition.BottomLeft
+    or side == WindowMousePosition.BottomRight
+end
+
 function Conversation:resize()
-  local config = vim.api.nvim_win_get_config(self.window)
-  local mouse = vim.fn.getmousepos()
-  if self.mouse_position == WindowMousePosition.Bottom then
-    -- resize bottom
-    config.row = -- calculate with `mouse`
-  elseif self.mouse_position == WindowMousePosition.Top then
-    -- resize top 
-  elseif self.mouse_position == WindowMousePosition.Left then
-    -- resuze left side
-  elseif self.mouse_position == WindowMousePosition.Right then
-    -- resize right side  
+  if not self:window_ready() then
+    return
   end
 
-  logger:info("Mouse dragging coordinates: " .. mouse.screenrow .. ", " .. mouse.screencol)
+  local config = vim.api.nvim_win_get_config(self.window)
+  local mouse = vim.fn.getmousepos()
+
+  -- Snapshot the geometry on the first drag event so every subsequent event is
+  -- applied as a delta from the drag origin. This keeps the math independent of
+  -- borders/screen offsets and prevents the window from oscillating.
+  if self.resize_state == nil then
+    if not self:is_resizable_side(self.mouse_position) then
+      return
+    end
+    self.resize_state = {
+      side = self.mouse_position,
+      row = config.row,
+      col = config.col,
+      width = config.width,
+      height = config.height,
+      start_row = mouse.screenrow,
+      start_col = mouse.screencol,
+    }
+    logger:debug("Started resize from: " .. self.resize_state.side)
+  end
+
+  local state = self.resize_state
+  if state == nil then return end
+  local side = state.side
+  local delta_row = mouse.screenrow - state.start_row
+  local delta_col = mouse.screencol - state.start_col
+
+  if side == WindowMousePosition.Bottom or side == WindowMousePosition.BottomLeft or side == WindowMousePosition.BottomRight then
+    -- Top edge stays fixed.
+    config.height = math.max(MIN_SIZE, state.height + delta_row)
+  end
+
+  if side == WindowMousePosition.Left or side == WindowMousePosition.BottomLeft then
+    -- Right edge stays fixed.
+    local width = math.max(MIN_SIZE, state.width - delta_col)
+    config.width = width
+    config.col = state.col + (state.width - width)
+  end
+
+  if side == WindowMousePosition.Right or side == WindowMousePosition.BottomRight then
+    -- Left edge stays fixed.
+    config.width = math.max(MIN_SIZE, state.width + delta_col)
+  end
+
+  vim.api.nvim_win_set_config(self.window, config)
+  logger:debug("Resizing " .. state.side .. " to " .. config.width .. "x" .. config.height)
+end
+
+function Conversation:stop_resize()
+  self.resize_state = nil
 end
 
 ---@return boolean
