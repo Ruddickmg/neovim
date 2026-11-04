@@ -7,6 +7,7 @@ local WindowMousePosition = mouse.WindowMousePosition
 local MIN_SIZE = 10
 
 ---@class ConversationResizeState
+---@field mode "move"|"resize"
 ---@field side WindowMousePosition
 ---@field row number
 ---@field col number
@@ -92,10 +93,16 @@ function Conversation:resize()
   -- applied as a delta from the drag origin. This keeps the math independent of
   -- borders/screen offsets and prevents the window from oscillating.
   if self.resize_state == nil then
-    if not self:is_resizable_side(self.mouse_position) then
+    local mode
+    if self.mouse_position == WindowMousePosition.Top then
+      mode = "move"
+    elseif self:is_resizable_side(self.mouse_position) then
+      mode = "resize"
+    else
       return
     end
     self.resize_state = {
+      mode = mode,
       side = self.mouse_position,
       row = config.row,
       col = config.col,
@@ -104,14 +111,22 @@ function Conversation:resize()
       start_row = mouse.screenrow,
       start_col = mouse.screencol,
     }
-    logger:debug("Started resize from: " .. self.resize_state.side)
+    logger:debug("Started " .. mode .. " from: " .. self.resize_state.side)
   end
 
   local state = self.resize_state
-  if state == nil then return end
+  if state == nil then
+    return
+  end
   local side = state.side
   local delta_row = mouse.screenrow - state.start_row
   local delta_col = mouse.screencol - state.start_col
+
+  if state.mode == "move" then
+    -- Dragging the top border moves the whole window; size is unchanged.
+    config.row = state.row + delta_row
+    config.col = state.col + delta_col
+  end
 
   if side == WindowMousePosition.Bottom or side == WindowMousePosition.BottomLeft or side == WindowMousePosition.BottomRight then
     -- Top edge stays fixed.
@@ -131,7 +146,21 @@ function Conversation:resize()
   end
 
   vim.api.nvim_win_set_config(self.window, config)
-  logger:debug("Resizing " .. state.side .. " to " .. config.width .. "x" .. config.height)
+  logger:debug(
+    "Dragging "
+      .. state.side
+      .. " ("
+      .. state.mode
+      .. ") to "
+      .. config.col
+      .. ","
+      .. config.row
+      .. " ("
+      .. config.width
+      .. "x"
+      .. config.height
+      .. ")"
+  )
 end
 
 function Conversation:stop_resize()
